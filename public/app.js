@@ -1,4 +1,6 @@
-$(document).ready(function() {
+$(document).ready(function(){
+
+//var moment = require("moment");
 //Perform the initial scrape, create and fill the database when app is run
 $.ajax({
   method: "GET",
@@ -8,42 +10,43 @@ $.ajax({
 // create function to display all the data on the page after retrieved from the db
 function displayData() {
     // Get the articles as a json
-  $.getJSON("/articles", function(data) {
+  $.getJSON("/articles", function(scrapeData) {
     // For each one
-    console.log("data returned from scrape:", data);
+    console.log("scrapeData returned from scrape:", scrapeData);
     // Display the information on the page
-    for (i = 0; i < data.length; i++) {
+    for (i = 0; i < scrapeData.length; i++) {
       // if a note for a particular article exists, change font color of title to green
       // and tell user they've previously added a note
-      if (data[i].note) {  // if a note exists on (this) article, call function that makes
+      if (scrapeData[i].note) {  // if a note exists on (this) article, call function that makes
         // a slight update to the note so that it's updatedAt value is changed (in save Note function),
         // or, change updatedAt value in article directly to "now" (in /articles function) (???)
         // ***  this is currently not correct!!!! but close
-        $.ajax({
-          method: "POST",
-          url: "/articles/" + data[i]._id,
-          data: {
-            // input updated character to title
-            title: data[i].note.title + " (updated)"
-          }
-        })
-        .then(function(data) {
-          // Log the response
-          console.log("data from posting a new Note: ", data);
-        });
+        // console.log("I'm in the if that there is a scrapeData[i].note!" + scrapeData[i].note);
+        // $.ajax({
+        //   method: "POST",
+        //   url: "/articles/" + scrapeData[i]._id,
+        //   data: {
+        //     // change timestamp that the article is updated to "now", so that it's not deleted
+        //     updatedAt: moment().format()
+        //   }
+        // })
+        // .then(function(dataUpdate) {
+        //   // Log the response
+        //   console.log("data from posting a new Note: ", dataUpdate);
+        // });
 
         //****
         $("#articles").append("<p style='color:green;' data-id='" + 
-          data[i]._id + "'>" + 
-          data[i].title + "  (You've made a Note!)</p><button data-id='" + 
-          data[i]._id + "' class='deleteArticle'>Delete Article</button><button><a href='" + 
-          data[i].link + "' target='_blank'>Go To Article</a></button>");
+          scrapeData[i]._id + "'>" + 
+          scrapeData[i].title + "  (You've made a Note!)</p><button data-id='" + 
+          scrapeData[i]._id + "' class='deleteArticle'>Delete Article</button><button><a href='" + 
+          scrapeData[i].link + "' target='_blank'>Go To Article</a></button>");
       } else {
         $("#articles").append("<p data-id='" + 
-        data[i]._id + "'>" + 
-        data[i].title + "</p><button data-id='" + 
-        data[i]._id + "' class='deleteArticle'>Delete Article</button><button><a href='" + 
-        data[i].link + "' target='_blank'>Go To Article</a></button>");
+        scrapeData[i]._id + "'>" + 
+        scrapeData[i].title + "</p><button data-id='" + 
+        scrapeData[i]._id + "' class='deleteArticle'>Delete Article</button><button><a href='" + 
+        scrapeData[i].link + "' target='_blank'>Go To Article</a></button>");
       }
     }
   });
@@ -98,34 +101,34 @@ $(document).on("click", "p", function() {
   $("#notes").empty();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
-
+  console.log("thisId after clicking 'p': " + thisId);
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
     url: "/articles/" + thisId
   })
     // With that done, add the note information to the page
-    .then(function(data) {
-      console.log("data from GET /articles+id", data);
+    .then(function(dataSaveP) {
+      console.log("dataSaveP from GET /articles+id", dataSaveP);
       // The title of the article
-      $("#notes").append("<h2>" + data.title + "</h2>");
+      $("#notes").append("<h2>" + dataSaveP.title + "</h2>");
       // An input to enter a new note title
       $("#notes").append("<input id='titleinput' name='title' placeholder='Title'>");
       // A textarea to add a new note body
       $("#notes").append("<textarea id='bodyinput' name='body' placeholder='Contents'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='saveNote'>Save Note</button>");
+      $("#notes").append("<button data-id='" + dataSaveP._id + "' id='saveNote'>Save Note</button>");
       // Here's a button to delete a note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='deleteNote'>Delete Note</button>");
+      $("#notes").append("<button data-id='" + dataSaveP._id + "' id='deleteNote'>Delete Note</button>");
       // experiment
       // show the modal
       $("#noteModal").modal("show");
       // If there's already a note in the article
-      if (data.note) {
+      if (dataSaveP.note) {
         // Place the title of the note in the title input
-        $("#titleinput").val(data.note.title);
+        $("#titleinput").val(dataSaveP.note.title);
         // Place the body of the note in the body textarea
-        $("#bodyinput").val(data.note.body);
+        $("#bodyinput").val(dataSaveP.note.body);
       }
     });
 });
@@ -145,9 +148,9 @@ $(document).on("click", "#saveNote", function() {
       body: $("#bodyinput").val()
     }
   })
-  .then(function(data) {
+  .then(function(dataSaveNoteUpdate) {
     // Log the response
-    console.log("data from posting a new Note: ", data);
+    console.log("data from posting a new Note: ", dataSaveNoteUpdate);
     // Empty the notes section
     $("#notes").empty();
     $("#noteModal").modal("hide");
