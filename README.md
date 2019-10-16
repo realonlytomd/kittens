@@ -1,3 +1,4 @@
 # News_Article_Scraper
-This app scrapes articles from The Verge (a tech news source), allows the user to make a note on individual articles, view those notes later as they are persistantly stored 
-in a Mongo database, and then delete the notes or the articles if they choose.
+This app helps people who foster newborn kittens. It includes a timer page for the
+required 2 hour feedings. A database of goals and metrics to measure and record
+the kitten's progress. Finally, a library or FAQ page for questions and information.

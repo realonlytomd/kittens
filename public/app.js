@@ -1,3 +1,8 @@
+// this is the actual app portion
+// need a page (or div) for the timer
+// the table of metrics and goals and what's the word for where the kitten is expected to be
+// and the library or FAQ section
+
 $(document).ready(function(){
 
 //var moment = require("moment");

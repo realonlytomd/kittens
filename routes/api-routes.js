@@ -1,3 +1,8 @@
+//  need to change to kittens. most of the functions remain however
+// nothing in timer
+// the db will be the info for the metrics (or whatever you call it)
+// and another one for the library or FAQ info, it should be in a db
+//
 // new file that contains the api route information.
 // moved from server.js file
 //
