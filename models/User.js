@@ -5,18 +5,18 @@ var Schema = mongoose.Schema;
 
 // Using the Schema constructor, create a new UserSchema object
 var UserSchema = new Schema({
-  // `title` is required and of type String
+  // `name` of user is required and of type String
   name: {
     type: String,
     required: true
   },
-  // `link` is required and of type String
+  // User's `password` is required and of type String
   password: {
     type: String,
     required: true
   },
-  // `note` is an object that stores a Note id
-  // The ref property links the ObjectId to the Note model
+  // `metric` is an object that stores a Metric id.
+  // The ref property links the ObjectId to the Metric model
   // So now it's possible to populate the Article with an associated Note
   metric: {
     type: Schema.Types.ObjectId,

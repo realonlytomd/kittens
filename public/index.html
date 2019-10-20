@@ -8,11 +8,98 @@
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
+    <!-- changing from scraper to kittens
+      need 3 pages, and 3 associated .css and .js pages
+      This page will become the signup and login page.-->
+    <!-- copy from letslift login-->
+    
+    <div class="container-fluid" id="signupBackground">
+        <!-- Modal, reminds user to enter both a correct email address and a password -->
+        <div class="modal fade" id="signupNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <h2>You entered <span id="wrongName"></span> as your email.</h2>
+                <h2>Please enter an email address in the form name@anything.com, and a 6 digit password.</h2>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+          <!-- End of Bootstrap modal code -->
+        <div class="row text-center">
+          <div class="col-xs-12">
+            <h1>Welcome to Kittens!</h1>
+            <div class="col-xs-12" id="loginDiv">
+              <h2 class="text-center" id="logininLogin"><span class="namebox">Registered Users</span></h2>
+              <form class="login">
+                <div class="form-group">
+                  <!--<label for="exampleInputEmail1">Email address</label>-->
+                  <input type="email" class="form-control" id="email-input" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <!--<label for="exampleInputPassword1">Password</label>-->
+                  <input type="password" class="form-control" id="password-input" placeholder="Password">
+                </div>
+                <button type="submit">Login</button>
+              </form>
+            </div>
+            <h2><span class="namebox">Sign Up Form</span></h2>
+            <!-- Button trigger modal -->
+            <div class="text-center">
+              <button type="button" data-toggle="modal" data-target="#myModalSignUp">
+                  Sign Up Advice
+              </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModalSignUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h2 class="modal-title text-center" id="myModalLabel">Sign Up Advice</h2>
+                  </div>
+                  <div class="modal-body">
+                    <h2>This is not a secure site.
+                      <br>There's no need to enter your actual email address. Just make up something that
+                      you'll remember when you want to use the workout app.
+                      <br>Please use the form name@anything.com, and 
+                      a six digit password. Don't forget your password!
+                    </h2>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <!-- End of Bootstrap code -->
+            <form class="signup">
+              <div class="form-group">
+                <label for="email-input">Email address</label>
+                <input type="email" class="form-control" id="email-input" placeholder="example:name@anything.com">
+              </div>
+              <div class="form-group">
+                <label for="password-input">Password</label>
+                <input type="password" class="form-control" id="password-input" placeholder="6 digits">
+              </div>
+              <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span> <span class="msg"></span>
+              </div>
+              <button type="submit">Sign Up</button>
+            </form>
+            <br />
+            <button><span><a href="/">Registered Users: Log In Here</a></span></button>
+          </div>
+        </div>
+    </div>
+    <!-- leftover from scraper app-->  
     <div class="container-fluid">
       <div class="row text-center">
         <div class="col-xs-12">
-          <!-- changing from scraper to kittens
-          need 3 pages, and 3 associated .css and .js pages-->
           <h1>Articles from The Verge</h1>
           <button id="scrape">List New Articles</button>
           <h2><i>Click on an article's text to make a note.</i></h2>

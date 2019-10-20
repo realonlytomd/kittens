@@ -1,7 +1,9 @@
-// this is the actual app portion
-// need a page (or div) for the timer
+// this will become the signup and login code for the index.html page
+// need a page (or div or modal) for the timer
 // the table of metrics and goals and what's the word for where the kitten is expected to be
+// milestones??
 // and the library or FAQ section
+// all will have seperate .js files
 
 $(document).ready(function(){
 
