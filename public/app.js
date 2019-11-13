@@ -2,7 +2,7 @@
 // need a page (or div or modal) for the timer
 // the table of metrics and goals and what's the word for where the kitten is expected to be
 // milestones??
-// and the library or FAQ section
+// and the library or FAQ section - now called, Topic.
 // all will have seperate .js files
 
 $(document).ready(function(){
