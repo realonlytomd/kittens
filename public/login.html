@@ -5,17 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/homeStyle.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
     <!-- changing from scraper to kittens
-     
-      home - buttons for going to the login or signup page,
-        going to the topics page (doesn't require being a registered user)
-       -->
+      need 4 pages, and 4 associated .css and .js pages
+      index - login/signup
+      Do I need a 4th page? after the user is logged in, a page of buttons
+        to other pages, and the feed timer modal:
+      home - buttons for feeding timer modal, library of topics, metrics for each
+        indiviual kitten (most users are fostering more than 1 kitten)
+      topic - library of topics - (open, not locked into registered users)
+      metrics - progress for the individual kittens
+      This page will become the signup and login page.-->
+    <!-- make my own login that checks for email and 6 digit password -->
     
     <div class="container-fluid" id="signupBackground">
-        
+        <!-- Modal, reminds user to enter both a correct email address and a password -->
+        <div class="modal fade" id="signupNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <h2>You entered <span id="wrongName"></span> as your email.</h2>
+                <h2>Please enter an email address in the form name@anything.com, and a 6 digit password.</h2>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+          <!-- End of Bootstrap modal code -->
         <div class="row text-center">
           <div class="col-xs-12">
             <h1>Welcome to Kittens!</h1>
