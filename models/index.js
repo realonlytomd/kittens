@@ -3,7 +3,6 @@
 // not articles and notes, but what??
 //
 module.exports = {
-  Article: require("./Article"),
-  Note: require("./Note"),
-  User: require("./User")
+  User: require("./User"),
+  Topic: require("./Topic")
 };

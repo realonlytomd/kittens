@@ -3,7 +3,7 @@
 
 var path = require("path");
 
-// need routes for home(/), topic(/topic), metrics(/metrics), login(/login)?
+// need routes for index(/), topic(/topic), metrics(/metrics), login(/login)?
 module.exports = function(app) {
 
 	app.get("/topic", function(req, res) {
@@ -11,7 +11,7 @@ module.exports = function(app) {
 	});
 
 	app.get("/", function(req, res) {
-		res.sendFile(path.join(__dirname, "../public/home.html"));
+		res.sendFile(path.join(__dirname, "../public/index.html"));
     });
     
     app.get("/metric", function(req, res) {

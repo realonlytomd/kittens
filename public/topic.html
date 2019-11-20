@@ -5,68 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styleTopic.css">
+    <link rel="stylesheet" href="assets/css/topicStyle.css">
   </head>
   <body>
     <!-- changing from scraper to kittens
       This page will become the Topics page.-->
-    <!-- It needs a title, explanation line, a search field? but maybe not,
+    <!-- It needs a title, welcome section, explanation line, a search field? but maybe not,
     a line to explain here the user can enter a topic or questions,
     and then a field for the user to enter a link to where they found a solution,
-    or info for that topc. Then, a submit button. The info should be stored in the Topic db.-->
+    or info for that topc. Then, a submit button. The info should be stored in the Topic db.
+    Followed by a list of current topics. -->
     
     <!-- leftover from scraper app.  Do we need moment.js?-->  
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <h1>Kittens!: Topics</h1>
-                <h2>User supported library of foster kitten care.</h2>
-                <h3><i>If you know a topic or a question that other readers would be interested in, 
-                    enter the subject below, and then paste a link to the web where other users
-                    can find the answer, or your own answer.
-                </i></h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-8 col-xs-offset-2">
-            <!-- put a standard bootstrap field entry form here-->
-                <div class="form-group">
-                    <label for="topic">Topic:</label>
-                    <input type="text" class="form-control" id="topic" placeholder="Type a topic">
-                </div>
-                <div class="form-group">
-                        <label for="answer">Solution:</label>
-                        <textarea class="form-control" rows="5" name="answer" id="answer" placeholder="Link to solution or simple answer"></textarea>
-                </div>
-                <input type="submit" value="Submit">
-            </div>
-        </div>
-        // put a div to display the current list of answered topics in the db.
-        <div class="row">
+      <div class="row">
+          <div class="col-xs-12 text-center">
+              <h1>Kittens!: Topics</h1>
+              <h2>User supported library of foster kitten care topics.</h2>
+              <h3><i>If you know a topic or a question that other readers would be interested in, 
+                  enter the subject below, and then paste a link to the web where other users
+                  can find the answer, or your own answer.
+              </i></h3>
+          </div>
+      </div>
+      <div class="row">
           <div class="col-xs-8 col-xs-offset-2">
-            <div id="topicsCurrent">
-            </div>
-          </div>
-
-        </div>
-            <!-- Modal for Notes for particular article -->
-      <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-body">
-                <div id="notes"></div>
+          <!-- put a standard bootstrap field entry form here-->
+              <div class="form-group">
+                  <label for="topic">Topic:</label>
+                  <input type="text" class="form-control" id="topic" name="topic" placeholder="Enter a topic">
               </div>
-              <div class="modal-footer">
-                <button type="button" data-dismiss="modal">Close</button>
+              <div class="form-group">
+                      <label for="answer">Solution:</label>
+                      <textarea class="form-control" rows="10" name="answer" id="answer" placeholder="Link to solution or simple answer"></textarea>
               </div>
-            </div>
+              <button type="submit" id="submitTopic">Submit</button>
+          </div>
+      </div>
+      <!-- put a div to display the current list of answered topics in the db. --> 
+      <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+          <div id="topicsCurrent">
           </div>
         </div>
-          <!-- End of Bootstrap modal code -->
+      </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="topic.js"></script>
   </body>
 </html>

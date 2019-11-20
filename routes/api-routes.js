@@ -8,85 +8,19 @@
 //
 var express = require("express");
 var axios = require("axios");
-var cheerio = require("cheerio");
 var moment = require("moment");
-// var cheerioAdv = require("cheerio-advanced-selectors");
-// cheerio = cheerioAdv.wrap(cheerio);
 var router = express.Router();
 var db = require("../models");
-var imageArray = [];
 // Routes
 module.exports = function(router) {
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {
-        // First, grab the body of the html of the site with request
-        axios.get("https://www.theverge.com/").then(function(response) {
-            // Then, load that into cheerio and save it to $ for a shorthand selector
-            // if using cheerio advanced, this should be added back in
-            //cheerio = cheerioAdv.wrap(cheerio);
-            var $ = cheerio.load(response.data);
-            $("h2.c-entry-box--compact__title").each(function(i, element) {
-                // Save an empty result object outside of functions that assign different
-                // elements of result object
-                var result = {};
-                result.title = $(this)
-                .children("a")
-                .text()
-                .trim();
-                //console.log("result.title: " + result.title);
-                result.link = $(this)
-                .children("a")
-                .attr("href");
-                //console.log("result.link: " + result.link);
-            // Create a new Article in the db using the `result` object built from scraping
-            // But only create the new Article in the db if it doesn't already exist
-            // This if statement checks to see if the title already is in the db
-                db.Article.findOne({ title: result.title })   
-                    .then(function(prevArticles) {
-                    if (prevArticles) {
-                        //console.log("This Article already exists: " + prevArticles);
-                    } else {
-                        //Below is the original create function - KEEP THIS
-                        db.Article.create(result)
-                        .then(function(dbArticle) {
-                        // View the added result in the console
-                        //console.log("New dbArticle is: " + dbArticle);
-                        })
-                        .catch(function(err) {
-                        // If an error occurred, send it to the client
-                        return res.json(err);
-                        }); //KEEP ABOVE
-                    }
-                    })
-                    .catch(function(err) {
-                        // However, if an error occurred, send it to the client
-                        res.json(err);
-                    }); // this completes the creation of the db function inside the test function
-            }); // this completes the assigning of elements that have been scraped to the result object
-        }); // this completes the axios.get function
-        // If successful, send a message to the client
-        res.send("Scrape Complete");
+        
     }); // this ccompletes the /scrape function
     
     // Route for getting all of the Articles from the db
     router.get("/articles", function(req, res) {
-        //Here insert a function to delete articles in the db
-        // that are older than 1 week using the moment.js library
-        // This is so the db doesn't continue to grow over time.
-        //*
-        // insert function to update pre-existing notes so
-        // that the article's updatedAt
-        // value to "now" before this deleteMany takes place
-        // var oneWeekPrev = moment().subtract(2,"minutes");
-        // console.log("twoMinutePrev: ", oneWeekPrev);
-        // // delete all articles that were updated in a time before 7 days ago.
-        // // this includes articles that have notes stored if over a week old. 
-        // db.Article.deleteMany({ updatedAt: { $lt: oneWeekPrev } })
-        //     .then(function(dbDateDelete){
-        //         console.log("dbDate: ", dbDateDelete);
-        //     });
-            // It's ok to rescrape after deleted, as those articles (probably) won't
-            // still be on the site, and consequently, won't be scraped again. 
+        // this should become toe find all for the topics db retrieval
         db.Article.find({})
             .then(function(dbArticle) {
             // If that worked, send them back to the client
