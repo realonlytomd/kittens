@@ -5,15 +5,27 @@ $(document).ready(function(){
 // and call the appropriate api
 
     $(document).on("click", "#submitTopic", function() {
-
-    })
+        $.ajax({
+            method: "CREATE",
+            url: "/createTopic",
+            data: {
+                topic: $("#topic").val(),
+                answer: $("#answer").val()
+            }
+        })
+        .then(function(dataCreateTopic) {
+            console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
+        });
+        $("#topic").val("");
+        $("#answer").val("");
+    });
 
     //following is old code from news scraper
-    $.ajax({
-      method: "GET",
-      url: "/scrape"
-    }).then(function() {
-    });
+    // $.ajax({
+    //   method: "GET",
+    //   url: "/scrape"
+    // }).then(function() {
+    // });
     // create function to display all the data on the page after retrieved from the db
     function displayData() {
         // Get the articles as a json

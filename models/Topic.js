@@ -11,7 +11,7 @@ var UserSchema = new Schema({
     required: true
   },
   // User's `password` is required and of type String
-  link: {
+  answer: {
     type: String,
     required: true
   }

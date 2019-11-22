@@ -7,12 +7,27 @@
 // moved from server.js file
 //
 var express = require("express");
-var axios = require("axios");
-var moment = require("moment");
+
+
 var router = express.Router();
 var db = require("../models");
 // Routes
 module.exports = function(router) {
+    // the CREATE route for storing a new topic and answer provided by a user
+    router.create("/createTopic", function(req, res) {
+        console.log("from .create, req: ", req);
+        db.Topic.create(req)
+            .then(function(dbTopic) {
+                // View the added result in the console
+            console.log("what was created in the topics db, dbTopic: ", dbTopic);
+            res.json(dbTopic);
+            })
+            .catch(function(err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
+            });
+    });
+
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {
         

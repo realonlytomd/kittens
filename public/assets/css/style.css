@@ -1,4 +1,10 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
+    box-sizing: border-box;
     /* background-image: url("../img/cityback.jpg");
     background-repeat: no-repeat;
     background-size: cover; */
