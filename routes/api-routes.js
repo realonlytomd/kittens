@@ -7,14 +7,12 @@
 // moved from server.js file
 //
 var express = require("express");
-
-
 var router = express.Router();
 var db = require("../models");
 // Routes
 module.exports = function(router) {
     // the CREATE route for storing a new topic and answer provided by a user
-    router.create("/createTopic", function(req, res) {
+    router.get("/createTopic", function(req, res) {
         console.log("from .create, req: ", req);
         db.Topic.create(req)
             .then(function(dbTopic) {
