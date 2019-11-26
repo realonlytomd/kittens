@@ -1,24 +1,36 @@
 // js code for the topic.html page
 
 $(document).ready(function(){
+  console.log("hello from topic.js");
 // first, take submits from the user on topics and answers to topics
 // and call the appropriate api
 
-    $(document).on("click", "#submitTopic", function() {
-        $.ajax({
-            method: "CREATE",
-            url: "/createTopic",
-            data: {
-                topic: $("#topic").val(),
-                answer: $("#answer").val()
-            }
-        })
-        .then(function(dataCreateTopic) {
-            console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
-        });
-        $("#topic").val("");
-        $("#answer").val("");
+  $(document).on("click", "#submitTopic", function() {
+      $.ajax({
+          method: "GET",
+          url: "/createTopic",
+          data: {
+              topic: $("#topic").val(),
+              answer: $("#answer").val()
+          }
+      })
+      .then(function(dataCreateTopic) {
+          console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
+      });
+      $("#topic").val("");
+      $("#answer").val("");
+  });
+
+  $(document).on("click", "#loadTopics", function() {
+    $.getJSON("/getAllTopics", function(allTopics) {
+      console.log("all topics from db, allTopics:", allTopics);
+      for (i = 0; i < allTopics.length; i++) {
+        $("#topicsCurrent").append("<h4>Topic: </h4><p>" +
+          allTopics[i].topic + "<h4>Answer: </h4><p>" +
+          allTopics[i].answer) + "<br>";
+      }
     });
+  });
 
     //following is old code from news scraper
     // $.ajax({
@@ -222,5 +234,5 @@ $(document).ready(function(){
          displayData();
         });
     });
-    });
+});
     

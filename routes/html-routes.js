@@ -3,7 +3,7 @@
 
 var path = require("path");
 
-// need routes for index(/), topic(/topic), metrics(/metrics), login(/login)?
+// need routes for index(/), topic(/topic), metric(/metric), login(/login)?
 module.exports = function(app) {
 
 	app.get("/topic", function(req, res) {

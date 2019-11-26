@@ -13,8 +13,8 @@ var db = require("../models");
 module.exports = function(router) {
     // the CREATE route for storing a new topic and answer provided by a user
     router.get("/createTopic", function(req, res) {
-        console.log("from .create, req: ", req);
-        db.Topic.create(req)
+        console.log("from /createTopic, req.query: ", req.query);
+        db.Topic.create(req.query)
             .then(function(dbTopic) {
                 // View the added result in the console
             console.log("what was created in the topics db, dbTopic: ", dbTopic);
@@ -23,6 +23,18 @@ module.exports = function(router) {
             .catch(function(err) {
             // If an error occurred, send it to the client
             return res.json(err);
+            });
+    });
+
+    // Route for getting all of the Topics from the db
+    router.get("/getAllTopics", function(req, res) {
+        db.Topic.find({})
+            .then(function(dbAllTopics) {
+            res.json(dbAllTopics);
+            })
+            .catch(function(err) {
+            // However, if an error occurred, send it to the client
+            res.json(err);
             });
     });
 
