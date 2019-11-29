@@ -22,6 +22,7 @@ $(document).ready(function(){
   });
 
   $(document).on("click", "#loadTopics", function() {
+    $("#topicsCurrent").empty();
     $.getJSON("/getAllTopics", function(allTopics) {
       console.log("all topics from db, allTopics:", allTopics);
       for (i = 0; i < allTopics.length; i++) {
