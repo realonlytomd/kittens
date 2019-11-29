@@ -4,7 +4,7 @@ $(document).ready(function(){
   console.log("hello from topic.js");
 // first, take submits from the user on topics and answers to topics
 // and call the appropriate api
-
+  $("#topicsCurrent").empty();
   $(document).on("click", "#submitTopic", function() {
       $.ajax({
           method: "GET",
@@ -26,8 +26,8 @@ $(document).ready(function(){
       console.log("all topics from db, allTopics:", allTopics);
       for (i = 0; i < allTopics.length; i++) {
         $("#topicsCurrent").append("<h4>Topic: </h4><p>" +
-          allTopics[i].topic + "<h4>Answer: </h4><p>" +
-          allTopics[i].answer) + "<br>";
+          allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
+          allTopics[i].answer + "</p><br />");
       }
     });
   });
