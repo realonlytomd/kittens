@@ -17,10 +17,10 @@ var UserSchema = new Schema({
   },
   // `metric` is an object that stores a Metric id.
   // The ref property links the ObjectId to the Metric model
-  // So now it's possible to populate the Article with an associated Note
-  metric: {
+  // So now it's possible to populate a User with an associated Kitten
+  kitten: {
     type: Schema.Types.ObjectId,
-    ref: "Metric"
+    ref: "Kitten"
   }
 }, {
   // adding timestamps: created at and updated at
