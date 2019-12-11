@@ -15,9 +15,9 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
-  // `metric` is an object that stores a Metric id.
-  // The ref property links the ObjectId to the Metric model
-  // So now it's possible to populate a User with an associated Kitten
+  // `kitten` is an object that stores individual cats.
+  // The ref property links the ObjectId to the Kitten model
+  // So it's possible to populate a User with an associated Kitten, should be more than one.
   kitten: {
     type: Schema.Types.ObjectId,
     ref: "Kitten"
