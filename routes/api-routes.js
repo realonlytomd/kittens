@@ -1,7 +1,5 @@
 //  need to change to kittens. most of the functions remain however
 // nothing in timer
-// the db will be the info for the metrics (or whatever you call it)
-// and another one for the library or FAQ info, it should be in a db
 //
 // new file that contains the api route information.
 // moved from server.js file
@@ -35,6 +33,21 @@ module.exports = function(router) {
             .catch(function(err) {
             // However, if an error occurred, send it to the client
             res.json(err);
+            });
+    });
+
+    // Route for creating a new user
+    router.get("/createUser", function(req, res) {
+        console.log("from /createUser, req.query: ", req.query);
+        db.User.create(req.query)
+            .then(function(dbUser) {
+                // View the added result in the console
+            console.log("what was created in the user db, dbUser: ", dbUser);
+            res.json(dbUser);
+            })
+            .catch(function(err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
             });
     });
 
