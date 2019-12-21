@@ -51,6 +51,19 @@ module.exports = function(router) {
             });
     });
 
+    // Route for getting all of the Users from the db
+    router.get("/getAllUsers", function(req, res) {
+        db.User.find({})
+            .then(function(dbAllUsers) {
+                console.log("dbAllUsers from /getAllUsers: ", dbAllUsers);
+            res.json(dbAllUsers);
+            })
+            .catch(function(err) {
+            // However, if an error occurred, send it to the client
+            res.json(err);
+            });
+    });
+
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {
         
