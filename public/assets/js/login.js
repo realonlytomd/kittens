@@ -7,7 +7,7 @@ $(document).ready(function(){
   var userNameInput = "";
   var passwordInput = "";
   var currentUser = "";
-
+  var currentPassword = "";
 
   // get user input submitted from a new user
   $(document).on("click", "#signupUser", function() {
@@ -29,7 +29,7 @@ $(document).ready(function(){
     $("#newPassword-input").val("");
   });
   
-  //Now need to get users who've already registered
+  //Now need to get users who've already registered and are re-logging in
   // Get their inputs from the html
   $(document).on("click", "#currentUserLogin", function() {
     currentUser = $("#userName-input").val().trim();
@@ -46,11 +46,6 @@ $(document).ready(function(){
       // List of kittens they have?
       // Instructions about entering kittens.
     });
-
-    
   });
-  
-
-  
   
 });
