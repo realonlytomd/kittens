@@ -21,10 +21,11 @@ $(document).ready(function(){
       $("#answer").val("");
   });
 
-  $(document).on("click", "#loadTopics", function() {
+  $(document).on("click", "#loadTopics", function(event) {
+    event.preventDefault();
     $("#topicsCurrent").empty();
     $.getJSON("/getAllTopics", function(allTopics) {
-      console.log("all topics from db, allTopics:", allTopics);
+      console.log("all topics from db, allTopics: ", allTopics);
       for (i = 0; i < allTopics.length; i++) {
         $("#topicsCurrent").append("<h4>Topic: </h4><p>" +
           allTopics[i].topic + "</p><h4>Answer: </h4><p>" +

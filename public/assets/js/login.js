@@ -31,7 +31,9 @@ $(document).ready(function(){
   
   //Now need to get users who've already registered and are re-logging in
   // Get their inputs from the html
-  $(document).on("click", "#currentUserLogin", function() {
+  $(document).on("click", "#currentUserLogin", function(event) {
+    // didn't work previously with the event.preventDefault - always use
+    event.preventDefault();
     currentUser = $("#userName-input").val().trim();
     currentPassword = $("#password-input").val().trim();
     console.log("currentUser: " + currentUser);

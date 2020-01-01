@@ -29,6 +29,7 @@ module.exports = function(router) {
         db.Topic.find({})
             .then(function(dbAllTopics) {
             res.json(dbAllTopics);
+            console.log("dbAllTopics from  route /getAllTopics: ", dbAllTopics);
             })
             .catch(function(err) {
             // However, if an error occurred, send it to the client
@@ -55,8 +56,8 @@ module.exports = function(router) {
     router.get("/getAllUsers", function(req, res) {
         db.User.find({})
             .then(function(dbAllUsers) {
-                console.log("dbAllUsers from /getAllUsers: ", dbAllUsers);
             res.json(dbAllUsers);
+            console.log("dbAllUsers from  route /getAllUsers: ", dbAllUsers);
             })
             .catch(function(err) {
             // However, if an error occurred, send it to the client
