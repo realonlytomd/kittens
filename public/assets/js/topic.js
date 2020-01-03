@@ -5,7 +5,8 @@ $(document).ready(function(){
 // first, take submits from the user on topics and answers to topics
 // and call the appropriate api
   $("#topicsCurrent").empty();
-  $(document).on("click", "#submitTopic", function() {
+  $(document).on("click", "#submitTopic", function(event) {
+    event.preventDefault();
       $.ajax({
           method: "GET",
           url: "/createTopic",
