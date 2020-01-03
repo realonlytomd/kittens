@@ -15,6 +15,12 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  // User's 'loggedIn' status is set to true if they are currently logged in.
+  loggedIn: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   // `kitten` is an object that stores individual cats.
   // The ref property links the ObjectId to the Kitten model
   // So it's possible to populate a User with an associated Kitten, should be more than one.
