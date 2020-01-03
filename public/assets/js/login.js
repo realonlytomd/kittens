@@ -10,7 +10,8 @@ $(document).ready(function(){
   var currentPassword = "";
 
   // get user input submitted from a new user
-  $(document).on("click", "#signupUser", function() {
+  $(document).on("click", "#signupUser", function(event) {
+    event.preventDefault();
     userNameInput = $("#newUserName-input").val().trim();
     passwordInput = $("#newPassword-input").val().trim();
    // then put these values into the mongo db
@@ -38,12 +39,13 @@ $(document).ready(function(){
     currentPassword = $("#password-input").val().trim();
     console.log("currentUser: " + currentUser);
     console.log("currentPassword: " + currentPassword);
-    // Then get all the current users who've ever logged in
+    // Then get all the current users who've ever logged in - dobe!
     $.getJSON("/getAllUsers", function(allUsers) {
       console.log("allUsers after getting them from db: ", allUsers);
 
-      // And compare. Find the matching login user name, and check if the stored 
+      // And compare. Find the matching login user name, and check if the stored
       // email address matches the input from the user.
+      
       // If it does  -- need to decide where user goes - topic page?
       // List of kittens they have?
       // Instructions about entering kittens.
