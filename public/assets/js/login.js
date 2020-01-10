@@ -57,7 +57,8 @@ $(document).ready(function(){
         }
       }
       // so, this for loop is working, but I should stop as the correct user is reached?
-      // and then take user to home page?? Make the user page where they see kittens,
+      // take the user to the /user page.
+      // Make the user page where they see kittens,
       // and can input more topics.
       // btw, a non-logged in user should have access to topics, but only a 
       // logged in user should be able to add to topics. *important"
