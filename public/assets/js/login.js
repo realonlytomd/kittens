@@ -14,7 +14,10 @@ $(document).ready(function(){
     event.preventDefault();
     userNameInput = $("#newUserName-input").val().trim();
     passwordInput = $("#newPassword-input").val().trim();
-   // then put these values into the mongo db
+    // Need to add a check to see that both userNameInput and passwordInput actualy exist
+    //
+    //
+    // then put these values into the mongo db
     $.ajax({
       method: "GET",
       url: "/createUser",
@@ -26,9 +29,14 @@ $(document).ready(function(){
     })
     .then(function(dataCreateUser) {
       console.log("data from creation of new user (dataCreateUser) in login.js: ", dataCreateUser);
+      //Once a name and password have been put in user db, now take user to the /user page??
+      // Sure..., I guess so
+      // but first, zero out input fields
+      $("#newUserName-input").val("");
+      $("#newPassword-input").val("");
+      window.location.replace("/user");
     });
-    $("#newUserName-input").val("");
-    $("#newPassword-input").val("");
+    
   });
   
   //Now need to get users who've already registered and are re-logging in
@@ -52,10 +60,17 @@ $(document).ready(function(){
         if ((currentUser === allUsers[i].name) && (currentPassword === allUsers[i].password)) {
           allUsers[i].loggedIn = true;
           console.log(allUsers[i].name + " is the current user");
+          // zero out input fields
+          $("#userName-input").val("");
+          $("#password-input").val("");
+          // take correctly logged in user to /user
+          window.location.replace("/user");
+          return;
         } else {
           console.log(allUsers[i].name + " is not the current user");
         }
       }
+      console.log("this log in doesn't match any users in db");
       // so, this for loop is working, but I should stop as the correct user is reached?
       // take the user to the /user page.
       // Make the user page where they see kittens,

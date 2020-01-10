@@ -14,8 +14,8 @@ module.exports = function(app) {
 		res.sendFile(path.join(__dirname, "../public/index.html"));
     });
     
-    app.get("/metric", function(req, res) {
-		res.sendFile(path.join(__dirname, "../public/metric.html"));
+    app.get("/user", function(req, res) {
+		res.sendFile(path.join(__dirname, "../public/user.html"));
     });
     
     app.get("/login", function(req, res) {

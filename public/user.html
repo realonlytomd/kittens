@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Kittens: User</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/topicStyle.css">
+  </head>
+  <body>
+    <!-- changing from scraper to kittens
+      This page will become the User page.-->
+    <!-- It needs 
+        welcome to the indiviual user name,
+        explanation,
+        buttons to go to an indiviual kitten already entered,
+        buttons to create a new kittin,
+        divs for displaying data from individual kittens,
+        place to display current topics db, just like on the topics page. -->
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 text-center">
+          <h1>Kittens!: Users</h1>
+          <h2>Welcome Individual User!</h2>
+        </div>
+      </div>
+      <div class="row">
+        <h3>Please enter a topic of interest, and a link or explanation of the answer.</h3>
+        <div class="col-xs-8 col-xs-offset-2">
+        <!-- put a standard bootstrap field entry form here-->
+            <div class="form-group">
+              <label for="topic">Topic:</label>
+              <input type="text" class="form-control" name="topic" id="topic" placeholder="Enter a topic">
+            </div>
+            <div class="form-group">
+              <label for="answer">Solution:</label>
+              <textarea class="form-control" rows="10" name="answer" id="answer" placeholder="Link to solution or simple answer"></textarea>
+            </div>
+            <button type="submit" id="submitTopic">Submit</button>
+        </div>
+      </div>
+      <!-- put a div to display the current list of answered topics in the db. --> 
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+          <h1>Topics currently in database:</h1>
+          <h2>(Same list as the home page.)</h2>
+          <button id="loadTopics">Load Topics</button>
+          <div id="topicsCurrent"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script type="text/javascript" src="./assets/js/user.js"></script>
+  </body>
+</html>
