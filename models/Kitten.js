@@ -1,3 +1,6 @@
+// this is not complete yet.
+// need to figure out how to get multiple kitten for one user
+
 var mongoose = require("mongoose");
 
 // Save a reference to the Schema constructor
@@ -8,9 +11,11 @@ var KittenSchema = new Schema({
   // `name` is of type String, the name of the kitten, expands to however many
   // kittens each user has.
   name: String,
-  // `metricOne` is of type String, for now, needs to be renamed the actual metric:
-  // i.e., age, etc. A list of milestones. There will be however many 
-  metricOne: String
+  // `weight` and 'length' is of type String, for now, just an example
+  // of what is to come. Wil need to add and age Model too
+  // focus currently, is to figure out getting multiple kittens for each user
+  weight: Number,
+  length: Number
 });
 
 // This creates our model from the above schema, using mongoose's model method

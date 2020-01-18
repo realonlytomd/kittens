@@ -21,13 +21,13 @@ var UserSchema = new Schema({
     required: true,
     default: false
   },
-  // `kitten` is an object that stores individual cats.
+  // `kitten` is an object that that will reference the kittens possessed by the user.
   // The ref property links the ObjectId to the Kitten model
-  // So it's possible to populate a User with an associated Kitten, should be more than one.
-  kitten: {
+  // So it's possible to populate a User with multiple kittens, use an array of ObjectIds
+  kitten: [{
     type: Schema.Types.ObjectId,
     ref: "Kitten"
-  }
+  }]
 }, {
   // adding timestamps: created at and updated at
   timestamps: true
