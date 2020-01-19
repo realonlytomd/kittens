@@ -65,6 +65,23 @@ module.exports = function(router) {
             });
     });
 
+    // Route for creating a new kitten
+    // different from above as the db for kittens is an array in mongodb
+    // THIS IS CURRENTLY NOT CORRECT!!!!!
+    router.get("/createKitten", function(req, res) {
+        console.log("from /createKitten, req.query: ", req.query);
+        db.User.create(req.query)
+            .then(function(dbNewKitten) {
+                // View the added result in the console
+            console.log("what was created in the user db, dbUser: ", dbNewKitten);
+            res.json(dbNewKitten);
+            })
+            .catch(function(err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
+            });
+    });
+
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {
         

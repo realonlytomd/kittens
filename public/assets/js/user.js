@@ -2,7 +2,54 @@
 
 $(document).ready(function(){
     console.log("hello from user.js");
-  // first, take submits from the user on topics and answers to topics
+    // when entering a new kitten, first, the current user's id 
+    // needs to be retrieved
+    // and should be sent to
+    // the api so that user's document can be populated with the kitten array
+
+    // this function happens when the user clicks the button to
+    // to get the modal with the forms to enter info for a new kitten 
+    $(document).on("click", "#createKitten", function(event) {
+      event.preventDefault();
+
+      // somehow get _id of user
+      var thisId = $(this).attr("data-id");
+      // Nmake an ajax call for the article that the user wants to add a note
+      $.ajax({
+        method: "GET",
+        url: "/createKitten/" + thisId
+      })
+        // add the note information to the page
+        .then(function(dataCreateKitten) {
+          
+        });
+    });
+    
+
+    // then, the user enters info about the kitten, and submits it.
+    // that data for a new kitten is stored in the recently populated user document
+    // below, GET is wrong, should be post, as we're writing to the newly populated document
+    $(document).on("click", "#submitNewKitten", function(event) {
+      event.preventDefault();
+        $.ajax({
+            method: "GET",
+            url: "/createKitten",
+            data: {
+                kittenName: $("#kittenNameInput").val().trim(),
+                kittenWeight: $("#kittenWeightInput").val().trim(),
+                kittenLength: $("#kittenLengthInput").val().trim()
+            }
+        })
+        .then(function(dataCreateKitten) {
+            console.log("data from creation of new kitten (dataCreateKitten) in user.js: ", dataCreateKitten);
+        });
+        // empty out the input fields
+        $("#kittenNameInput").val("");
+        $("#kittenWeightInput").val("");
+        $("#kittenLengthInput").val("");
+    });
+
+  // take submits from the user on topics and answers to topics
   // and call the appropriate api to store in the topics db
     $("#topicsCurrent").empty();
     $(document).on("click", "#submitTopic", function(event) {
@@ -16,7 +63,7 @@ $(document).ready(function(){
             }
         })
         .then(function(dataCreateTopic) {
-            console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
+            console.log("data from creation of topic (dbTopic) in user.js: ", dataCreateTopic);
         });
         // empty out the input fields
         $("#topic").val("");
