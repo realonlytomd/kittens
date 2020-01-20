@@ -38,6 +38,13 @@ module.exports = function(router) {
     });
 
     // Route for creating a new user
+    // off the top of my head... dbUser can be set up above as a variable
+    // that is stored outside of just this function.
+    // that way, when  user currently logged in, (loggedIn === true),
+    // their user_id can be trieved and set back, so new kitten storage can be made
+    // just to that user.
+    // need to be sure it's also available with a user that has just logged in, 
+    // not just a new user.
     router.get("/createUser", function(req, res) {
         console.log("from /createUser, req.query: ", req.query);
         db.User.create(req.query)
@@ -73,7 +80,7 @@ module.exports = function(router) {
         db.User.create(req.query)
             .then(function(dbNewKitten) {
                 // View the added result in the console
-            console.log("what was created in the user db, dbUser: ", dbNewKitten);
+            console.log("what was created in the user db, dbNewKitten: ", dbNewKitten);
             res.json(dbNewKitten);
             })
             .catch(function(err) {

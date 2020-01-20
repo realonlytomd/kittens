@@ -7,12 +7,13 @@ $(document).ready(function(){
     // and should be sent to
     // the api so that user's document can be populated with the kitten array
 
-    // this function happens when the user clicks the button to
+    // this function happens when the user clicks the button
     // to get the modal with the forms to enter info for a new kitten 
     $(document).on("click", "#createKitten", function(event) {
       event.preventDefault();
 
       // somehow get _id of user
+      // don't know how to get this. those variables are in other .js files
       var thisId = $(this).attr("data-id");
       // Nmake an ajax call for the article that the user wants to add a note
       $.ajax({

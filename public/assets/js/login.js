@@ -48,7 +48,7 @@ $(document).ready(function(){
     currentPassword = $("#password-input").val().trim();
     console.log("currentUser: " + currentUser);
     console.log("currentPassword: " + currentPassword);
-    // Then get all the current users who've ever logged in - dobe!
+    // Then get all the current users who've ever logged in 
     $.getJSON("/getAllUsers", function(allUsers) {
       console.log("allUsers after getting them from db: ", allUsers);
 
