@@ -9,9 +9,7 @@ $(document).ready(function(){
   var currentUser = "";
   var currentPassword = "";
   var currentUser_id = "";
-  // testing how to get the user id from this .js file, to the user.js file
-  // currently, the user.js file is not seeing this variable....boo
-  var globalVariable = {};
+  
    //Get users who've already registered and are re-logging in
   // Get their inputs from the html
   $(document).on("click", "#currentUserLogin", function(event) {
@@ -32,24 +30,21 @@ $(document).ready(function(){
         console.log("allUsers[i].password= " + allUsers[i].password);
         if ((currentUser === allUsers[i].name) && (currentPassword === allUsers[i].password)) {
           allUsers[i].loggedIn = true;
-          // Should now change loggedIn to true in the db? hmmm, but what about in the 
-          // html routes, maybe do something there?
           // thinking: don't need loggedIN at all, because multiple users can be logged in
           // at the same time. So, eventually, delete it out of the model
-          // and just know what the current user's id is (as below)
           console.log(allUsers[i].name + " is the current user");
           // and that user's id will be used to post to their data in the db
           currentUser_id = allUsers[i]._id;
-          globalVariable = {currentUserid: currentUser_id};
           console.log("from login.js, currentUser_id is " + currentUser_id);
-          console.log("from login.js, globalVariable is ", globalVariable);
+          // set to local storage to be accessible in user.js so
+          // currently logged in user can post to their db values
+          localStorage.setItem('currentUserid', currentUser_id);
           // zero out input fields
           $("#userName-input").val("");
           $("#password-input").val("");
-          // take correctly logged in user to /user. but need to find a way to know which one 
-          // they are, so far have to go through this again on the user page....
-          //hmm, could take the user to the /user page, do this, then have it there.
+          // take correctly logged in user to /user.
           // if they don't have the correct login, then take them back to login page@!!!!!!
+          // add this later
           window.location.replace("/user");
           return;
         } else {
@@ -57,10 +52,7 @@ $(document).ready(function(){
         }
       }
       console.log("this log in doesn't match any users in db");
-      // so, this for loop is working, but I should stop as the correct user is reached?
-      // take the user to the /user page.
-      // Make the user page where they see kittens,
-      // and can input more topics.
+      // so, this for loop is working,
       // btw, a non-logged in user should have access to topics, but only a 
       // logged in user should be able to add to topics. *important"
       // If it does  -- need to decide where user goes - topic page?

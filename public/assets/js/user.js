@@ -1,9 +1,13 @@
 // js code for the user.html page
 
+// get the id of the current user from login.js file for
+// currently logged in user.
+var currentUserid = localStorage.getItem('currentUserid');
+
 $(document).ready(function(){
     console.log("hello from user.js");
     // currently, I'm getting an error here, it's not defined.
-    console.log("globalVariable.currentUserid is ", globalVariable.currentUserid);
+    console.log("from user.js, currentUserid is ", currentUserid);
     // when entering a new kitten, first, the current user's id 
     // needs to be retrieved
     // and should be sent to
