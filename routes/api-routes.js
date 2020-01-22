@@ -75,6 +75,7 @@ module.exports = function(router) {
     // Route for creating a new kitten
     // different from above as the db for kittens is an array in mongodb
     // THIS IS CURRENTLY NOT CORRECT!!!!!
+    // need to find the correct user, then populate it with the new kitten array
     router.get("/createKitten", function(req, res) {
         console.log("from /createKitten, req.query: ", req.query);
         db.User.create(req.query)
@@ -89,6 +90,10 @@ module.exports = function(router) {
             });
     });
 
+    // after this, push the new kitten info into the recently populated user
+    //
+
+    // **********older code, using for reference*******888
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {
         

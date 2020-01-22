@@ -2,6 +2,8 @@
 
 $(document).ready(function(){
     console.log("hello from user.js");
+    // currently, I'm getting an error here, it's not defined.
+    console.log("globalVariable.currentUserid is ", globalVariable.currentUserid);
     // when entering a new kitten, first, the current user's id 
     // needs to be retrieved
     // and should be sent to

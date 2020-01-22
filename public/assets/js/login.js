@@ -1,5 +1,5 @@
 // this will become the signup and login code for the login.html page
-// need a page (or div or modal) for the timer
+// 
 
 $(document).ready(function(){
   console.log("hello from login.js");
@@ -8,6 +8,68 @@ $(document).ready(function(){
   var passwordInput = "";
   var currentUser = "";
   var currentPassword = "";
+  var currentUser_id = "";
+  // testing how to get the user id from this .js file, to the user.js file
+  // currently, the user.js file is not seeing this variable....boo
+  var globalVariable = {};
+   //Get users who've already registered and are re-logging in
+  // Get their inputs from the html
+  $(document).on("click", "#currentUserLogin", function(event) {
+    // didn't work previously without the event.preventDefault - always use
+    event.preventDefault();
+    currentUser = $("#userName-input").val().trim();
+    currentPassword = $("#password-input").val().trim();
+    console.log("currentUser: " + currentUser);
+    console.log("currentPassword: " + currentPassword);
+    // Then get all the current users who've ever logged in 
+    $.getJSON("/getAllUsers", function(allUsers) {
+      console.log("allUsers after getting them from db: ", allUsers);
+
+      // And compare. Find the matching login user name, and check if the stored
+      // email address matches the input from the user.
+      for (i = 0; i < allUsers.length; i++) {
+        console.log("allUsers[i].name= " + allUsers[i].name);
+        console.log("allUsers[i].password= " + allUsers[i].password);
+        if ((currentUser === allUsers[i].name) && (currentPassword === allUsers[i].password)) {
+          allUsers[i].loggedIn = true;
+          // Should now change loggedIn to true in the db? hmmm, but what about in the 
+          // html routes, maybe do something there?
+          // thinking: don't need loggedIN at all, because multiple users can be logged in
+          // at the same time. So, eventually, delete it out of the model
+          // and just know what the current user's id is (as below)
+          console.log(allUsers[i].name + " is the current user");
+          // and that user's id will be used to post to their data in the db
+          currentUser_id = allUsers[i]._id;
+          globalVariable = {currentUserid: currentUser_id};
+          console.log("from login.js, currentUser_id is " + currentUser_id);
+          console.log("from login.js, globalVariable is ", globalVariable);
+          // zero out input fields
+          $("#userName-input").val("");
+          $("#password-input").val("");
+          // take correctly logged in user to /user. but need to find a way to know which one 
+          // they are, so far have to go through this again on the user page....
+          //hmm, could take the user to the /user page, do this, then have it there.
+          // if they don't have the correct login, then take them back to login page@!!!!!!
+          window.location.replace("/user");
+          return;
+        } else {
+          console.log(allUsers[i].name + " is not the current user");
+        }
+      }
+      console.log("this log in doesn't match any users in db");
+      // so, this for loop is working, but I should stop as the correct user is reached?
+      // take the user to the /user page.
+      // Make the user page where they see kittens,
+      // and can input more topics.
+      // btw, a non-logged in user should have access to topics, but only a 
+      // logged in user should be able to add to topics. *important"
+      // If it does  -- need to decide where user goes - topic page?
+      // List of kittens they have?
+      // Instructions about entering kittens.
+    });
+    $("#userName-input").val("");
+    $("#password-input").val("");
+  });
 
   // get user input submitted from a new user
   $(document).on("click", "#signupUser", function(event) {
@@ -37,52 +99,6 @@ $(document).ready(function(){
       window.location.replace("/user");
     });
     
-  });
-  
-  //Now need to get users who've already registered and are re-logging in
-  // Get their inputs from the html
-  $(document).on("click", "#currentUserLogin", function(event) {
-    // didn't work previously without the event.preventDefault - always use
-    event.preventDefault();
-    currentUser = $("#userName-input").val().trim();
-    currentPassword = $("#password-input").val().trim();
-    console.log("currentUser: " + currentUser);
-    console.log("currentPassword: " + currentPassword);
-    // Then get all the current users who've ever logged in 
-    $.getJSON("/getAllUsers", function(allUsers) {
-      console.log("allUsers after getting them from db: ", allUsers);
-
-      // And compare. Find the matching login user name, and check if the stored
-      // email address matches the input from the user.
-      for (i = 0; i < allUsers.length; i++) {
-        console.log("allUsers[i].name= " + allUsers[i].name);
-        console.log("allUsers[i].password= " + allUsers[i].password);
-        if ((currentUser === allUsers[i].name) && (currentPassword === allUsers[i].password)) {
-          allUsers[i].loggedIn = true;
-          console.log(allUsers[i].name + " is the current user");
-          // zero out input fields
-          $("#userName-input").val("");
-          $("#password-input").val("");
-          // take correctly logged in user to /user
-          window.location.replace("/user");
-          return;
-        } else {
-          console.log(allUsers[i].name + " is not the current user");
-        }
-      }
-      console.log("this log in doesn't match any users in db");
-      // so, this for loop is working, but I should stop as the correct user is reached?
-      // take the user to the /user page.
-      // Make the user page where they see kittens,
-      // and can input more topics.
-      // btw, a non-logged in user should have access to topics, but only a 
-      // logged in user should be able to add to topics. *important"
-      // If it does  -- need to decide where user goes - topic page?
-      // List of kittens they have?
-      // Instructions about entering kittens.
-    });
-    $("#userName-input").val("");
-    $("#password-input").val("");
   });
   
 });
