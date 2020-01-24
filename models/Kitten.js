@@ -11,11 +11,11 @@ var KittenSchema = new Schema({
   // `name` is of type String, the name of the kitten, expands to however many
   // kittens each user has.
   name: String,
-  // `weight` and 'length' is of type String, for now, just an example
+  // `weight` and 'length' is of type Number, for now, just an example
   // of what is to come. Wil need to add and age Model too
   // focus currently, is to figure out getting multiple kittens for each user
-  weight: Number,
-  length: Number
+  weight: String,
+  length: String
 });
 
 // This creates our model from the above schema, using mongoose's model method

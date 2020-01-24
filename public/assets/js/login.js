@@ -85,6 +85,9 @@ $(document).ready(function(){
       console.log("data from creation of new user (dataCreateUser) in login.js: ", dataCreateUser);
       //Once a name and password have been put in user db, now take user to the /user page??
       // Sure..., I guess so
+      // set localstorage to the newly created user id so they can input kitten data
+      console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
+      localStorage.setItem('currentUserid', dataCreateUser._id);
       // but first, zero out input fields
       $("#newUserName-input").val("");
       $("#newPassword-input").val("");

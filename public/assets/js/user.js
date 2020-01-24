@@ -6,7 +6,6 @@ var currentUserid = localStorage.getItem('currentUserid');
 
 $(document).ready(function(){
     console.log("hello from user.js");
-    // currently, I'm getting an error here, it's not defined.
     console.log("from user.js, currentUserid is ", currentUserid);
     // when entering a new kitten, first, the current user's id 
     // needs to be retrieved
@@ -14,21 +13,17 @@ $(document).ready(function(){
     // the api so that user's document can be populated with the kitten array
 
     // this function happens when the user clicks the button
-    // to get the modal with the forms to enter info for a new kitten 
+    // to get the modal with the forms to enter info for a new kitten
+    // It populates the specific user in the db with the kitten schema
     $(document).on("click", "#createKitten", function(event) {
       event.preventDefault();
-
-      // somehow get _id of user
-      // don't know how to get this. those variables are in other .js files
-      var thisId = $(this).attr("data-id");
       // Nmake an ajax call for the article that the user wants to add a note
       $.ajax({
         method: "GET",
-        url: "/createKitten/" + thisId
+        url: "/popKitten/" + currentUserid
       })
-        // add the note information to the page
         .then(function(dataCreateKitten) {
-          
+        console.log("in user.js, dataCreateKitten, after User is populated: ", dataCreateKitten);
         });
     });
     
@@ -39,16 +34,16 @@ $(document).ready(function(){
     $(document).on("click", "#submitNewKitten", function(event) {
       event.preventDefault();
         $.ajax({
-            method: "GET",
-            url: "/createKitten",
+            method: "POST",
+            url: "/createKitten/" + currentUserid,
             data: {
                 kittenName: $("#kittenNameInput").val().trim(),
                 kittenWeight: $("#kittenWeightInput").val().trim(),
                 kittenLength: $("#kittenLengthInput").val().trim()
             }
         })
-        .then(function(dataCreateKitten) {
-            console.log("data from creation of new kitten (dataCreateKitten) in user.js: ", dataCreateKitten);
+        .then(function(dataNewKitten) {
+            console.log("data from creation of new kitten (dataNewKitten) in user.js: ", dataNewKitten);
         });
         // empty out the input fields
         $("#kittenNameInput").val("");

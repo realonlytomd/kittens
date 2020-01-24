@@ -72,26 +72,45 @@ module.exports = function(router) {
             });
     });
 
-    // Route for creating a new kitten
-    // different from above as the db for kittens is an array in mongodb
-    // THIS IS CURRENTLY NOT CORRECT!!!!!
-    // need to find the correct user, then populate it with the new kitten array
-    router.get("/createKitten", function(req, res) {
-        console.log("from /createKitten, req.query: ", req.query);
-        db.User.create(req.query)
-            .then(function(dbNewKitten) {
-                // View the added result in the console
-            console.log("what was created in the user db, dbNewKitten: ", dbNewKitten);
-            res.json(dbNewKitten);
+    // Route for getting a specific User by id, and then populate it with a kitten
+    router.get("/popKitten/:id", function(req, res) {
+        // Using the id passed in the id parameter, and make a query that finds the matching one in the db
+            db.User.findOne({ _id: req.params.id })
+                // then populate the kitten schema associated with it
+                .populate("kitten")
+                .then(function(dbUser) {
+                // If successful, find a User with the given id, send it back to the client
+                console.log("api-routes.js, after populate, dbUser: ", dbUser);
+                res.json(dbUser);
+                })
+                .catch(function(err) {
+                // but if an error occurred, send it to the client
+                res.json(err);
+                });
+        });
+
+    // need to find the correct user, then fill in the data with the new kitten array
+    router.post("/createKitten/:id", function(req, res) {
+        console.log("from /createKitten/:id, req.body: ", req.body);
+        
+        db.Kitten.create(req.body)
+            .then(function(dbKitten) {
+                console.log("api-routes.js, dbKitten: ", dbKitten);
+            return db.User.findOneAndUpdate(
+                { _id: req.params.id }, 
+                { $push: { kitten: dbKitten._id } }, 
+                { new: true });
             })
+            .then(function(dbUser) {
+                res.json(dbUser);
+                console.log("What was created in the user db, dbUser: ", dbUser);
+            })
+                // View the added result in the console
             .catch(function(err) {
             // If an error occurred, send it to the client
-            return res.json(err);
+            res.json(err);
             });
     });
-
-    // after this, push the new kitten info into the recently populated user
-    //
 
     // **********older code, using for reference*******888
     // the GET route for scraping The Verge's website
@@ -141,7 +160,10 @@ module.exports = function(router) {
         // it returns only the original by default
         //  the Mongoose query returns a promise, we can chain another `.then` 
         // which receives the result of the query
-            return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+            return db.Article.findOneAndUpdate(
+                { _id: req.params.id }, 
+                { note: dbNote._id }, 
+                { new: true });
             })
             .then(function(dbArticle) {
             // If successful in updating an Article, send it back to the client
