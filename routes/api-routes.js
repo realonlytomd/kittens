@@ -73,7 +73,7 @@ module.exports = function(router) {
     });
 
     // Route for getting a specific User by id, and then populate it with a kitten
-    router.get("/popKitten/:id", function(req, res) {
+    router.get("/popUser/:id", function(req, res) {
         // Using the id passed in the id parameter, and make a query that finds the matching one in the db
             db.User.findOne({ _id: req.params.id })
                 // then populate the kitten schema associated with it
@@ -85,7 +85,7 @@ module.exports = function(router) {
                 ])
                 .then(function(dbUser) {
                 // If successful, find a User with the given id, send it back to the client
-                console.log("api-routes.js, after populate, dbUser: ", dbUser);
+                console.log("api-routes.js, JUST POPULATE USER, dbUser: ", dbUser);
                 res.json(dbUser);
                 })
                 .catch(function(err) {
@@ -96,11 +96,11 @@ module.exports = function(router) {
 
     // need to find the correct user, then fill in the data with the new kitten array
     router.post("/createKitten/:id", function(req, res) {
-        console.log("from /createKitten/:id, req.body: ", req.body);
+        console.log("BEFORE CREATE KITTEN - req.body: ", req.body);
         
         db.Kitten.create(req.body)
             .then(function(dbKitten) {
-                console.log("api-routes.js, dbKitten: ", dbKitten);
+                console.log("AFTER .CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
             return db.User.findOneAndUpdate(
                 { _id: req.params.id }, 
                 { $push: { kitten: dbKitten._id } }, 
@@ -108,7 +108,7 @@ module.exports = function(router) {
             })
             .then(function(dbUser) {
                 res.json(dbUser);
-                console.log("What was created in the user db, dbUser: ", dbUser);
+                console.log("AFTER CORRECT USER UPDATED - dbUser: ", dbUser);
             })
                 // View the added result in the console
             .catch(function(err) {

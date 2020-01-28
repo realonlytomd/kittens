@@ -20,7 +20,7 @@ $(document).ready(function(){
       // Nmake an ajax call for the article that the user wants to add a note
       $.ajax({
         method: "GET",
-        url: "/popKitten/" + currentUserid
+        url: "/popUser/" + currentUserid
       })
         .then(function(dataCreateKitten) {
         console.log("in user.js, dataCreateKitten, after User is populated: ", dataCreateKitten);
@@ -30,20 +30,19 @@ $(document).ready(function(){
 
     // then, the user enters info about the kitten, and submits it.
     // that data for a new kitten is stored in the recently populated user document
-    // below, GET is wrong, should be post, as we're writing to the newly populated document
     $(document).on("click", "#submitNewKitten", function(event) {
       event.preventDefault();
         $.ajax({
             method: "POST",
             url: "/createKitten/" + currentUserid,
             data: {
-                kittenName: $("#kittenNameInput").val().trim(),
-                kittenWeight: $("#kittenWeightInput").val().trim(),
-                kittenLength: $("#kittenLengthInput").val().trim()
+                name: $("#kittenNameInput").val().trim(),
+                weight: $("#kittenWeightInput").val().trim(),
+                length: $("#kittenLengthInput").val().trim()
             }
         })
-        .then(function(dataNewKitten) {
-            console.log("data from creation of new kitten (dataNewKitten) in user.js: ", dataNewKitten);
+        .then(function(dataKittenUser) {
+            console.log("User after creation of new kitten (dataKittenUser) in user.js: ", dataKittenUser);
         });
         // empty out the input fields
         $("#kittenNameInput").val("");
