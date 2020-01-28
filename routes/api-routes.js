@@ -77,7 +77,12 @@ module.exports = function(router) {
         // Using the id passed in the id parameter, and make a query that finds the matching one in the db
             db.User.findOne({ _id: req.params.id })
                 // then populate the kitten schema associated with it
-                .populate("kitten")
+                .populate([
+                    {
+                        path: "kitten",
+                        model: "Kitten"
+                    },
+                ])
                 .then(function(dbUser) {
                 // If successful, find a User with the given id, send it back to the client
                 console.log("api-routes.js, after populate, dbUser: ", dbUser);
