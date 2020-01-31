@@ -80,8 +80,12 @@ module.exports = function(router) {
                 .populate([
                     {
                         path: "kitten",
-                        model: "Kitten"
-                    },
+                        model: "Kitten",
+                        populate: {
+                            path: "metric",
+                            model: "Metric"
+                        }
+                    },  //do I need this comma here????
                 ])
                 .then(function(dbUser) {
                 // If successful, find a User with the given id, send it back to the client
@@ -101,6 +105,10 @@ module.exports = function(router) {
         db.Kitten.create(req.body)
             .then(function(dbKitten) {
                 console.log("AFTER .CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
+                // this needs to change to reflect inputting kitten data into the array
+                // in each kitten. 
+                // OR, is it just handled by pushing in the kitten id??
+                // need to look at the objects before and after the ajax calls
             return db.User.findOneAndUpdate(
                 { _id: req.params.id }, 
                 { $push: { kitten: dbKitten._id } }, 

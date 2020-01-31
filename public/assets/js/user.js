@@ -20,6 +20,7 @@ $(document).ready(function(){
       // Nmake an ajax call for the article that the user wants to add a note
       $.ajax({
         method: "GET",
+        // popUser path will be changed to reflect added population of the metrics
         url: "/popUser/" + currentUserid
       })
         .then(function(dataCreateKitten) {
@@ -29,12 +30,16 @@ $(document).ready(function(){
     
 
     // then, the user enters info about the kitten, and submits it.
+    // still need to add ability to enter multiple metrics (age, weight, length) for
+    // each kitten, in the html
     // that data for a new kitten is stored in the recently populated user document
     $(document).on("click", "#submitNewKitten", function(event) {
       event.preventDefault();
         $.ajax({
             method: "POST",
             url: "/createKitten/" + currentUserid,
+            // below will likely change, because not sure how it should feed into the
+            // api-routes file
             data: {
                 name: $("#kittenNameInput").val().trim(),
                 weight: $("#kittenWeightInput").val().trim(),
