@@ -25,19 +25,23 @@
           <h2>Welcome Individual User!</h2>
         </div>
       </div>
-      <!-- Modal -->
+      <!-- First Modal for entering new kitten name-->
       <div class="modal fade" id="newKittenModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h2 class="modal-title text-center" id="myModalLabel">New Kitten Entry Form</h2>
+              <h2 class="modal-title text-center" id="myModalLabel">New Kitten Name Entry</h2>
             </div>
             <div class="modal-body">
               <!-- entry form for entering infor about the new kitten-->
               <div class="form-group">
                 <label for="kittenNameInput">Kitten Name:</label>
                 <input type="text" class="form-control" name="name" id="kittenNameInput" placeholder="Enter a Name">
+              </div>
+              <!--<div class="form-group">
+                <label for="kittenAgeInput">Kitten Age:</label>
+                <input type="text" class="form-control" name="age" id="kittenAgeInput" placeholder="Enter the kitten's age in weeks">
               </div>
               <div class="form-group">
                 <label for="kittenWeightInput">Kitten Weight:</label>
@@ -46,7 +50,7 @@
               <div class="form-group">
                 <label for="kittenLengthInput">Kitten Length:</label>
                 <input type="text" class="form-control" name="length" id="kittenLengthInput" placeholder="Enter a number for the length">
-              </div>
+              </div> -->
               <button type="submit" id="submitNewKitten">Submit</button>
             </div>
             <div class="modal-footer">
@@ -56,6 +60,37 @@
         </div>
       </div>
   <!-- End of Bootstrap modal code -->
+  <!-- Second Modal for entering kitten's metrics name-->
+  <div class="modal fade" id="newKittenMetricModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h2 class="modal-title text-center" id="myModalLabel">New Kitten Metrics Entry</h2>
+        </div>
+        <div class="modal-body">
+          <!-- entry form for entering infor about the new kitten-->
+          <div class="form-group">
+            <label for="kittenAgeInput">Kitten Age:</label>
+            <input type="text" class="form-control" name="age" id="kittenAgeInput" placeholder="Enter the kitten's age in weeks">
+          </div>
+          <div class="form-group">
+            <label for="kittenWeightInput">Kitten Weight:</label>
+            <input type="text" class="form-control" name="weight" id="kittenWeightInput" placeholder="Enter a number for the weight">
+          </div>
+          <div class="form-group">
+            <label for="kittenLengthInput">Kitten Length:</label>
+            <input type="text" class="form-control" name="length" id="kittenLengthInput" placeholder="Enter a number for the length">
+          </div>
+          <button type="submit" id="submitKittenMetrics">Submit</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End of Bootstrap modal code -->
       <div class="row">
         <div class="col-xs-12">
           <button type="button" data-toggle="modal" data-target="#newKittenModal" id="createKitten">

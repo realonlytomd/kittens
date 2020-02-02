@@ -17,14 +17,14 @@ $(document).ready(function(){
     // It populates the specific user in the db with the kitten schema
     $(document).on("click", "#createKitten", function(event) {
       event.preventDefault();
-      // Nmake an ajax call for the article that the user wants to add a note
+      // Nmake an ajax call for the user to add a kitten with metrics
       $.ajax({
         method: "GET",
         // popUser path will be changed to reflect added population of the metrics
         url: "/popUser/" + currentUserid
       })
         .then(function(dataCreateKitten) {
-        console.log("in user.js, dataCreateKitten, after User is populated: ", dataCreateKitten);
+          console.log("in user.js, dataCreateKitten, after User is populated: ", dataCreateKitten);
         });
     });
     
@@ -41,9 +41,10 @@ $(document).ready(function(){
             // below will likely change, because not sure how it should feed into the
             // api-routes file
             data: {
-                name: $("#kittenNameInput").val().trim(),
-                weight: $("#kittenWeightInput").val().trim(),
-                length: $("#kittenLengthInput").val().trim()
+                name: $("#kittenNameInput").val().trim()
+                // age: $("#kittenAgeInput").val().trim(),
+                // weight: $("#kittenWeightInput").val().trim(),
+                // length: $("#kittenLengthInput").val().trim()
             }
         })
         .then(function(dataKittenUser) {
@@ -51,8 +52,11 @@ $(document).ready(function(){
         });
         // empty out the input fields
         $("#kittenNameInput").val("");
-        $("#kittenWeightInput").val("");
-        $("#kittenLengthInput").val("");
+        // then bring up 2nd modal, hide this one, that allows user to enter kitten  metrics.
+        // then feed that data to another post since the metric arrays are already populated
+        
+        // $("#kittenWeightInput").val("");
+        // $("#kittenLengthInput").val("");
     });
 
   // take submits from the user on topics and answers to topics

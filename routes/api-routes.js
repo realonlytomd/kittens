@@ -85,7 +85,7 @@ module.exports = function(router) {
                             path: "metric",
                             model: "Metric"
                         }
-                    },  //do I need this comma here????
+                    }
                 ])
                 .then(function(dbUser) {
                 // If successful, find a User with the given id, send it back to the client
@@ -101,8 +101,8 @@ module.exports = function(router) {
     // need to find the correct user, then fill in the data with the new kitten array
     router.post("/createKitten/:id", function(req, res) {
         console.log("BEFORE CREATE KITTEN - req.body: ", req.body);
-        
-        db.Kitten.create(req.body)
+        //insert creation of the kitten's metrics
+            db.Kitten.create(req.body)
             .then(function(dbKitten) {
                 console.log("AFTER .CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
                 // this needs to change to reflect inputting kitten data into the array
@@ -110,9 +110,10 @@ module.exports = function(router) {
                 // OR, is it just handled by pushing in the kitten id??
                 // need to look at the objects before and after the ajax calls
             return db.User.findOneAndUpdate(
-                { _id: req.params.id }, 
+                { _id: req.params.id },
                 { $push: { kitten: dbKitten._id } }, 
-                { new: true });
+                { new: true }
+                );
             })
             .then(function(dbUser) {
                 res.json(dbUser);
