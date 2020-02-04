@@ -5,5 +5,6 @@
 module.exports = {
   User: require("./User"),
   Kitten: require("./Kitten"),
+  Metric: require("./Metric"),
   Topic: require("./Topic")
 };

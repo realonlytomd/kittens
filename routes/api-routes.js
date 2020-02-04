@@ -98,17 +98,14 @@ module.exports = function(router) {
                 });
         });
 
-    // need to find the correct user, then fill in the data with the new kitten array
+    // need to find the correct user, then fill in the data (name) with the new kitten array
     router.post("/createKitten/:id", function(req, res) {
         console.log("BEFORE CREATE KITTEN - req.body: ", req.body);
         //insert creation of the kitten's metrics
             db.Kitten.create(req.body)
             .then(function(dbKitten) {
                 console.log("AFTER .CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
-                // this needs to change to reflect inputting kitten data into the array
-                // in each kitten. 
-                // OR, is it just handled by pushing in the kitten id??
-                // need to look at the objects before and after the ajax calls
+                // pushing the new kitten name into the document kitten array
             return db.User.findOneAndUpdate(
                 { _id: req.params.id },
                 { $push: { kitten: dbKitten._id } }, 
@@ -116,10 +113,35 @@ module.exports = function(router) {
                 );
             })
             .then(function(dbUser) {
+                // send back the correct user with new data in the kitten arrays
                 res.json(dbUser);
                 console.log("AFTER CORRECT USER UPDATED - dbUser: ", dbUser);
             })
-                // View the added result in the console
+            .catch(function(err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+            });
+    });
+
+    // need to find the correct user, then fill in the metrics with the selected metric array
+    router.post("/kittenMetrics/:id", function(req, res) {
+        console.log("BEFORE KITTEN HAS METRICS - req.body: ", req.body);
+        //insert creation of the kitten's metrics
+            db.Metric.create(req.body)
+            .then(function(dbMetric) {
+                console.log("AFTER .CREATE METRICS - api-routes.js, dbMetric: ", dbMetric);
+                // pushing the new kitten name into the document kitten array
+            return db.Kitten.findOneAndUpdate(
+                { _id: req.params.id },
+                { $push: { metric: dbMetric._id } }, 
+                { new: true }
+                );
+            })
+            .then(function(dbKitten) {
+                // send back the correct user with new data in the metric arrays
+                res.json(dbKitten);
+                console.log("AFTER KITTEN UPDATED - dbKitten: ", dbKitten);
+            })
             .catch(function(err) {
             // If an error occurred, send it to the client
             res.json(err);

@@ -2,61 +2,78 @@
 
 // get the id of the current user from login.js file for
 // currently logged in user.
-var currentUserid = localStorage.getItem('currentUserid');
+var currentUserid = localStorage.getItem("currentUserid");
+var currentKittenid = "";
 
 $(document).ready(function(){
     console.log("hello from user.js");
     console.log("from user.js, currentUserid is ", currentUserid);
-    // when entering a new kitten, first, the current user's id 
-    // needs to be retrieved
-    // and should be sent to
-    // the api so that user's document can be populated with the kitten array
-
     // this function happens when the user clicks the button
-    // to get the modal with the forms to enter info for a new kitten
-    // It populates the specific user in the db with the kitten schema
+    // to get the modal with the form to enter the name for a new kitten
+    // It populates the specific user in the db with the kitten and metric schema
     $(document).on("click", "#createKitten", function(event) {
       event.preventDefault();
-      // Nmake an ajax call for the user to add a kitten with metrics
+      // make an ajax call for the user to add a kitten name
       $.ajax({
         method: "GET",
-        // popUser path will be changed to reflect added population of the metrics
         url: "/popUser/" + currentUserid
       })
         .then(function(dataCreateKitten) {
+          // this is the current user with his fields populated to receive kitten name and metric data
           console.log("in user.js, dataCreateKitten, after User is populated: ", dataCreateKitten);
         });
     });
     
 
-    // then, the user enters info about the kitten, and submits it.
-    // still need to add ability to enter multiple metrics (age, weight, length) for
-    // each kitten, in the html
+    // then, the user enters the name for a new kitten in the modal, and submits it.
     // that data for a new kitten is stored in the recently populated user document
     $(document).on("click", "#submitNewKitten", function(event) {
       event.preventDefault();
         $.ajax({
             method: "POST",
             url: "/createKitten/" + currentUserid,
-            // below will likely change, because not sure how it should feed into the
-            // api-routes file
             data: {
                 name: $("#kittenNameInput").val().trim()
-                // age: $("#kittenAgeInput").val().trim(),
-                // weight: $("#kittenWeightInput").val().trim(),
-                // length: $("#kittenLengthInput").val().trim()
             }
         })
         .then(function(dataKittenUser) {
             console.log("User after creation of new kitten (dataKittenUser) in user.js: ", dataKittenUser);
-        });
-        // empty out the input fields
-        $("#kittenNameInput").val("");
-        // then bring up 2nd modal, hide this one, that allows user to enter kitten  metrics.
-        // then feed that data to another post since the metric arrays are already populated
-        
-        // $("#kittenWeightInput").val("");
-        // $("#kittenLengthInput").val("");
+            // save id of current (newly created kitten)
+            currentKittenid = dataKittenUser.kitten[dataKittenUser.kitten.length - 1];
+            console.log("currentKittenid: " + currentKittenid);
+            // empty out the input fields
+            $("#kittenNameInput").val("");
+            // Hide the current modal, then bring up 2nd modal that allows user to enter kitten metrics.
+            $("#newKittenModal").modal("hide");
+            $("#newKittenMetricModal").modal("show");
+          });
+    });
+
+    // then, the user enters the metrics for a kitten in the modal, and submits it.
+    // that id is stored in the kitten document
+    // currently, this is ONLY for entering a brand new kitten.
+    // If a kitten already exists, and the user wants to enter new metrics,
+    // THAT kitten's id will have to be retrieved - NEED TO DO THIS
+    $(document).on("click", "#submitKittenMetrics", function(event) {
+      event.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "/kittenMetrics/" + currentKittenid,
+            data: {
+                age: $("#kittenAgeInput").val().trim(),
+                weight: $("#kittenWeightInput").val().trim(),
+                length: $("#kittenLengthInput").val().trim()
+            }
+        })
+        .then(function(allDataKittenUser) {
+            console.log("User after kitten metrics (allDataKittenUser) in user.js: ", allDataKittenUser);
+            // empty out the input fields
+            $("#kittenAgeInput").val("");
+            $("#kittenWeightInput").val("");
+            $("#kittenLengthInput").val("");
+            // then hide this modal
+            $("#newKittenMetricModal").modal("hide");
+          });
     });
 
   // take submits from the user on topics and answers to topics
