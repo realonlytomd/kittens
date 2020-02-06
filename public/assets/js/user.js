@@ -84,12 +84,24 @@ $(document).ready(function(){
       // this is currently sending the user id to the backend.
       $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
         console.log("inside #getAllKittens, current user from db, currentUser: ", currentUser);
-
-        // for (i = 0; i < allKittens.length; i++) {
-        //   $("#currentKittens").append("<h4>Topic: </h4><p>" +
-        //     allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
-        //     allTopics[i].answer + "</p><br />");
-        // }
+        console.log(currentUser[0]);
+        console.log("currentUser[0].kitten.length: " + currentUser[0].kitten.length);
+        // this for loop goes through each kitten of the user
+        // gets the kitten document and name of kitten, then
+        // gets the array of metrics for each kitten
+        for (i = 0; i < currentUser[0].kitten.length; i++) {
+          // this prints the id's for each kitten to the console
+          console.log("kitten[" + i + "]: " + currentUser[0].kitten[i]);
+          $.getJSON("/getAKitten" + currentUser[0].kitten[i], function(kitten) {
+            //this prints the kitten object from the db
+            console.log("kitten: ", kitten);
+            // this prints the kitten's name
+            console.log("kitten[0].name: ", kitten[0].name);
+            // and then the array of metric id's  -- next, go through each metric
+            console.log("kitten[0].metric: ", kitten[0].metric);
+          });
+          // should go ahead on render to document
+        }
       });
     });
 

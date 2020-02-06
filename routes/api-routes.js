@@ -160,6 +160,23 @@ module.exports = function(router) {
             .then(function(dbCurrentUser) {
                 res.json(dbCurrentUser);
                 console.log("from  route /getCurrentUser:id, dbCurrentUser: ", dbCurrentUser);
+                console.log("dbCurrentUser.kitten.length", dbCurrentUser[0].kitten.length);
+            })
+            .catch(function(err) {
+            // However, if an error occurred, send it to the client
+            res.json(err);
+            });
+    });
+
+    //This route gets one kitten document from kitten collection
+    router.get("/getAKitten:id", function(req, res) {
+        console.log("inside api-routes: req.params: ", req.params);
+        // need to find the correct user, THEN all their kittens, 
+        db.Kitten.find({ _id: req.params.id})
+            .then(function(dbAKitten) {
+                res.json(dbAKitten);
+                console.log("from  route /getAkitten:id, dbAKitten: ", dbAKitten);
+                //console.log("dbCurrentUser.kitten.length", dbAKitten[0].kitten.length);
             })
             .catch(function(err) {
             // However, if an error occurred, send it to the client
