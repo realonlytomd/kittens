@@ -38,7 +38,7 @@ $(document).ready(function(){
         })
         .then(function(dataKittenUser) {
             console.log("User after creation of new kitten (dataKittenUser) in user.js: ", dataKittenUser);
-            // save id of current (newly created kitten)
+            // save id of current (last created kitten)
             currentKittenid = dataKittenUser.kitten[dataKittenUser.kitten.length - 1];
             console.log("currentKittenid: " + currentKittenid);
             // empty out the input fields
@@ -74,6 +74,23 @@ $(document).ready(function(){
             // then hide this modal
             $("#newKittenMetricModal").modal("hide");
           });
+    });
+
+    // This is a first attempt at getting all the existing kittens for a particular user
+    // from the database, and the associated metrics for each kitten.
+    $(document).on("click", "#getAllKittens", function(event) {
+      event.preventDefault();
+      $("#currentKittens").empty();
+      // this is currently sending the user id to the backend.
+      $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
+        console.log("inside #getAllKittens, current user from db, currentUser: ", currentUser);
+
+        // for (i = 0; i < allKittens.length; i++) {
+        //   $("#currentKittens").append("<h4>Topic: </h4><p>" +
+        //     allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
+        //     allTopics[i].answer + "</p><br />");
+        // }
+      });
     });
 
   // take submits from the user on topics and answers to topics

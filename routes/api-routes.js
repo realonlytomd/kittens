@@ -60,6 +60,7 @@ module.exports = function(router) {
     });
 
     // Route for getting all of the Users from the db
+    // For login.js
     router.get("/getAllUsers", function(req, res) {
         db.User.find({})
             .then(function(dbAllUsers) {
@@ -123,7 +124,7 @@ module.exports = function(router) {
             });
     });
 
-    // need to find the correct user, then fill in the metrics with the selected metric array
+    // need to find the correct kitten, then fill in the metrics with the selected metric array
     router.post("/kittenMetrics/:id", function(req, res) {
         console.log("BEFORE KITTEN HAS METRICS - req.body: ", req.body);
         //insert creation of the kitten's metrics
@@ -144,6 +145,24 @@ module.exports = function(router) {
             })
             .catch(function(err) {
             // If an error occurred, send it to the client
+            res.json(err);
+            });
+    });
+
+    // first attempt at the Route for getting all of the kittens from a particular user from the db
+    // not right: need the particlar user, then out of that user, get the kittens name,
+    // and metrics....
+    //This .get only gets the current user
+    router.get("/getCurrentUser:id", function(req, res) {
+        console.log("inside api-routes: req.params: ", req.params);
+        // need to find the correct user, THEN all their kittens, 
+        db.User.find({ _id: req.params.id}) // This is to limit the find to just current user
+            .then(function(dbCurrentUser) {
+                res.json(dbCurrentUser);
+                console.log("from  route /getCurrentUser:id, dbCurrentUser: ", dbCurrentUser);
+            })
+            .catch(function(err) {
+            // However, if an error occurred, send it to the client
             res.json(err);
             });
     });
