@@ -92,15 +92,27 @@ $(document).ready(function(){
         for (i = 0; i < currentUser[0].kitten.length; i++) {
           // this prints the id's for each kitten to the console
           console.log("kitten[" + i + "]: " + currentUser[0].kitten[i]);
-          $.getJSON("/getAKitten" + currentUser[0].kitten[i], function(kitten) {
+          $.getJSON("/getAKitten" + currentUser[0].kitten[i], function(curkat) {
             //this prints the kitten object from the db
-            console.log("kitten: ", kitten);
+            console.log("curkat: ", curkat);
             // this prints the kitten's name
-            console.log("kitten[0].name: ", kitten[0].name);
+            console.log("curkat[0].name: ", curkat[0].name);
+            $("#currentKittens").append("<h4>Kitten Name: " + curkat[0].name + "</h4>");
             // and then the array of metric id's  -- next, go through each metric
-            console.log("kitten[0].metric: ", kitten[0].metric);
+            console.log("curkat[0].metric: ", curkat[0].metric);
+            console.log("curket[0].metric.length: " + curkat[0].metric.length);
+              //need a for loop to go through metrics
+              for (j = 0; j < curkat[0].metric.length; j++) {
+                console.log("metric[" + j + "]: " + curkat[0].metric[j]);
+                $.getJSON("/getAMetric" + curkat[0].metric[j], function(curmet) {
+                  console.log("curmet: ", curmet);
+                  console.log("curmet[0].age: ", curmet[0].age);
+                  //Not quite right, prints out below the names....
+                  $("#currentKittens").append("<h5>Kitten Age: " + curmet[0].age + "</h5>");
+                });
+              }
+            
           });
-          // should go ahead on render to document
         }
       });
     });

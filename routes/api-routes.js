@@ -184,6 +184,21 @@ module.exports = function(router) {
             });
     });
 
+    //This route gets one kitten document from kitten collection
+    router.get("/getAMetric:id", function(req, res) {
+        console.log("inside api-routes: req.params: ", req.params);
+        // need to find the correct user, THEN all their kittens, 
+        db.Metric.find({ _id: req.params.id})
+            .then(function(dbAMetric) {
+                res.json(dbAMetric);
+                console.log("from  route /getAMetric:id, dbAMetric: ", dbAMetric);
+                //console.log("dbCurrentUser.kitten.length", dbAKitten[0].kitten.length);
+            })
+            .catch(function(err) {
+            // However, if an error occurred, send it to the client
+            res.json(err);
+            });
+    });
     // **********older code, using for reference*******888
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {
