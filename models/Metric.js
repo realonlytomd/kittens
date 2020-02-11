@@ -18,7 +18,7 @@ var MetricSchema = new Schema({
     required: true
   },
   // Kitten's length is required and of type String
-  length: {
+  size: {
     type: String,
     required: true
   }

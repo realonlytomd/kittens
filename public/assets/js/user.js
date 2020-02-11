@@ -4,6 +4,10 @@
 // currently logged in user.
 var currentUserid = localStorage.getItem("currentUserid");
 var currentKittenid = "";
+var kittenNames = [];
+var kittenAges = [];
+var kittenWeights = [];
+var kittenSizes = [];
 
 $(document).ready(function(){
     console.log("hello from user.js");
@@ -62,7 +66,7 @@ $(document).ready(function(){
             data: {
                 age: $("#kittenAgeInput").val().trim(),
                 weight: $("#kittenWeightInput").val().trim(),
-                length: $("#kittenLengthInput").val().trim()
+                size: $("#kittenSizeInput").val().trim()
             }
         })
         .then(function(allDataKittenUser) {
@@ -70,7 +74,7 @@ $(document).ready(function(){
             // empty out the input fields
             $("#kittenAgeInput").val("");
             $("#kittenWeightInput").val("");
-            $("#kittenLengthInput").val("");
+            $("#kittenSizeInput").val("");
             // then hide this modal
             $("#newKittenMetricModal").modal("hide");
           });
@@ -80,41 +84,67 @@ $(document).ready(function(){
     // from the database, and the associated metrics for each kitten.
     $(document).on("click", "#getAllKittens", function(event) {
       event.preventDefault();
+      // empty out the div that shows the user's current kittens and metrics
       $("#currentKittens").empty();
-      // this is currently sending the user id to the backend.
+      // get the current user document
       $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
         console.log("inside #getAllKittens, current user from db, currentUser: ", currentUser);
         console.log(currentUser[0]);
+        //how many kittens in the user's document. It's an array of kitten references
         console.log("currentUser[0].kitten.length: " + currentUser[0].kitten.length);
         // this for loop goes through each kitten of the user
         // gets the kitten document and name of kitten, then
         // gets the array of metrics for each kitten
         for (i = 0; i < currentUser[0].kitten.length; i++) {
-          // this prints the id's for each kitten to the console
+          // this logs the id's for each kitten to the console
           console.log("kitten[" + i + "]: " + currentUser[0].kitten[i]);
           $.getJSON("/getAKitten" + currentUser[0].kitten[i], function(curkat) {
-            //this prints the kitten object from the db
+            //this logs the full kitten object from the db
             console.log("curkat: ", curkat);
-            // this prints the kitten's name
+            // this logs the kitten's name
             console.log("curkat[0].name: ", curkat[0].name);
-            $("#currentKittens").append("<h4>Kitten Name: " + curkat[0].name + "</h4>");
-            // and then the array of metric id's  -- next, go through each metric
+            // push each kitten name into a variable array kittenNames
+            kittenNames.push(curkat[0].name);
+            // and then the array of metric id references  -- next, go through each metric
             console.log("curkat[0].metric: ", curkat[0].metric);
-            console.log("curket[0].metric.length: " + curkat[0].metric.length);
+            console.log("curkat[0].metric.length: " + curkat[0].metric.length);
               //need a for loop to go through metrics
               for (j = 0; j < curkat[0].metric.length; j++) {
+                // logs the array of metric document id's
                 console.log("metric[" + j + "]: " + curkat[0].metric[j]);
                 $.getJSON("/getAMetric" + curkat[0].metric[j], function(curmet) {
+                  // logs the entire metric document
                   console.log("curmet: ", curmet);
+                  // logs the age of each metric document, then other fields
                   console.log("curmet[0].age: ", curmet[0].age);
-                  //Not quite right, prints out below the names....
-                  $("#currentKittens").append("<h5>Kitten Age: " + curmet[0].age + "</h5>");
+                  kittenAges.push(curmet[0].age);
+                  console.log("curmet[0].weight: ", curmet[0].weight);
+                  kittenWeights.push(curmet[0].weight);
+                  console.log("curmet[0].size: ", curmet[0].size);
+                  kittenSizes.push(curmet[0].size);
                 });
               }
-            
           });
         }
       });
+    });
+
+    $(document).on("click", "#showAllKittens", function(event) {
+      // print out the built arrays
+      console.log("building the arrays, kittenNames", kittenNames);
+      console.log("building the arrays,  kittenAges", kittenAges);
+      console.log("building the arrays KittenWeights", kittenWeights);
+      console.log("building the arrays KittenSizes", kittenSizes);
+      // print the resulting filled kitten arrays to the DOM
+      // now it should print to the dom
+      console.log("SHOULD BE PRINTING TO DOM");
+      for (i=0; i<kittenNames.length; i++) {
+        $("#currentKittens").append("<h4>" + 
+        kittenNames[i] + "</h4><h5>" + 
+        kittenAges[i] + "<br>" +
+        kittenWeights[i] + "<br>" +
+        kittenSizes[i] + "</h5>");
+      }
     });
 
   // take submits from the user on topics and answers to topics
