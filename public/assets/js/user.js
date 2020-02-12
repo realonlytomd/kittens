@@ -4,6 +4,7 @@
 // currently logged in user.
 var currentUserid = localStorage.getItem("currentUserid");
 var currentKittenid = "";
+var kittenIds = [];
 var kittenNames = [];
 var kittenAges = [];
 var kittenWeights = [];
@@ -82,6 +83,8 @@ $(document).ready(function(){
 
     // This is a first attempt at getting all the existing kittens for a particular user
     // from the database, and the associated metrics for each kitten.
+    // currently (2/12), arrays are getting pushed into fairly randomly...
+    // due to javascript's asynch??
     $(document).on("click", "#getAllKittens", function(event) {
       event.preventDefault();
       // empty out the div that shows the user's current kittens and metrics
@@ -101,9 +104,11 @@ $(document).ready(function(){
           $.getJSON("/getAKitten" + currentUser[0].kitten[i], function(curkat) {
             //this logs the full kitten object from the db
             console.log("curkat: ", curkat);
-            // this logs the kitten's name
+            // this logs the kitten's id and name
+            console.log("curkat[0]._id: ", curkat[0]._id);
             console.log("curkat[0].name: ", curkat[0].name);
-            // push each kitten name into a variable array kittenNames
+            // push each kitten id and name into a variable array kittenIds and kittenNames
+            kittenIds.push(curkat[0]._id);
             kittenNames.push(curkat[0].name);
             // and then the array of metric id references  -- next, go through each metric
             console.log("curkat[0].metric: ", curkat[0].metric);
@@ -132,6 +137,7 @@ $(document).ready(function(){
     $(document).on("click", "#showAllKittens", function(event) {
       event.preventDefault();
       // print out the built arrays
+      console.log("building the arrays, kittenIds", kittenIds);
       console.log("building the arrays, kittenNames", kittenNames);
       console.log("building the arrays,  kittenAges", kittenAges);
       console.log("building the arrays KittenWeights", kittenWeights);
@@ -141,17 +147,26 @@ $(document).ready(function(){
       $("#currentKittens").empty();
       for (i=0; i<kittenNames.length; i++) {
         $("#currentKittens").append("<h4>" + 
-        kittenNames[i] + "</h4><h5>" + 
+        kittenNames[i] + "</h4><button type='submit' id='submitNewKittenMetrics' data-id=" + 
+        kittenIds[i] + ">Add Metrics</button><h5>" + 
         kittenAges[i] + "<br>" +
         kittenWeights[i] + "<br>" +
         kittenSizes[i] + "</h5>");
       }
       //empty out kitten arrays, they will be built over each time
+      kittenIds = [];
       kittenNames = [];
       kittenAges = [];
       kittenWeights = [];
       kittenSizes = [];
     });
+
+    $(document).on("click", "#submitNewKittenMetrics", function(event) {
+      event.preventDefault();
+      $("#newKittenMetricModal").modal("show");
+      currentKittenid = $(this).attr("data-id");
+    });
+
 
   // take submits from the user on topics and answers to topics
   // and call the appropriate api to store in the topics db

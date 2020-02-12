@@ -139,7 +139,7 @@ module.exports = function(router) {
                 );
             })
             .then(function(dbKitten) {
-                // send back the correct user with new data in the metric arrays
+                // send back the correct kitten with new data in the metric arrays
                 res.json(dbKitten);
                 console.log("AFTER KITTEN UPDATED - dbKitten: ", dbKitten);
             })
