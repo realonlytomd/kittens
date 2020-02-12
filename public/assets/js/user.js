@@ -130,14 +130,15 @@ $(document).ready(function(){
     });
 
     $(document).on("click", "#showAllKittens", function(event) {
+      event.preventDefault();
       // print out the built arrays
       console.log("building the arrays, kittenNames", kittenNames);
       console.log("building the arrays,  kittenAges", kittenAges);
       console.log("building the arrays KittenWeights", kittenWeights);
       console.log("building the arrays KittenSizes", kittenSizes);
       // print the resulting filled kitten arrays to the DOM
-      // now it should print to the dom
       console.log("SHOULD BE PRINTING TO DOM");
+      $("#currentKittens").empty();
       for (i=0; i<kittenNames.length; i++) {
         $("#currentKittens").append("<h4>" + 
         kittenNames[i] + "</h4><h5>" + 
@@ -145,6 +146,11 @@ $(document).ready(function(){
         kittenWeights[i] + "<br>" +
         kittenSizes[i] + "</h5>");
       }
+      //empty out kitten arrays, they will be built over each time
+      kittenNames = [];
+      kittenAges = [];
+      kittenWeights = [];
+      kittenSizes = [];
     });
 
   // take submits from the user on topics and answers to topics
