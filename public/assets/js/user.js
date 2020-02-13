@@ -83,8 +83,10 @@ $(document).ready(function(){
 
     // This is a first attempt at getting all the existing kittens for a particular user
     // from the database, and the associated metrics for each kitten.
-    // currently (2/12), arrays are getting pushed into fairly randomly...
+    // currently (2/12), arrays are getting pushed into incorrectly.
     // due to javascript's asynch??
+    // can I push info into the arrays one kitten, and one set of metrics at a time???
+    //
     $(document).on("click", "#getAllKittens", function(event) {
       event.preventDefault();
       // empty out the div that shows the user's current kittens and metrics
