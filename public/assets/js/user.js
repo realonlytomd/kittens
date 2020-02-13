@@ -9,6 +9,7 @@ var kittenNames = [];
 var kittenAges = [];
 var kittenWeights = [];
 var kittenSizes = [];
+var currentUser = {};
 
 $(document).ready(function(){
     console.log("hello from user.js");
@@ -135,6 +136,74 @@ $(document).ready(function(){
         }
       });
     });
+
+    // this is the 2nd attempt at getting all the kittens and metrics
+    // instead of for loops, trying .forEach method.
+    // the id of this function is changed to #getAllKittensForEach.
+    // add a button for this.
+    $(document).on("click", "#getAllKittensForEach", function(event) {
+      event.preventDefault();
+      // empty out the div that shows the user's current kittens and metrics
+      $("#currentKittens").empty();
+      // get the current user document
+      $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
+        console.log("inside #getAllKittensForEach, current user from db, currentUser: ", currentUser);
+        console.log("currentUser[0]: ", currentUser[0]);
+        //how many kittens in the user's document. It's an array of kitten references
+        console.log("this is this user's array of kitten id's: " + currentUser[0].kitten);
+        console.log("currentUser[0].kitten.length: " + currentUser[0].kitten.length);
+      
+        // this .forEach goes through each kitten of the user
+        // gets the kitten document and name of kitten, then
+        // gets the array of metrics for each kitten
+        //for (i = 0; i < currentUser[0].kitten.length; i++) {
+          //currentUser[0].kitten.forEach(myFunction);
+
+        currentUser[0].kitten.forEach(element, index => {
+          console.log("kitten[" + index + "]: " + currentUser[0].kitten[index]);
+          
+        });
+            
+      
+          
+            
+           
+          // this logs the id's for each kitten to the console
+    //       
+    //       $.getJSON("/getAKitten" + currentUser[0].kitten[i], function(curkat) {
+    //         //this logs the full kitten object from the db
+    //         console.log("curkat: ", curkat);
+    //         // this logs the kitten's id and name
+    //         console.log("curkat[0]._id: ", curkat[0]._id);
+    //         console.log("curkat[0].name: ", curkat[0].name);
+    //         // push each kitten id and name into a variable array kittenIds and kittenNames
+    //         kittenIds.push(curkat[0]._id);
+    //         kittenNames.push(curkat[0].name);
+    //         // and then the array of metric id references  -- next, go through each metric
+    //         console.log("curkat[0].metric: ", curkat[0].metric);
+    //         console.log("curkat[0].metric.length: " + curkat[0].metric.length);
+    //           //need a for loop to go through metrics
+    //           // for (j = 0; j < curkat[0].metric.length; j++) {
+    //           //   // logs the array of metric document id's
+    //           //   console.log("metric[" + j + "]: " + curkat[0].metric[j]);
+    //           //   $.getJSON("/getAMetric" + curkat[0].metric[j], function(curmet) {
+    //           //     // logs the entire metric document
+    //           //     console.log("curmet: ", curmet);
+    //           //     // logs the age of each metric document, then other fields
+    //           //     console.log("curmet[0].age: ", curmet[0].age);
+    //           //     kittenAges.push(curmet[0].age);
+    //           //     console.log("curmet[0].weight: ", curmet[0].weight);
+    //           //     kittenWeights.push(curmet[0].weight);
+    //           //     console.log("curmet[0].size: ", curmet[0].size);
+    //           //     kittenSizes.push(curmet[0].size);
+    //           //   });
+    //           // }
+    //       });
+    //    //}
+       });
+     });
+
+    
 
     $(document).on("click", "#showAllKittens", function(event) {
       event.preventDefault();
