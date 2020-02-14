@@ -9,7 +9,6 @@ var kittenNames = [];
 var kittenAges = [];
 var kittenWeights = [];
 var kittenSizes = [];
-var currentUser = {};
 
 $(document).ready(function(){
     console.log("hello from user.js");
@@ -157,13 +156,10 @@ $(document).ready(function(){
         // gets the kitten document and name of kitten, then
         // gets the array of metrics for each kitten
         //for (i = 0; i < currentUser[0].kitten.length; i++) {
-          //currentUser[0].kitten.forEach(myFunction);
-
-        currentUser[0].kitten.forEach(element, index => {
-          console.log("kitten[" + index + "]: " + currentUser[0].kitten[index]);
-          
-        });
-            
+        currentUser[0].kitten.forEach(myFunction);
+        // function myFunction(item, index) {
+        //   console.log("THIS! --- " + index + " : " + item ); 
+        // }
       
           
             
@@ -202,7 +198,9 @@ $(document).ready(function(){
     //    //}
        });
      });
-
+     function myFunction(item, index) {
+      console.log("THIS! --- " + index + " : " + item ); 
+    }
     
 
     $(document).on("click", "#showAllKittens", function(event) {
