@@ -157,51 +157,57 @@ $(document).ready(function(){
         // gets the array of metrics for each kitten
         //for (i = 0; i < currentUser[0].kitten.length; i++) {
         currentUser[0].kitten.forEach(myFunction);
-        // function myFunction(item, index) {
-        //   console.log("THIS! --- " + index + " : " + item ); 
-        // }
-      
-          
-            
-           
-          // this logs the id's for each kitten to the console
-    //       
-    //       $.getJSON("/getAKitten" + currentUser[0].kitten[i], function(curkat) {
-    //         //this logs the full kitten object from the db
-    //         console.log("curkat: ", curkat);
-    //         // this logs the kitten's id and name
-    //         console.log("curkat[0]._id: ", curkat[0]._id);
-    //         console.log("curkat[0].name: ", curkat[0].name);
-    //         // push each kitten id and name into a variable array kittenIds and kittenNames
-    //         kittenIds.push(curkat[0]._id);
-    //         kittenNames.push(curkat[0].name);
-    //         // and then the array of metric id references  -- next, go through each metric
-    //         console.log("curkat[0].metric: ", curkat[0].metric);
-    //         console.log("curkat[0].metric.length: " + curkat[0].metric.length);
-    //           //need a for loop to go through metrics
-    //           // for (j = 0; j < curkat[0].metric.length; j++) {
-    //           //   // logs the array of metric document id's
-    //           //   console.log("metric[" + j + "]: " + curkat[0].metric[j]);
-    //           //   $.getJSON("/getAMetric" + curkat[0].metric[j], function(curmet) {
-    //           //     // logs the entire metric document
-    //           //     console.log("curmet: ", curmet);
-    //           //     // logs the age of each metric document, then other fields
-    //           //     console.log("curmet[0].age: ", curmet[0].age);
-    //           //     kittenAges.push(curmet[0].age);
-    //           //     console.log("curmet[0].weight: ", curmet[0].weight);
-    //           //     kittenWeights.push(curmet[0].weight);
-    //           //     console.log("curmet[0].size: ", curmet[0].size);
-    //           //     kittenSizes.push(curmet[0].size);
-    //           //   });
-    //           // }
-    //       });
-    //    //}
+
+          function myFunction(item, index) {
+            console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
+            $.getJSON("/getAKitten" + item, function(curkat) {
+            // this logs the full kitten object from the db
+            console.log("curkat: ", curkat);
+            // this logs the kitten's id and name
+            console.log("curkat[0]._id: ", curkat[0]._id);
+            console.log("curkat[0].name: ", curkat[0].name);
+            // these were used to build arrays to print out later
+            // kittenIds.push(curkat[0]._id);
+            // kittenNames.push(curkat[0].name);
+            // console.log("kittenIds: ",  kittenIds);
+            // console.log("kittenNames: ", kittenNames);
+
+            // but trying to print directly to DOM
+            $("#currentKittens").append("<h4>" + 
+            curkat[0].name + "</h4><button type='submit' id='submitNewKittenMetrics' data-id=" + 
+            curkat[0]._id + ">Add Metrics</button>");
+
+            console.log("curkat[0].metric: ", curkat[0].metric);
+            console.log("curkat[0].metric.length: " + curkat[0].metric.length);
+            // no for each metric (of each kitten), retrieve the data
+              curkat[0].metric.forEach(innerForEach);
+
+                function innerForEach(innerItem, innerIndex) {
+                // logs the array of metric document id's
+                  console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " - " + innerItem);
+                  $.getJSON("/getAMetric" + innerItem, function(curmet) {
+                    // logs the entire metric document
+                    console.log("curmet: ", curmet);
+                    // logs the age of each metric document, then other fields
+                    console.log("curmet[0].age: ", curmet[0].age);
+                    //kittenAges.push(curmet[0].age);
+                    console.log("curmet[0].weight: ", curmet[0].weight);
+                    //kittenWeights.push(curmet[0].weight);
+                    console.log("curmet[0].size: ", curmet[0].size);
+                    //kittenSizes.push(curmet[0].size);
+                    // console.log("kittenAges: ", kittenAges);
+                    // console.log("kittenWeights: ", kittenWeights);
+                    // console.log("kittenSizes: ", kittenSizes);
+                    $("#currentKittens").append("<br><h5>" + 
+                    curmet[0].age + "<br>" +
+                    curmet[0].weight + "<br>" +
+                    curmet[0].size + "</h5>");
+                  });
+                }
+            });
+          }
        });
-     });
-     function myFunction(item, index) {
-      console.log("THIS! --- " + index + " : " + item ); 
-    }
-    
+     });  
 
     $(document).on("click", "#showAllKittens", function(event) {
       event.preventDefault();
