@@ -56,9 +56,6 @@ $(document).ready(function(){
 
     // then, the user enters the metrics for a kitten in the modal, and submits it.
     // that id is stored in the kitten document
-    // currently, this is ONLY for entering a brand new kitten.
-    // If a kitten already exists, and the user wants to enter new metrics,
-    // THAT kitten's id will have to be retrieved - NEED TO DO THIS
     $(document).on("click", "#submitKittenMetrics", function(event) {
       event.preventDefault();
         $.ajax({
@@ -81,127 +78,51 @@ $(document).ready(function(){
           });
     });
 
-    // This is a first attempt at getting all the existing kittens for a particular user
-    // from the database, and the associated metrics for each kitten.
-    // currently (2/12), arrays are getting pushed into incorrectly.
-    // due to javascript's asynch??
-    // can I push info into the arrays one kitten, and one set of metrics at a time???
-    //
-    $(document).on("click", "#getAllKittens", function(event) {
-      event.preventDefault();
-      // empty out the div that shows the user's current kittens and metrics
-      $("#currentKittens").empty();
-      // get the current user document
-      $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
-        console.log("inside #getAllKittens, current user from db, currentUser: ", currentUser);
-        console.log(currentUser[0]);
-        //how many kittens in the user's document. It's an array of kitten references
-        console.log("currentUser[0].kitten.length: " + currentUser[0].kitten.length);
-        // this for loop goes through each kitten of the user
-        // gets the kitten document and name of kitten, then
-        // gets the array of metrics for each kitten
-        for (i = 0; i < currentUser[0].kitten.length; i++) {
-          // this logs the id's for each kitten to the console
-          console.log("kitten[" + i + "]: " + currentUser[0].kitten[i]);
-          $.getJSON("/getAKitten" + currentUser[0].kitten[i], function(curkat) {
-            //this logs the full kitten object from the db
-            console.log("curkat: ", curkat);
-            // this logs the kitten's id and name
-            console.log("curkat[0]._id: ", curkat[0]._id);
-            console.log("curkat[0].name: ", curkat[0].name);
-            // push each kitten id and name into a variable array kittenIds and kittenNames
-            kittenIds.push(curkat[0]._id);
-            kittenNames.push(curkat[0].name);
-            // and then the array of metric id references  -- next, go through each metric
-            console.log("curkat[0].metric: ", curkat[0].metric);
-            console.log("curkat[0].metric.length: " + curkat[0].metric.length);
-              //need a for loop to go through metrics
-              for (j = 0; j < curkat[0].metric.length; j++) {
-                // logs the array of metric document id's
-                console.log("metric[" + j + "]: " + curkat[0].metric[j]);
-                $.getJSON("/getAMetric" + curkat[0].metric[j], function(curmet) {
-                  // logs the entire metric document
-                  console.log("curmet: ", curmet);
-                  // logs the age of each metric document, then other fields
-                  console.log("curmet[0].age: ", curmet[0].age);
-                  kittenAges.push(curmet[0].age);
-                  console.log("curmet[0].weight: ", curmet[0].weight);
-                  kittenWeights.push(curmet[0].weight);
-                  console.log("curmet[0].size: ", curmet[0].size);
-                  kittenSizes.push(curmet[0].size);
-                });
-              }
-          });
-        }
-      });
-    });
-
     // this is the 2nd attempt at getting all the kittens and metrics
     // instead of for loops, trying .forEach method.
     // the id of this function is changed to #getAllKittensForEach.
-    // add a button for this.
     $(document).on("click", "#getAllKittensForEach", function(event) {
       event.preventDefault();
       // empty out the div that shows the user's current kittens and metrics
       $("#currentKittens").empty();
       // get the current user document
       $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
-        console.log("inside #getAllKittensForEach, current user from db, currentUser: ", currentUser);
         console.log("currentUser[0]: ", currentUser[0]);
-        //how many kittens in the user's document. It's an array of kitten references
-        console.log("this is this user's array of kitten id's: " + currentUser[0].kitten);
-        console.log("currentUser[0].kitten.length: " + currentUser[0].kitten.length);
-      
         // this .forEach goes through each kitten of the user
         // gets the kitten document and name of kitten, then
         // gets the array of metrics for each kitten
-        //for (i = 0; i < currentUser[0].kitten.length; i++) {
-        currentUser[0].kitten.forEach(myFunction);
+        currentUser[0].kitten.forEach(outerForEach);
 
-          function myFunction(item, index) {
+          function outerForEach(item, index) {
             console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
             $.getJSON("/getAKitten" + item, function(curkat) {
-            // this logs the full kitten object from the db
-            console.log("curkat: ", curkat);
             // this logs the kitten's id and name
+            // then, metric array and length
             console.log("curkat[0]._id: ", curkat[0]._id);
             console.log("curkat[0].name: ", curkat[0].name);
-            // these were used to build arrays to print out later
-            // kittenIds.push(curkat[0]._id);
-            // kittenNames.push(curkat[0].name);
-            // console.log("kittenIds: ",  kittenIds);
-            // console.log("kittenNames: ", kittenNames);
-
-            // but trying to print directly to DOM
-            $("#currentKittens").append("<h4>" + 
-            curkat[0].name + "</h4><button type='submit' id='submitNewKittenMetrics' data-id=" + 
-            curkat[0]._id + ">Add Metrics</button>");
-
             console.log("curkat[0].metric: ", curkat[0].metric);
             console.log("curkat[0].metric.length: " + curkat[0].metric.length);
-            // no for each metric (of each kitten), retrieve the data
+            // now for each metric (of each kitten), retrieve the data
               curkat[0].metric.forEach(innerForEach);
 
                 function innerForEach(innerItem, innerIndex) {
                 // logs the array of metric document id's
                   console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " - " + innerItem);
                   $.getJSON("/getAMetric" + innerItem, function(curmet) {
-                    // logs the entire metric document
-                    console.log("curmet: ", curmet);
                     // logs the age of each metric document, then other fields
                     console.log("curmet[0].age: ", curmet[0].age);
-                    //kittenAges.push(curmet[0].age);
                     console.log("curmet[0].weight: ", curmet[0].weight);
-                    //kittenWeights.push(curmet[0].weight);
                     console.log("curmet[0].size: ", curmet[0].size);
-                    //kittenSizes.push(curmet[0].size);
-                    // console.log("kittenAges: ", kittenAges);
-                    // console.log("kittenWeights: ", kittenWeights);
-                    // console.log("kittenSizes: ", kittenSizes);
-                    $("#currentKittens").append("<br><h5>" + 
-                    curmet[0].age + "<br>" +
-                    curmet[0].weight + "<br>" +
-                    curmet[0].size + "</h5>");
+                    // Write info to DOM
+                    // Currently, 2/17, asynch is still a problem. the info is not 
+                    // being written in order of kitten ages.
+                    // BUT, the info is correct for each kitten (and User)
+                    $("#currentKittens").append("<h4>" + 
+                      curkat[0].name + "</h4><button type='submit' id='submitNewKittenMetrics' data-id=" + 
+                      curkat[0]._id + ">Add Metrics</button><br><h5>" + 
+                      curmet[0].age + "<br>" +
+                      curmet[0].weight + "<br>" +
+                      curmet[0].size + "</h5>");
                   });
                 }
             });
@@ -209,33 +130,8 @@ $(document).ready(function(){
        });
      });  
 
-    $(document).on("click", "#showAllKittens", function(event) {
-      event.preventDefault();
-      // print out the built arrays
-      console.log("building the arrays, kittenIds", kittenIds);
-      console.log("building the arrays, kittenNames", kittenNames);
-      console.log("building the arrays,  kittenAges", kittenAges);
-      console.log("building the arrays KittenWeights", kittenWeights);
-      console.log("building the arrays KittenSizes", kittenSizes);
-      // print the resulting filled kitten arrays to the DOM
-      console.log("SHOULD BE PRINTING TO DOM");
-      $("#currentKittens").empty();
-      for (i=0; i<kittenNames.length; i++) {
-        $("#currentKittens").append("<h4>" + 
-        kittenNames[i] + "</h4><button type='submit' id='submitNewKittenMetrics' data-id=" + 
-        kittenIds[i] + ">Add Metrics</button><h5>" + 
-        kittenAges[i] + "<br>" +
-        kittenWeights[i] + "<br>" +
-        kittenSizes[i] + "</h5>");
-      }
-      //empty out kitten arrays, they will be built over each time
-      kittenIds = [];
-      kittenNames = [];
-      kittenAges = [];
-      kittenWeights = [];
-      kittenSizes = [];
-    });
-
+    // This function is used as user clicks on the Add Metrics button (rendered from above)
+    // to add metrics to an existing kitten
     $(document).on("click", "#submitNewKittenMetrics", function(event) {
       event.preventDefault();
       $("#newKittenMetricModal").modal("show");
