@@ -26,10 +26,26 @@ app.use(express.static("public"));
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
+//may not need this since I added the function(err) callback below
 mongoose.Promise = Promise;
 // set up for deploying on heroku and developing local
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/littlecats";
-mongoose.connect(MONGODB_URI);
+  if (process.env.MONGODB_URI) {
+    mongoose.connect(process.env.MONGODB_URI);
+  } else {
+    mongoose.connect("mongodb://localhost:27017/littlecats", { 
+      useNewUrlParser: true, 
+      useUnifiedTopology: true 
+    }, function(err){
+      if(err){
+      console.log(err);
+    } else {
+      console.log("mongoose connection is successful on: " + "mongodb://localhost:27017/littlecats");
+    }
+   });
+  }
+//var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/littlecats", { useNewUrlParser: true };
+//mongoose.connect(MONGODB_URI);
+//mongoose.connect('mongodb://localhost:27017/Notification',{ useNewUrlParser: true });
 
 // // Routes
 require("./routes/api-routes.js")(app);
