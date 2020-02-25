@@ -43,6 +43,7 @@ mongoose.Promise = Promise;
     }
    });
   }
+// previous code (from class). Keeping for reference
 //var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/littlecats", { useNewUrlParser: true };
 //mongoose.connect(MONGODB_URI);
 //mongoose.connect('mongodb://localhost:27017/Notification',{ useNewUrlParser: true });
