@@ -78,15 +78,7 @@ $(document).ready(function(){
           });
     });
 
-    // get the kitten names
-    // instead of for loops, use .forEach method.
-    // I think I should have it do this function as the page loads????
-    // It's calling the function to print to DOM too soon.
-    // I could have it get the info., then when the user clicks the button,
-    // merely display to DOM
-    
-    // Now, this happens as the page loads.....
-    // will need to add a reload after adding a new kitten
+      // Now, this happens as the page loads.....
       // empty out the div that shows the user's current kittens and metrics
       $("#currentKittens").empty();
       // get the current user document
@@ -96,6 +88,7 @@ $(document).ready(function(){
         // this .forEach goes through each kitten of the user
         // It gets the kitten document and name of kitten, then
         // gets the array of metric Ids for each kitten. currenUser[0].kitten is an array
+        
         currentUser[0].kitten.forEach(outerForEach);
         
           function outerForEach(item, index) {
@@ -106,17 +99,60 @@ $(document).ready(function(){
               console.log("curkat[0]._id: ", curkat[0]._id);
               console.log("curkat[0].name: ", curkat[0].name);
               // this prints to DOM while the .forEach goes through the array
-              $("#currentKittens").append("<h4>Kitten " + curkat[0].name + "</h4>");
+              //$("#currentKittens").append("<h4>Kitten " + curkat[0].name + "</h4>");
               console.log("curkat[0].metric: ", curkat[0].metric);
               console.log("curkat[0].metric.length: " + curkat[0].metric.length);
               // trying to push the name data into the appropriate array, 
               // and writing them to DOM later, as well as inside the .forEach
               // kittenNames SHOULD be in order... but it's not
+              // print kittenNames AFTER both .forEach
               kittenNames.push(curkat[0].name);
               console.log("kittenNames: " + kittenNames);
+              // this prints the names to the DOM before calling the metric .forEach
+              // using the array of names as it comes out of the .getJSON
+              // $("#currentKittens").append("<h4>Kitten: " + 
+              //   curkat[0].name + "</h4>");
+
+              // here, going to add in the retrieval of each metric for each kitten again.
+              //I don't think this works
+              curkat[0].metric.forEach(innerForEach);
+              function innerForEach(innerItem, innerIndex) {
+              // logs the array of metric document id's
+                console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " - " + innerItem);
+                $.getJSON("/getAMetric" + innerItem, function(curmet) {
+                  // logs the age of each metric document, then other fields
+                  console.log("curmet[0].age: ", curmet[0].age);
+                  console.log("curmet[0].weight: ", curmet[0].weight);
+                  console.log("curmet[0].size: ", curmet[0].size);
+                  kittenAges.push(curmet[0].age);
+                  kittenWeights.push(curmet[0].weight);
+                  kittenSizes.push(curmet[0].size);
+                  console.log("kittenAges: " + kittenAges);
+                  console.log("kittenWeights: " + kittenWeights);
+                  console.log("kittenSizes: " + kittenSizes);
+                  // Write info to DOM
+                  // Currently, 2/17, asynch is still a problem. the info is not 
+                  // being written in order of kitten ages.
+                  // BUT, the info is correct for each kitten (and User)
+                  // going to try pushing the info into the arrays (tried before, but not
+                  // with .forEach)
+                  // $("#currentKittens").append(
+                  //   //"<h4>Kitten: " + 
+                  //   //curkat[0].name + "</h4>
+                  //   "<h5>Age: " + 
+                  //   curmet[0].age + "<br>Weight: " +
+                  //   curmet[0].weight + "<br>Length: " +
+                  //   curmet[0].size + "</h5>");
+                });
+              }
+              //take out the button to add metrics. Put the data-id on the name of the kitten
+              // and make it the way user can add matrics.
+              // $("#currentKittens").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
+              //   curkat[0]._id + ">Add Metrics</button>");
             });
           }
-      });
+      }); 
+  
   // this function lists out the current user's kitten names
   $(document).on("click", "#getAllKittensForEach", function(event) {
     event.preventDefault();
@@ -130,6 +166,7 @@ $(document).ready(function(){
        kittenNames[i] + "</h4>");
     }
       //empty out the kitten names array so user can click the button as needed
+      // remember that the kittenNames array is buiilt (currently) when the page loads
     kittenNames = [];
   });
             
@@ -161,9 +198,9 @@ $(document).ready(function(){
 //                     // with .forEach)
 //                     $("#currentKittens").append("<h4>" + 
 //                       curkat[0].name + "</h4><button type='submit' id='submitNewKittenMetrics' data-id=" + 
-//                       curkat[0]._id + ">Add Metrics</button><br><h5>" + 
-//                       curmet[0].age + "<br>" +
-//                       curmet[0].weight + "<br>" +
+//                       curkat[0]._id + ">Add Metrics</button><br><h5>Age: " + 
+//                       curmet[0].age + "<br>Weight: " +
+//                       curmet[0].weight + "<br>Length: " +
 //                       curmet[0].size + "</h5>");
 //                   });
 //                 }
