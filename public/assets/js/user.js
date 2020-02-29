@@ -113,7 +113,7 @@ $(document).ready(function(){
         event.preventDefault();
         currentKittenid = $(this).attr("data-id");
         $.getJSON("/getAKitten" + currentKittenid, function(curkat) {
-          $("#currentKittens").append("<h4>Kitten: " + curkat[0].name + "</h4>");
+          $("#kittenMetrics").append("<h4>Kitten: " + curkat[0].name + "</h4>");
           console.log("curkat[0].metric: ", curkat[0].metric);
           console.log("curkat[0].metric.length: " + curkat[0].metric.length);
           curkat[0].metric.forEach(innerForEach);
@@ -123,13 +123,35 @@ $(document).ready(function(){
               console.log("curmet[0].age: ", curmet[0].age);
               console.log("curmet[0].weight: ", curmet[0].weight);
               console.log("curmet[0].size: ", curmet[0].size);
-              $("#currentKittens").append("<h5>Age: " + 
-                curmet[0].age + "<br>Weight: " +
-                curmet[0].weight + "<br>Length: " +
+              kittenAges.push(curmet[0].age);
+              kittenWeights.push(curmet[0].weight);
+              kittenSizes.push(curmet[0].size);
+              console.log("the Agesarray: " + kittenAges);
+              console.log("the Weightsarray: " + kittenWeights);
+              console.log("the Sizesarray: " + kittenSizes);
+              $("#kittenMetrics").append("<h5>oldAge: " + 
+                curmet[0].age + "<br>oldWeight: " +
+                curmet[0].weight + "<br>oldLength: " +
                 curmet[0].size + "</h5><br>");
             });
           }
         });
+        // Now print the newly created arrays to the Dom
+        if (kittenAges !== []) {
+          for (i=0; i<kittenAges.length; i++) {
+            console.log("I'm INSIDE THE FOR LOOP");
+            $("#kittenMetrics").append("<h5>Age: " + 
+                kittenAges[i] + "<br>Weight: " +
+                kittenWeights[i] + "<br>Length: " +
+                kittenSizes[i] + "</h5><br>");
+          }
+        } else {
+          console.log("NO ARRAYS!!!!!");
+        }
+        //empty out arrays before clicking a new kitten
+        kittenAges = [];
+        kittenWeights = [];
+        kittenSizes = [];
       });
               //this adding a button needs to be somewhere for user to add new metrics
               // $("#currentKittens").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
