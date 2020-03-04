@@ -3,7 +3,7 @@
 // get the id of the current user from login.js file for
 // currently logged in user.
 var currentUserid = localStorage.getItem("currentUserid");
-var currentKittenid = "";
+var currentKittenId = "";
 var kittenIds = [];
 var kittenNames = [];
 var kittenAges = [];
@@ -80,7 +80,6 @@ $(document).ready(function(){
 
       // Now, this happens as the page loads.....
       // empty out the div that shows the user's current kittens and metrics
-      // I may regret this as I don't really want the div emptied out as the page loads every time
       $("#currentKittens").empty();
       // get the current user document
       $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
@@ -109,14 +108,21 @@ $(document).ready(function(){
           }
       });
    // this function lists an individual kitten's current metrics
+   // based on the id of the kitten as attached to individual buttons
       $(document).on("click", "#listMetrics", function(event) {
         event.preventDefault();
-        currentKittenid = $(this).attr("data-id");
-        $.getJSON("/getAKitten" + currentKittenid, function(curkat) {
+        $("#kittenMetrics").empty();
+        currentKittenId = $(this).attr("data-id");
+        // gets the array of metrics associated with the current kitten
+        $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
+          // appends the name of the current kitten
           $("#kittenMetrics").append("<h4>Kitten: " + curkat[0].name + "</h4>");
           console.log("curkat[0].metric: ", curkat[0].metric);
           console.log("curkat[0].metric.length: " + curkat[0].metric.length);
+
+          // this .forEach goes through each metric id to obtain associated metrics from db
           curkat[0].metric.forEach(innerForEach);
+
           function innerForEach(innerItem, innerIndex) {
             console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " - " + innerItem);
             $.getJSON("/getAMetric" + innerItem, function(curmet) {
@@ -126,32 +132,41 @@ $(document).ready(function(){
               kittenAges.push(curmet[0].age);
               kittenWeights.push(curmet[0].weight);
               kittenSizes.push(curmet[0].size);
-              console.log("the Agesarray: " + kittenAges);
-              console.log("the Weightsarray: " + kittenWeights);
-              console.log("the Sizesarray: " + kittenSizes);
+              console.log("kittenAges: " + kittenAges);
+              console.log("kittenWeights: " + kittenWeights);
+              console.log("kittenSizes: " + kittenSizes);
+              // for checking: writing these to DOM will be removed later as the assembled
+              // array of metrices must be sorted before printin to DOM
               $("#kittenMetrics").append("<h5>oldAge: " + 
                 curmet[0].age + "<br>oldWeight: " +
                 curmet[0].weight + "<br>oldLength: " +
                 curmet[0].size + "</h5><br>");
+              console.log("kittenAges.length = " + kittenAges.length);
+              console.log("curkat[0].metric.length = " + curkat[0].metric.length);
+              // only print the arrays of kitten metrics to DOM if they are completely finished
+              if (kittenAges.length === curkat[0].metric.length) {
+                showDom();
+              }
             });
           }
-        });
-        // Now print the newly created arrays to the Dom
-        if (kittenAges !== []) {
-          for (i=0; i<kittenAges.length; i++) {
-            console.log("I'm INSIDE THE FOR LOOP");
-            $("#kittenMetrics").append("<h5>Age: " + 
-                kittenAges[i] + "<br>Weight: " +
-                kittenWeights[i] + "<br>Length: " +
-                kittenSizes[i] + "</h5><br>");
+          // function to print the newly created arrays to the Dom
+          // the first time, these arrays are not filled yet, printing nothing to DOM
+          function showDom() {
+            console.log("inside function showDom, kittenAges: " + kittenAges);
+              for (i=0; i<kittenAges.length; i++) {
+                console.log("I'm INSIDE THE FOR LOOP");
+                // finally, write info from db to DOM for user
+                $("#kittenMetrics").append("<h5>Age: " + 
+                    kittenAges[i] + "<br>Weight: " +
+                    kittenWeights[i] + "<br>Length: " +
+                    kittenSizes[i] + "</h5><br>");
+              }
+              //empty out arrays before clicking a new kitten
+              kittenAges = [];
+              kittenWeights = [];
+              kittenSizes = [];
           }
-        } else {
-          console.log("NO ARRAYS!!!!!");
-        }
-        //empty out arrays before clicking a new kitten
-        kittenAges = [];
-        kittenWeights = [];
-        kittenSizes = [];
+        });
       });
               //this adding a button needs to be somewhere for user to add new metrics
               // $("#currentKittens").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
