@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/realonlytomd/kittens#readme",
   "dependencies": {
+    "array-rearrange": "^2.2.2",
     "axios": "^0.19.0",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
@@ -27,6 +28,8 @@
     "moment": "^2.24.0",
     "mongoose": "^5.8.4",
     "morgan": "^1.9.1",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "requirejs": "^2.3.6",
+    "sort-ids": "^2.1.0"
   }
 }

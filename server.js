@@ -7,6 +7,18 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 // var cheerioAdv = require("cheerio-advanced-selectors");
 
+// // require array sort npms
+// // requirejs added so require can be used client side
+// var requirejs = require('requirejs');
+// requirejs.config({
+//   //Pass the top-level main.js/index.js require
+//   //function to requirejs so that node modules
+//   //are loaded relative to the top-level JS file.
+//   nodeRequire: require
+// });
+// // var sortAges = require("sort-ids");
+// // var reorder = require("array-rearrange");
+
 // Require all models
 var db = require("./models");
 
@@ -37,7 +49,7 @@ mongoose.Promise = Promise;
       useUnifiedTopology: true 
     }, function(err){
       if(err){
-      console.log(err);
+      console.log("am I gettting an error?", err);
     } else {
       console.log("mongoose connection is successful on: " + "mongodb://localhost:27017/littlecats");
     }

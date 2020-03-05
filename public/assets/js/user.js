@@ -1,14 +1,27 @@
 // js code for the user.html page
 
+// // require "require" as it's not typically client side
+// var requirejs = require('requirejs');
+// // require sort-ids npm
+// var sortAges = requirejs("sort-ids");
+// var reorder = requirejs("array-rearrange");
+
 // get the id of the current user from login.js file for
 // currently logged in user.
 var currentUserid = localStorage.getItem("currentUserid");
+//these 2 can be removed?
 var currentKittenId = "";
 var kittenIds = [];
 var kittenNames = [];
+//these also aren't needed out of the function their created in
 var kittenAges = [];
 var kittenWeights = [];
 var kittenSizes = [];
+// these are needed across functions as they are sorted in one, and printed to DOM
+// there will be many more metrics in future
+// var sortedAges = [];
+// var sortedWeights = [];
+// var sortedSizes = [];
 
 $(document).ready(function(){
     console.log("hello from user.js");
@@ -129,22 +142,33 @@ $(document).ready(function(){
               console.log("curmet[0].age: ", curmet[0].age);
               console.log("curmet[0].weight: ", curmet[0].weight);
               console.log("curmet[0].size: ", curmet[0].size);
+              //create the arrays of kitten metrics
               kittenAges.push(curmet[0].age);
               kittenWeights.push(curmet[0].weight);
               kittenSizes.push(curmet[0].size);
-              console.log("kittenAges: " + kittenAges);
-              console.log("kittenWeights: " + kittenWeights);
-              console.log("kittenSizes: " + kittenSizes);
               // for checking: writing these to DOM will be removed later as the assembled
               // array of metrices must be sorted before printin to DOM
-              $("#kittenMetrics").append("<h5>oldAge: " + 
-                curmet[0].age + "<br>oldWeight: " +
-                curmet[0].weight + "<br>oldLength: " +
-                curmet[0].size + "</h5><br>");
+              // $("#kittenMetrics").append("<h5>oldAge: " + 
+              //   curmet[0].age + "<br>oldWeight: " +
+              //   curmet[0].weight + "<br>oldLength: " +
+              //   curmet[0].size + "</h5><br>");
               console.log("kittenAges.length = " + kittenAges.length);
               console.log("curkat[0].metric.length = " + curkat[0].metric.length);
               // only print the arrays of kitten metrics to DOM if they are completely finished
               if (kittenAges.length === curkat[0].metric.length) {
+                // perform sort function to get arrays in order of kitten ages
+                console.log("kittenAges: " + kittenAges);
+                console.log("kittenWights: " + kittenWeights);
+                console.log("kittenSizes: " + kittenSizes);                
+                // var ages = sortAges(kittenAges);
+                // sortedAges = reorder(kittenAges, ages);
+                // sortedWeights = reorder(kittenWeights, ages);
+                // sortedSizes = reorder(kittenSizes, ages);
+                // console.log("sortedAges: " + sortedAges);
+                // console.log("sortedWights: " + sortedWeights);
+                // console.log("sortedSizes: " + sortedSizes);
+
+                // call the function to print arrays to the DOM
                 showDom();
               }
             });
@@ -165,6 +189,9 @@ $(document).ready(function(){
               kittenAges = [];
               kittenWeights = [];
               kittenSizes = [];
+              // sortedAges = [];
+              // sortedWeights = [];
+              // sortedSizes = [];
           }
         });
       });
