@@ -25,8 +25,9 @@ module.exports = function(router) {
         // need to convert the numbers in ages array from strings to number
         var kittenAges = req.query.ages;
         numberKittenAges = kittenAges.map(Number);
+        console.log("numberKittenAges: ", numberKittenAges);
         var ages = sortAges(numberKittenAges);
-        console.log("age: ", ages);
+        console.log("ages: ", ages);
         console.log("2why isn't the above showing up?");
         var sortedAges = reorder(req.query.ages, ages);
         console.log("3why isn't the above showing up?");
