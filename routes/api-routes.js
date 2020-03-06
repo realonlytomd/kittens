@@ -1,4 +1,4 @@
-//  need to change to kittens. most of the functions remain however
+
 // nothing in timer
 //
 // new file that contains the api route information.
@@ -7,8 +7,42 @@
 var express = require("express");
 var router = express.Router();
 var db = require("../models");
+var sortAges = require("sort-ids");
+var reorder = require("array-rearrange");
+
 // Routes
 module.exports = function(router) {
+
+    // experimental route to take kitten metric arrays into the server side,
+    // and perform sort fuctions (using require) that isn't available client side,
+    // and then feed it back to the client to be displayed on DOM
+    router.get("/sortArrays", function(req, res) {
+        console.log("from /sortArrays, req.query: ", req.query);
+        console.log("from /sortArrays, req.query.ages: ", req.query.ages);
+        console.log("from /sortArrays, req.query.weights: ", req.query.weights);
+        console.log("from /sortArrays, req.query.sizes: ", req.query.sizes);
+        console.log("1why isn't the above showing up?");
+        // need to convert the numbers in ages array from strings to number
+        var kittenAges = req.query.ages;
+        numberKittenAges = kittenAges.map(Number);
+        var ages = sortAges(numberKittenAges);
+        console.log("age: ", ages);
+        console.log("2why isn't the above showing up?");
+        var sortedAges = reorder(req.query.ages, ages);
+        console.log("3why isn't the above showing up?");
+        var sortedWeights = reorder(req.query.weights, ages);
+        console.log("4why isn't the above showing up?");
+        var sortedSizes = reorder(req.query.sizes, ages);
+        console.log("5why isn't the above showing up?");
+        console.log("sortedAges: " + sortedAges);
+        console.log("6why isn't the above showing up?");
+        console.log("sortedWights: " + sortedWeights);
+        console.log("7why isn't the above showing up?");
+        console.log("sortedSizes: " + sortedSizes);
+        console.log("8why isn't the above showing up?");
+        
+    });
+
     // the CREATE route for storing a new topic and answer provided by a user
     router.get("/createTopic", function(req, res) {
         console.log("from /createTopic, req.query: ", req.query);
@@ -38,13 +72,6 @@ module.exports = function(router) {
     });
 
     // Route for creating a new user
-    // off the top of my head... dbUser can be set up above as a variable
-    // that is stored outside of just this function.
-    // that way, when  user currently logged in, (loggedIn === true),
-    // their user_id can be trieved and set back, so new kitten storage can be made
-    // just to that user.
-    // need to be sure it's also available with a user that has just logged in, 
-    // not just a new user.
     router.get("/createUser", function(req, res) {
         console.log("from /createUser, req.query: ", req.query);
         db.User.create(req.query)
@@ -149,9 +176,7 @@ module.exports = function(router) {
             });
     });
 
-    // first attempt at the Route for getting all of the kittens from a particular user from the db
-    // not right: need the particlar user, then out of that user, get the kittens name,
-    // and metrics....
+    // Route for getting all of the kittens from a particular user from the db
     //This .get only gets the current user
     router.get("/getCurrentUser:id", function(req, res) {
         console.log("inside api-routes: req.params: ", req.params);
@@ -184,7 +209,7 @@ module.exports = function(router) {
             });
     });
 
-    //This route gets one kitten document from kitten collection
+    //This route gets metric document from kitten collection
     router.get("/getAMetric:id", function(req, res) {
         console.log("inside api-routes: req.params: ", req.params);
         // need to find the correct user, THEN all their kittens, 
@@ -192,7 +217,6 @@ module.exports = function(router) {
             .then(function(dbAMetric) {
                 res.json(dbAMetric);
                 console.log("from  route /getAMetric:id, dbAMetric: ", dbAMetric);
-                //console.log("dbCurrentUser.kitten.length", dbAKitten[0].kitten.length);
             })
             .catch(function(err) {
             // However, if an error occurred, send it to the client

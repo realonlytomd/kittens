@@ -16,8 +16,8 @@ var cheerio = require("cheerio");
 //   //are loaded relative to the top-level JS file.
 //   nodeRequire: require
 // });
-// // var sortAges = require("sort-ids");
-// // var reorder = require("array-rearrange");
+var sortAges = require("sort-ids");
+var reorder = require("array-rearrange");
 
 // Require all models
 var db = require("./models");

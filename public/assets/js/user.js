@@ -159,14 +159,21 @@ $(document).ready(function(){
                 // perform sort function to get arrays in order of kitten ages
                 console.log("kittenAges: " + kittenAges);
                 console.log("kittenWights: " + kittenWeights);
-                console.log("kittenSizes: " + kittenSizes);                
-                // var ages = sortAges(kittenAges);
-                // sortedAges = reorder(kittenAges, ages);
-                // sortedWeights = reorder(kittenWeights, ages);
-                // sortedSizes = reorder(kittenSizes, ages);
-                // console.log("sortedAges: " + sortedAges);
-                // console.log("sortedWights: " + sortedWeights);
-                // console.log("sortedSizes: " + sortedSizes);
+                console.log("kittenSizes: " + kittenSizes);
+                // now feed the arrays to the server side
+                $.ajax({
+                  method: "GET",
+                  url: "/sortArrays",
+                  data: {
+                      ages: kittenAges,
+                      weights: kittenWeights,
+                      sizes: kittenSizes
+                  }
+                })
+                .then(function() {
+                  //console.log("data from creation of topic (dbTopic) in user.js: ", dataCreateTopic);
+                });     
+                
 
                 // call the function to print arrays to the DOM
                 showDom();
