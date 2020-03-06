@@ -19,9 +19,9 @@ var kittenWeights = [];
 var kittenSizes = [];
 // these are needed across functions as they are sorted in one, and printed to DOM
 // there will be many more metrics in future
-// var sortedAges = [];
-// var sortedWeights = [];
-// var sortedSizes = [];
+var sortedAges = [];
+var sortedWeights = [];
+var sortedSizes = [];
 
 $(document).ready(function(){
     console.log("hello from user.js");
@@ -170,13 +170,17 @@ $(document).ready(function(){
                       sizes: kittenSizes
                   }
                 })
-                .then(function() {
-                  //console.log("data from creation of topic (dbTopic) in user.js: ", dataCreateTopic);
-                });     
-                
-
-                // call the function to print arrays to the DOM
-                showDom();
+                .then(function(sortedMetrics) {
+                  console.log("from creation of sortedMetrcis: ", sortedMetrics);
+                  sortedAges = sortedMetrics.ages;
+                  sortedWeights = sortedMetrics.weights;
+                  sortedSizes = sortedMetrics.sizes;
+                  console.log("sortedAges: " + sortedAges);
+                  console.log("sortedWights: " + sortedWeights);
+                  console.log("sortedSizes: " + sortedSizes);
+                  // call the function to print arrays to the DOM
+                  showDom();
+                });
               }
             });
           }
@@ -184,21 +188,26 @@ $(document).ready(function(){
           // the first time, these arrays are not filled yet, printing nothing to DOM
           function showDom() {
             console.log("inside function showDom, kittenAges: " + kittenAges);
+            console.log("inside function showDom, sortedAges: " + sortedAges);
               for (i=0; i<kittenAges.length; i++) {
                 console.log("I'm INSIDE THE FOR LOOP");
                 // finally, write info from db to DOM for user
                 $("#kittenMetrics").append("<h5>Age: " + 
-                    kittenAges[i] + "<br>Weight: " +
-                    kittenWeights[i] + "<br>Length: " +
-                    kittenSizes[i] + "</h5><br>");
+                  kittenAges[i] + "<br>Weight: " +
+                  kittenWeights[i] + "<br>Length: " +
+                  kittenSizes[i] + "</h5><br>");
+                $("#kittenMetrics").append("<h5>sortedAge: " + 
+                  sortedAges[i] + "<br>sortedWeight: " +
+                  sortedWeights[i] + "<br>sortedLength: " +
+                  sortedSizes[i] + "</h5><br>");
               }
               //empty out arrays before clicking a new kitten
               kittenAges = [];
               kittenWeights = [];
               kittenSizes = [];
-              // sortedAges = [];
-              // sortedWeights = [];
-              // sortedSizes = [];
+              sortedAges = [];
+              sortedWeights = [];
+              sortedSizes = [];
           }
         });
       });

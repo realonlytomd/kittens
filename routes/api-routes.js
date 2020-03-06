@@ -13,7 +13,7 @@ var reorder = require("array-rearrange");
 // Routes
 module.exports = function(router) {
 
-    // experimental route to take kitten metric arrays into the server side,
+    // route to take kitten metric arrays into the server side,
     // and perform sort fuctions (using require) that isn't available client side,
     // and then feed it back to the client to be displayed on DOM
     router.get("/sortArrays", function(req, res) {
@@ -21,27 +21,25 @@ module.exports = function(router) {
         console.log("from /sortArrays, req.query.ages: ", req.query.ages);
         console.log("from /sortArrays, req.query.weights: ", req.query.weights);
         console.log("from /sortArrays, req.query.sizes: ", req.query.sizes);
-        console.log("1why isn't the above showing up?");
         // need to convert the numbers in ages array from strings to number
         var kittenAges = req.query.ages;
         numberKittenAges = kittenAges.map(Number);
         console.log("numberKittenAges: ", numberKittenAges);
         var ages = sortAges(numberKittenAges);
         console.log("ages: ", ages);
-        console.log("2why isn't the above showing up?");
         var sortedAges = reorder(req.query.ages, ages);
-        console.log("3why isn't the above showing up?");
         var sortedWeights = reorder(req.query.weights, ages);
-        console.log("4why isn't the above showing up?");
         var sortedSizes = reorder(req.query.sizes, ages);
-        console.log("5why isn't the above showing up?");
         console.log("sortedAges: " + sortedAges);
-        console.log("6why isn't the above showing up?");
         console.log("sortedWights: " + sortedWeights);
-        console.log("7why isn't the above showing up?");
         console.log("sortedSizes: " + sortedSizes);
-        console.log("8why isn't the above showing up?");
-        
+        var sortedMetrics = {
+            ages: sortedAges,
+            weights: sortedWeights,
+            sizes: sortedSizes
+        };
+        console.log("sortedMetrics: ", sortedMetrics);
+        res.json(sortedMetrics);
     });
 
     // the CREATE route for storing a new topic and answer provided by a user
