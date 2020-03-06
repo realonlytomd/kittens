@@ -73,7 +73,7 @@ $(document).ready(function(){
       event.preventDefault();
         $.ajax({
             method: "POST",
-            url: "/kittenMetrics/" + currentKittenid,
+            url: "/kittenMetrics/" + currentKittenId,
             data: {
                 age: $("#kittenAgeInput").val().trim(),
                 weight: $("#kittenWeightInput").val().trim(),
@@ -208,18 +208,21 @@ $(document).ready(function(){
               sortedAges = [];
               sortedWeights = [];
               sortedSizes = [];
+              //this adds a button for user to add new metrics
+              console.log("curkat[0]._id: " + curkat[0]._id);
+              $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
+                curkat[0]._id + ">Add Metrics</button>");
           }
         });
       });
-              //this adding a button needs to be somewhere for user to add new metrics
-              // $("#currentKittens").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
-              //   curkat[0]._id + ">Add Metrics</button>");
+      
+      
     // This function is used as user clicks on the Add Metrics button (rendered from above)
     // to add metrics to an existing kitten, also while other metrics have been listed
     $(document).on("click", "#submitNewKittenMetrics", function(event) {
       event.preventDefault();
       $("#newKittenMetricModal").modal("show");
-      currentKittenid = $(this).attr("data-id");
+      currentKittenId = $(this).attr("data-id");
     });
 
 
