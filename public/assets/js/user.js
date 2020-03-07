@@ -57,8 +57,8 @@ $(document).ready(function(){
         .then(function(dataKittenUser) {
             console.log("User after creation of new kitten (dataKittenUser) in user.js: ", dataKittenUser);
             // save id of current (last created kitten)
-            currentKittenid = dataKittenUser.kitten[dataKittenUser.kitten.length - 1];
-            console.log("currentKittenid: " + currentKittenid);
+            currentKittenId = dataKittenUser.kitten[dataKittenUser.kitten.length - 1];
+            console.log("currentKittenId: " + currentKittenId);
             // empty out the input fields
             $("#kittenNameInput").val("");
             // Hide the current modal, then bring up 2nd modal that allows user to enter kitten metrics.
