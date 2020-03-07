@@ -7,8 +7,14 @@
 var express = require("express");
 var router = express.Router();
 var db = require("../models");
+// require method to sort ages array by number
 var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
+
+// initialize sorted arrays
+var sortedAges = [];
+var sortedWeights = [];
+var sortedSizes = [];
 
 // Routes
 module.exports = function(router) {
@@ -25,11 +31,17 @@ module.exports = function(router) {
         var kittenAges = req.query.ages;
         numberKittenAges = kittenAges.map(Number);
         console.log("numberKittenAges: ", numberKittenAges);
-        var ages = sortAges(numberKittenAges);
-        console.log("ages: ", ages);
-        var sortedAges = reorder(req.query.ages, ages);
-        var sortedWeights = reorder(req.query.weights, ages);
-        var sortedSizes = reorder(req.query.sizes, ages);
+        var newIndex = sortAges(numberKittenAges);
+        console.log("newIndex: ", newIndex);
+        // reorder method below seems to be breaking, so do a for loop to reorder arrays
+        for (var i=0; i<numberKittenAges.length; i++) {
+            sortedAges[i]=req.query.ages[newIndex[i]];
+            sortedWeights[i]=req.query.weights[newIndex[i]];
+            sortedSizes[i]=req.query.sizes[newIndex[i]];
+        }
+        // var sortedAges = reorder(req.query.ages, ages);
+        // var sortedWeights = reorder(req.query.weights, ages);
+        // var sortedSizes = reorder(req.query.sizes, ages);
         console.log("sortedAges: " + sortedAges);
         console.log("sortedWights: " + sortedWeights);
         console.log("sortedSizes: " + sortedSizes);
@@ -40,6 +52,9 @@ module.exports = function(router) {
         };
         console.log("sortedMetrics: ", sortedMetrics);
         res.json(sortedMetrics);
+        sortedAges = [];
+        sortedWeights = [];
+        sortedSizes = [];
     });
 
     // the CREATE route for storing a new topic and answer provided by a user
