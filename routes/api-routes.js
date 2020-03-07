@@ -20,7 +20,7 @@ var sortedSizes = [];
 module.exports = function(router) {
 
     // route to take kitten metric arrays into the server side,
-    // and perform sort fuctions (using require) that isn't available client side,
+    // and perform sort fuctions (using require("sort-ids")) that isn't available client side,
     // and then feed it back to the client to be displayed on DOM
     router.get("/sortArrays", function(req, res) {
         console.log("from /sortArrays, req.query: ", req.query);
