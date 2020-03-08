@@ -114,8 +114,8 @@ $(document).ready(function(){
               console.log("curkat[0].name: ", curkat[0].name);
               // this prints the names to the DOM 
               // as a button, with that kitten's id as data-id
-              $("#currentKittens").append("<button type='submit' id='listMetrics' data-id=" +
-                curkat[0]._id + ">" + 
+              $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +
+                curkat[0]._id + ">" +
                 curkat[0].name + "</button>");
             });
           }
@@ -130,6 +130,8 @@ $(document).ready(function(){
         $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
           // appends the name of the current kitten
           $("#kittenMetrics").append("<h4>Kitten: " + curkat[0].name + "</h4>");
+          $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
+            curkat[0]._id + ">Add Metrics</button><br>");
           console.log("curkat[0].metric: ", curkat[0].metric);
           console.log("curkat[0].metric.length: " + curkat[0].metric.length);
 
@@ -192,14 +194,14 @@ $(document).ready(function(){
               for (i=0; i<kittenAges.length; i++) {
                 console.log("I'm INSIDE THE FOR LOOP");
                 // finally, write info from db to DOM for user
-                $("#kittenMetrics").append("<h5>Age: " + 
-                  kittenAges[i] + "<br>Weight: " +
-                  kittenWeights[i] + "<br>Length: " +
-                  kittenSizes[i] + "</h5><br>");
-                $("#kittenMetrics").append("<h5>sortedAge: " + 
-                  sortedAges[i] + "<br>sortedWeight: " +
-                  sortedWeights[i] + "<br>sortedLength: " +
-                  sortedSizes[i] + "</h5><br>");
+                // $("#kittenMetrics").append("<h5>Age: " + 
+                //   kittenAges[i] + "<br>Weight: " +
+                //   kittenWeights[i] + "<br>Length: " +
+                //   kittenSizes[i] + "</h5><br>");
+                $("#kittenMetrics").append("<div class='metricInfo'><h5>Age: " + 
+                  sortedAges[i] + "<br>Weight: " +
+                  sortedWeights[i] + "<br>Length: " +
+                  sortedSizes[i] + "</h5></div>");
               }
               //empty out arrays before clicking a new kitten
               kittenAges = [];
@@ -210,8 +212,6 @@ $(document).ready(function(){
               sortedSizes = [];
               //this adds a button for user to add new metrics
               console.log("curkat[0]._id: " + curkat[0]._id);
-              $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
-                curkat[0]._id + ">Add Metrics</button>");
           }
         });
       });

@@ -11,12 +11,22 @@ body {
     background-color: aliceblue;
 }
 
+button.kittenButtons {
+    margin-left: 5px;
+}
+
+/*button#submitNewKittenMetrics {
+    display: inline-block;
+}*/
+
+.metricInfo {
+    width: 110px;
+    display: inline-block;
+}
+
 p {
     margin-top: 24px;
     margin-bottom: 8px;
-    margin-right: 4px;
-}
-.deleteArticle {
     margin-right: 4px;
 }
 
