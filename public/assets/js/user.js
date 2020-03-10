@@ -26,6 +26,15 @@ var sortedSizes = [];
 $(document).ready(function(){
     console.log("hello from user.js");
     console.log("from user.js, currentUserid is ", currentUserid);
+
+    // function to bring up the countdown clock to feed the kitten
+    $(document).on("click", "#feedKitten", function(event) {
+      event.preventDefault();
+      // need to get inputs from user on how long to set the timer for
+      // then the function to bring up the click on the DOM
+      // and show the counting down clock
+      // will need an alarm or whatever to show countdown has been reached
+    });
     // this function happens when the user clicks the button
     // to get the modal with the form to enter the name for a new kitten
     // It populates the specific user in the db with the kitten and metric schema
@@ -88,6 +97,7 @@ $(document).ready(function(){
             $("#kittenSizeInput").val("");
             // then hide this modal
             $("#newKittenMetricModal").modal("hide");
+            window.location.reload();
           });
     });
 
@@ -97,6 +107,8 @@ $(document).ready(function(){
       // get the current user document
       $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
         console.log("currentUser[0]: ", currentUser[0]);
+        console.log("currentUser[0].name: ", currentUser[0].name);
+        $("span#currentUser").text(currentUser[0].name);
         console.log("currentUser[0].kitten: ", currentUser[0].kitten);
         // this .forEach goes through each kitten of the user
         // It gets the kitten document and name of kitten, then prints row of buttons
