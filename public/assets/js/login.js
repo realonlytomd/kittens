@@ -16,14 +16,13 @@ $(document).ready(function(){
     // didn't work previously without the event.preventDefault - always use
     event.preventDefault();
     currentUser = $("#userName-input").val().trim();
-    makeCapital(userNameInput);
-    
-    console.log("currentUser: " + currentUser);
+    console.log("before currentUser: " + currentUser);
+    currentUser = currentUser.charAt(0).toUpperCase() + currentUser.slice(1).toLowerCase();
+    console.log("after currentUser: " + currentUser);
     currentPassword = $("#password-input").val().trim();
-    currentPassword.toLowerCase();
-    console.log("currentPassword: " + currentPassword);
-    console.log("currentUser: " + currentUser);
-    console.log("currentPassword: " + currentPassword);
+    console.log("before currentPassword: " + currentPassword);
+    currentPassword = currentPassword.toLowerCase();
+    console.log("after currentPassword: " + currentPassword);
     // Then get all the current users who've ever logged in 
     $.getJSON("/getAllUsers", function(allUsers) {
       console.log("allUsers after getting them from db: ", allUsers);
@@ -72,14 +71,16 @@ $(document).ready(function(){
   $(document).on("click", "#signupUser", function(event) {
     event.preventDefault();
     userNameInput = $("#newUserName-input").val().trim();
-    makeCapital(userNameInput);
-    function makeCapital(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-    }
-    console.log("userNameInput: " + userNameInput);
+    console.log("before userNameInput: " + userNameInput);
+    
+    userNameInput = userNameInput.charAt(0).toUpperCase() + userNameInput.slice(1).toLowerCase();
+    
+    console.log("after userNameInput: " + userNameInput);
     passwordInput = $("#newPassword-input").val().trim();
-    passwordInput.toLowerCase();
-    console.log("passwordInput: " + passwordInput);
+    console.log("before passwordInput: " + passwordInput);
+    passwordInput = passwordInput.toLowerCase();
+    console.log("after passwordInput: " + passwordInput);
+    
     // Need to add a check to see that both userNameInput and passwordInput actualy exist
     //
     //
