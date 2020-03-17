@@ -42,7 +42,7 @@ $(document).ready(function(){
           console.log("from login.js, currentUser_id is " + currentUser_id);
           // set to local storage to be accessible in user.js so
           // currently logged in user can post to their db values
-          localStorage.setItem('currentUserid', currentUser_id);
+          localStorage.setItem('currentUserId', currentUser_id);
           // zero out input fields
           $("#userName-input").val("");
           $("#password-input").val("");

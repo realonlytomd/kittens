@@ -8,7 +8,7 @@
 
 // get the id of the current user from login.js file for
 // currently logged in user.
-var currentUserid = localStorage.getItem("currentUserid");
+var currentUserId = localStorage.getItem("currentUserId");
 //these 2 can be removed?
 var currentKittenId = "";
 var kittenIds = [];
@@ -25,7 +25,7 @@ var sortedSizes = [];
 
 $(document).ready(function(){
   console.log("hello from user.js");
-  console.log("from user.js, currentUserid is ", currentUserid);
+  console.log("from user.js, currentUserId is ", currentUserId);
 
     // function to bring up the countdown clock to feed the kitten
   $(document).on("click", "#feedKitten", function(event) {
@@ -44,7 +44,7 @@ $(document).ready(function(){
     // make an ajax call for the user to add a kitten name
     $.ajax({
       method: "GET",
-      url: "/popUser/" + currentUserid
+      url: "/popUser/" + currentUserId
     })
       .then(function(dataCreateKitten) {
         // this is the current user with his fields populated to receive kitten name and metric data
@@ -59,7 +59,7 @@ $(document).ready(function(){
     event.preventDefault();
       $.ajax({
           method: "POST",
-          url: "/createKitten/" + currentUserid,
+          url: "/createKitten/" + currentUserId,
           data: {
               name: $("#kittenNameInput").val().trim()
           }
@@ -106,7 +106,7 @@ $(document).ready(function(){
       // empty out the div that shows the user's current kittens and metrics
   $("#currentKittens").empty();
   // get the current user document
-  $.getJSON("/getCurrentUser" + currentUserid, function(currentUser) {
+  $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
     console.log("currentUser[0]: ", currentUser[0]);
     console.log("currentUser[0].name: ", currentUser[0].name);
     $("span#currentUser").text(currentUser[0].name);
