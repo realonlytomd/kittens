@@ -5,7 +5,9 @@
 // // require sort-ids npm
 // var sortAges = requirejs("sort-ids");
 // var reorder = requirejs("array-rearrange");
-
+// Set up the timer variables
+var startCount;
+var myTimer;
 // get the id of the current user from login.js file for
 // currently logged in user.
 var currentUserId = localStorage.getItem("currentUserId");
@@ -31,10 +33,35 @@ $(document).ready(function(){
   $(document).on("click", "#feedKitten", function(event) {
     event.preventDefault();
     // need to get inputs from user on how long to set the timer for
+    // so need another modal
     // then the function to bring up the click on the DOM
     // and show the counting down clock
     // will need an alarm or whatever to show countdown has been reached
+    stopTimer();
+    startCount = 5;
+    timer();
   });
+
+  // timer function
+  function timer() {
+    //this span is in a fixed footer so user sees it on page while the
+    //timer clock is running.
+    $("#feedTimer").show();
+    $("span#timerDisplay").html(startCount);
+    startCount = startCount - 1;
+    console.log("startCount = " + startCount);
+    // add play a sound as startCount reaches 0
+    myTimer = setTimeout(function(){ timer() }, 1000);
+    if (startCount === -1) {
+      stopTimer();
+    }
+  }
+
+  //stop Timer function
+  function stopTimer() {
+    clearTimeout(myTimer);
+    $("#feedTimer").hide();
+  }
 
   // this function happens when the user clicks the button
   // to get the modal with the form to enter the name for a new kitten
