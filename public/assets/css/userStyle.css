@@ -11,6 +11,10 @@ body {
     background-color: aliceblue;
 }
 
+button#createKitten, button#signupButton {
+    margin-top: 10px;
+}
+
 button.kittenButtons {
     margin-left: 5px;
 }

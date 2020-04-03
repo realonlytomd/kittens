@@ -44,7 +44,7 @@ $(document).ready(function(){
 
   // timer function
   function timer() {
-    //this span is in a fixed footer so user sees it on page while the
+    //this span is in a fixed div so user sees it on page while the
     //timer clock is running.
     $("#feedTimer").show();
     $("span#timerDisplay").html(startCount);
@@ -54,6 +54,7 @@ $(document).ready(function(){
     myTimer = setTimeout(function(){ timer() }, 1000);
     if (startCount === -1) {
       stopTimer();
+      $("#feedTheKitten").modal("show");
     }
   }
 

@@ -100,7 +100,7 @@ $(document).ready(function(){
       // Sure..., I guess so
       // set localstorage to the newly created user id so they can input kitten data
       console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
-      localStorage.setItem('currentUserid', dataCreateUser._id);
+      localStorage.setItem('currentUserId', dataCreateUser._id);
       // but first, zero out input fields
       $("#newUserName-input").val("");
       $("#newPassword-input").val("");
