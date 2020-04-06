@@ -11,16 +11,19 @@ var myTimer;
 // get the id of the current user from login.js file for
 // currently logged in user.
 var currentUserId = localStorage.getItem("currentUserId");
-//these 2 can be removed?
+
 var currentKittenId = "";
 var kittenIds = [];
 var kittenNames = [];
-//these also aren't needed out of the function their created in
+var kittenBreeds = [];
+var kittenFurlengths = [];
+var kittenFurcolors = [];
+var kittenSexes = [];
 var kittenAges = [];
 var kittenWeights = [];
 var kittenSizes = [];
 // these are needed across functions as they are sorted in one, and printed to DOM
-// there will be many more metrics in future
+
 var sortedAges = [];
 var sortedWeights = [];
 var sortedSizes = [];
@@ -81,7 +84,7 @@ $(document).ready(function(){
   });
     
 
-    // then, the user enters the name for a new kitten in the modal, and submits it.
+    // then, the user enters the name, etc. for a new kitten in the modal, and submits it.
     // that data for a new kitten is stored in the recently populated user document
   $(document).on("click", "#submitNewKitten", function(event) {
     event.preventDefault();
@@ -89,7 +92,11 @@ $(document).ready(function(){
           method: "POST",
           url: "/createKitten/" + currentUserId,
           data: {
-              name: $("#kittenNameInput").val().trim()
+            name: $("#kittenNameInput").val().trim(),
+            breed: $("#kittenBreedInput").val().trim(),
+            furlength: $("#kittenFurlengthInput").val().trim(),
+            furcolor: $("#kittenFurcolorInput").val().trim(),
+            sex: $("#kittenSexInput").val().trim()
           }
       })
       .then(function(dataKittenUser) {
@@ -99,6 +106,10 @@ $(document).ready(function(){
           console.log("currentKittenId: " + currentKittenId);
           // empty out the input fields
           $("#kittenNameInput").val("");
+          $("#kittenBreedInput").val("");
+          $("#kittenFurlengthInput").val("");
+          $("#kittenFurcolorInput").val("");
+          $("#kittenSexInput").val("");
           // Hide the current modal, then bring up 2nd modal that allows user to enter kitten metrics.
           $("#newKittenModal").modal("hide");
           $("#newKittenMetricModal").modal("show");
@@ -153,6 +164,10 @@ $(document).ready(function(){
           // then, metric array and length
           console.log("curkat[0]._id: ", curkat[0]._id);
           console.log("curkat[0].name: ", curkat[0].name);
+          console.log("curkat[0].breed: ", curkat[0].breed);
+          console.log("curkat[0].furlength: ", curkat[0].furlength);
+          console.log("curkat[0].furcolor: ", curkat[0].furcolor);
+          console.log("curkat[0].sex: ", curkat[0].sex);
           // this prints the names to the DOM 
           // as a button, with that kitten's id as data-id
           $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +
@@ -169,8 +184,14 @@ $(document).ready(function(){
     currentKittenId = $(this).attr("data-id");
     // gets the array of metrics associated with the current kitten
     $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
-      // appends the name of the current kitten
-      $("#kittenMetrics").append("<h4>Kitten: " + curkat[0].name + "</h4>");
+      // appends the name of the current kitten and other constants
+      $("#kittenMetrics").append("<h4>Kitten: " + 
+      curkat[0].name + "<br>Breed: " +
+      curkat[0].breed + "<br>Fur Length: " +
+      curkat[0].furlength + "<br>Fur Color: " +
+      curkat[0].furcolor + "<br>Sex: " +
+      curkat[0].sex +  "</h4>");
+      // print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
         curkat[0]._id + ">Add Metrics</button><br>");
       console.log("curkat[0].metric: ", curkat[0].metric);
@@ -208,9 +229,9 @@ $(document).ready(function(){
               method: "GET",
               url: "/sortArrays",
               data: {
-                  ages: kittenAges,
-                  weights: kittenWeights,
-                  sizes: kittenSizes
+                ages: kittenAges,
+                weights: kittenWeights,
+                sizes: kittenSizes
               }
             })
             .then(function(sortedMetrics) {
@@ -239,7 +260,7 @@ $(document).ready(function(){
             //   kittenAges[i] + "<br>Weight: " +
             //   kittenWeights[i] + "<br>Length: " +
             //   kittenSizes[i] + "</h5><br>");
-            $("#kittenMetrics").append("<div class='metricInfo'><h5>Age: " + 
+            $("#kittenMetrics").append("<div class='metricInfo'><h5>Age: " +
               sortedAges[i] + "<br>Weight: " +
               sortedWeights[i] + "<br>Length: " +
               sortedSizes[i] + "</h5></div>");
@@ -251,8 +272,6 @@ $(document).ready(function(){
           sortedAges = [];
           sortedWeights = [];
           sortedSizes = [];
-          //this adds a button for user to add new metrics
-          console.log("curkat[0]._id: " + curkat[0]._id);
       }
     });
   });

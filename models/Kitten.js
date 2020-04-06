@@ -14,6 +14,26 @@ var KittenSchema = new Schema({
     type: String,
     required: true
   },
+  // 'breed' of kitten
+  breed: {
+    type: String,
+    required: true
+  },
+  // 'hair or fur length'
+  furlength: {
+    type: String,
+    required: true
+  },
+  // 'color of fur'
+  furcolor: {
+    type: String,
+    required: true
+  },
+  // 'sex of kitten'
+  sex: {
+    type: String,
+    required: true
+  },
   // `metric` is an object that that will reference the metrics of the kittens.
   // The ref property links the ObjectId to the Metric model
   // So it's possible to populate a Kitten with multiple metrics, use an array of ObjectIds
