@@ -32,4 +32,5 @@ $(document).ready(function(){
         "<div class='item'>" +
         "<img class='img-responsive center-block myImage' src='assets/img/sleepy.png' alt='cutefive'>" +
         "</div></div></div>");
+        $("#innerCar").carousel();
 });
