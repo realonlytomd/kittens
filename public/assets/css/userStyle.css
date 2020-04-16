@@ -11,6 +11,17 @@ body {
     background-color: aliceblue;
 }
 
+.no-gutters {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.myImage {
+    width: 100%;
+}
+
 button#createKitten, button#signupButton {
     margin-top: 10px;
 }
