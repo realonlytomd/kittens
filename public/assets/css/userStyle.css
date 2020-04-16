@@ -11,9 +11,10 @@ body {
     background-color: aliceblue;
 }
 
-#innerCar {
-    margin-top: -65px;
-    z-index: -1;
+#carouselBackground, #innerCar{
+    margin-top: -103px;
+    z-index: -100;
+    pointer-events: none;
 }
 
 .no-gutters {
@@ -27,7 +28,16 @@ body {
     width: 100%;
 }
 
-button#createKitten, button#signupButton {
+span#topicButton, span#signupButton {
+    z-index: 100;
+    font-size: 26px;
+}
+
+button#justTopicButton, button#justButton {
+    color: black;
+}
+
+button#createKitten, button#justButton {
     margin-top: 10px;
 }
 
