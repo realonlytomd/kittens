@@ -1,6 +1,13 @@
 // js file for the index.html page
 // provides the changing src files for the carousel (currently)
 // maybe something more interesting later
+//
+// I could animate the pic - but how to get it to repeat?
+// I guess add a timer.... every 5 seconds, it changes?
+// but isn't that built into animate.css?  just need the pic to change
+// like it does in stressed (DHM), randome index in the kittenPics array,
+// then after that's built, that index is spliced out, and a new one is picked
+// according to the timer, not a click from a user.  (I could add that to stress pics too)
 $(document).ready(function(){
     // build array of kitten pics
     var kittenPics = ["derp.jpg", "fours.jpg", "littlelady.png", "pairs.jpg", "sleepy.png"];
