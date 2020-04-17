@@ -60,7 +60,9 @@ button.kittenButtons {
 }
 
 p {
-    margin-top: 24px;
-    margin-bottom: 8px;
-    margin-right: 4px;
+    margin-left: 30px;
+}
+
+button#loadTopics {
+    margin-bottom: 20px;
 }
