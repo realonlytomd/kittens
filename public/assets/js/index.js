@@ -10,7 +10,7 @@
 // according to the timer, not a click from a user.  (I could add that to stress pics too)
 $(document).ready(function(){
     // build array of kitten pics
-    var kittenPics = ["derp.jpg", "fours.jpg", "littlelady.png", "pairs.jpg", "sleepy.png"];
+    var kittenPics = ["derp.jpg", "fours.jpg", "littlelady.png", "pairs.jpg", "sleepy2.png"];
     $("#carouselBackground").append("<div id='innerCar' class='carousel slide'" +
         " data-ride='carousel' data-interval='5000' data-wrap='true'>" +
         "<ol class='carousel-indicators'>" +
