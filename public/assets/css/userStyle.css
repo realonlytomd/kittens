@@ -11,9 +11,13 @@ body {
     background-color: aliceblue;
 }
 
-#carouselBackground, #innerCar{
-    margin-top: -103px;
-    z-index: -100;
+#fullBody {
+    min-height: 100vh;
+}
+
+#carouselBackground {
+    margin-top: 10px;
+    z-index: -1000;
     pointer-events: none;
 }
 
