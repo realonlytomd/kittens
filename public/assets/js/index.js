@@ -58,7 +58,7 @@ $(document).ready(function(){
         // get a new randome new index
         kittenIndex = Math.floor(Math.random() * kittenPics.length);
         buildBackground();
-        myTimer = setTimeout(function(){ timer() }, 3000);
+        myTimer = setTimeout(function(){ timer() }, 7000);
     }
 
     // build the image function
