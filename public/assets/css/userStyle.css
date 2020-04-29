@@ -11,6 +11,19 @@ body {
     background-color: aliceblue;
     max-height: 100vh;
 }
+
+h1 span{
+    background-color: whitesmoke;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+h3 span{
+    background-color: whitesmoke;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
  #userText {
      z-index: 100;
  }

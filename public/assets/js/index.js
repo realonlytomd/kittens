@@ -82,7 +82,7 @@ $(document).ready(function(){
 
     // build the image function
     function buildBackground() {
-        console.group("kittenIndex: " + kittenIndex);
+        //console.log("kittenIndex: " + kittenIndex);
         $("#carouselBackground").empty();
         var image = $("<img>");
         image.addClass("img-responsive");
