@@ -10,7 +10,20 @@
 // according to the timer, not a click from a user.  (I could add that to stress pics too)
 $(document).ready(function(){
     // build array of kitten pics
-    var kittenPics = ["derp.jpg", "fours.jpg", "littlelady2.png", "pairs.jpg", "sleepy2.png"];
+    var kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
+        "beautyland.jpg", "boxland.jpg", "browngrapeland.jpg", "busterland.jpg", 
+        "chairland.jpg", "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
+        "fourwaterland.jpg", "groupland.jpg", "littleladyland.png", "momland.jpg", 
+        "pairsland.jpg", "regalwaterland.jpg", "scrambleland.jpg", "screamland.png", 
+        "sleepy2land.png", "threehugland.jpg", "threesland.jpg", "tubland.jpg", "washland.jpg"];
+    var kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
+        "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "chairport.jpg", "closeupport.jpg",
+        "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
+        "faroffport.jpg", "fluffyport.jpg", "foursport.jpg", "furport.jpg", "grayport.jpg", "littlelady2port.png",
+        "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
+        "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
+        "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
+        "xmasballport.jpg", "yellowcloseport.jpg"];
     var kittenIndex;
     // $("#carouselBackground").append("<div id='innerCar' class='carousel slide'" +
     //     " data-ride='carousel' data-interval='5000' data-wrap='true'>" +
@@ -56,9 +69,13 @@ $(document).ready(function(){
     // the timer function
     function timer() {
         // get a new randome new index
-        kittenIndex = Math.floor(Math.random() * kittenPics.length);
-        buildBackground();
-        myTimer = setTimeout(function(){ timer() }, 7000);
+        if ($("span#topicButton").css("font-size") === "24") {
+            kittenIndex = Math.floor(Math.random() * kittenPortPics.length);
+        } else {
+            kittenIndex = Math.floor(Math.random() * kittenLandPics.length);
+        }
+            buildBackground();
+            myTimer = setTimeout(function(){ timer() }, 7000);
     }
 
     // build the image function
@@ -70,14 +87,36 @@ $(document).ready(function(){
         image.addClass("myImage");
         image.addClass("animated");
         image.addClass("slideInRight");
-        image.attr("src", "assets/img/" + kittenPics[kittenIndex]);
+        if ($("span#topicButton").css("font-size") === "24") {
+            image.attr("src", "assets/img/" + kittenPortPics[kittenIndex]);
+        } else {
+            image.attr("src", "assets/img/" + kittenLandPics[kittenIndex]);
+        }
         image.attr("alt", "cute");
         $("#carouselBackground").append(image);
         // now splice out this used index
-        kittenPics.splice(parseInt(kittenIndex), 1);
+        if ($("span#topicButton").css("font-size") === "24") {
+            kittenPortPics.splice(parseInt(kittenIndex), 1);
+        } else {
+            kittenLandPics.splice(parseInt(kittenIndex), 1);
+        }
         // if the last index has been removed, rebuild the array
-        if (kittenPics.length === 0) {
-            kittenPics = ["derp.jpg", "fours.jpg", "littlelady2.png", "pairs.jpg", "sleepy2.png"];
+        if ((kittenPortPics.length || kittenLandPics.length) === 0) {
+            kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
+                "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg", 
+                "chairland.jpg", "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
+                "fourwaterland.jpg", "groupland.jpg", "littleladyland.png", "momland.jpg", 
+                "pairsland.jpg", "regalwaterland.jpg", "scrambleland.jpg", "screamland.png", 
+                "sleepy2land.png", "threehugland.jpg", "threesland.jpg", "tubland.jpg", "washland.jpg"];
+            
+            kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
+                "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "chairport.jpg", "closeupport.jpg",
+                "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
+                "faroffport.jpg", "fluffyport.jpg", "foursport.jpg", "furport.jpg", "grayport.jpg", "littlelady2port.png",
+                "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
+                "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
+                "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
+                "xmasballport.jpg", "yellowcloseport.jpg"];
         }
     }
     

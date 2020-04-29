@@ -14,7 +14,7 @@ body {
  #userText {
      z-index: 100;
  }
- 
+
 /*#fullBody {
     min-height: 100vh;
 }*/
@@ -32,7 +32,7 @@ body {
     padding-left: 0px;
 }
 .myImage {
-    max-height: 100%;
+    width: 100%;
 }
 
 span#topicButton, span#signupButton {
@@ -72,4 +72,10 @@ p {
 
 button#loadTopics {
     margin-bottom: 20px;
+}
+
+@media only screen and (orientation: portrait) {
+    span#topicButton, span#signupButton {
+        font-size: 24px;
+    }
 }
