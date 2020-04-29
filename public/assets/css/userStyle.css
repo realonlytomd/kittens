@@ -37,11 +37,11 @@ body {
 
 span#topicButton, span#signupButton {
     z-index: 100;
-    font-size: 26px;
 }
 
 button#justTopicButton, button#justButton {
     color: black;
+    font-size: 26px;
 }
 
 button#createKitten, button#justButton {
@@ -75,7 +75,7 @@ button#loadTopics {
 }
 
 @media only screen and (orientation: portrait) {
-    span#topicButton, span#signupButton {
+    button#justTopicButton, button#justButton {
         font-size: 24px;
     }
 }

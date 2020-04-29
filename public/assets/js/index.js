@@ -11,7 +11,7 @@
 $(document).ready(function(){
     // build array of kitten pics
     var kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
-        "beautyland.jpg", "boxland.jpg", "browngrapeland.jpg", "busterland.jpg", 
+        "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg", 
         "chairland.jpg", "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
         "fourwaterland.jpg", "groupland.jpg", "littleladyland.png", "momland.jpg", 
         "pairsland.jpg", "regalwaterland.jpg", "scrambleland.jpg", "screamland.png", 
@@ -19,7 +19,7 @@ $(document).ready(function(){
     var kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
         "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "chairport.jpg", "closeupport.jpg",
         "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
-        "faroffport.jpg", "fluffyport.jpg", "foursport.jpg", "furport.jpg", "grayport.jpg", "littlelady2port.png",
+        "faroffport.jpg", "fluffyport.png", "foursport.jpg", "furport.jpg", "grayport.jpg", "littlelady2port.png",
         "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
         "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
         "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
@@ -69,9 +69,11 @@ $(document).ready(function(){
     // the timer function
     function timer() {
         // get a new randome new index
-        if ($("span#topicButton").css("font-size") === "24") {
+        if ($("button#justTopicButton").css("font-size") === "24px") {
+            //console.log("In timer(), font-size should be 24: " + $("button#justTopicButton").css("font-size"));
             kittenIndex = Math.floor(Math.random() * kittenPortPics.length);
         } else {
+            //console.log("In timer(), font-size should be 26: " + $("button#justTopicButton").css("font-size"));
             kittenIndex = Math.floor(Math.random() * kittenLandPics.length);
         }
             buildBackground();
@@ -80,6 +82,7 @@ $(document).ready(function(){
 
     // build the image function
     function buildBackground() {
+        console.group("kittenIndex: " + kittenIndex);
         $("#carouselBackground").empty();
         var image = $("<img>");
         image.addClass("img-responsive");
@@ -87,21 +90,25 @@ $(document).ready(function(){
         image.addClass("myImage");
         image.addClass("animated");
         image.addClass("slideInRight");
-        if ($("span#topicButton").css("font-size") === "24") {
+        if ($("button#justTopicButton").css("font-size") === "24px") {
+            //console.log("In buildBackground(), fontsize should be 24: " + $("button#justTopicButton").css("font-size"));
             image.attr("src", "assets/img/" + kittenPortPics[kittenIndex]);
         } else {
+            //console.log("In buildBackground(), fontsize should be 26: " + $("button#justTopicButton").css("font-size"));
             image.attr("src", "assets/img/" + kittenLandPics[kittenIndex]);
         }
         image.attr("alt", "cute");
         $("#carouselBackground").append(image);
         // now splice out this used index
-        if ($("span#topicButton").css("font-size") === "24") {
+        if ($("button#justTopicButton").css("font-size") === "24px") {
+            //console.log("before splice: fontsize is 24: " + $("button#justTopicButton").css("font-size"));
             kittenPortPics.splice(parseInt(kittenIndex), 1);
         } else {
+            //console.log("before splice: fontsize is 26: " + $("button#justTopicButton").css("font-size"));
             kittenLandPics.splice(parseInt(kittenIndex), 1);
         }
         // if the last index has been removed, rebuild the array
-        if ((kittenPortPics.length || kittenLandPics.length) === 0) {
+        if ((kittenPortPics.length === 0) || (kittenLandPics.length === 0)) {
             kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
                 "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg", 
                 "chairland.jpg", "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
@@ -112,7 +119,7 @@ $(document).ready(function(){
             kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
                 "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "chairport.jpg", "closeupport.jpg",
                 "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
-                "faroffport.jpg", "fluffyport.jpg", "foursport.jpg", "furport.jpg", "grayport.jpg", "littlelady2port.png",
+                "faroffport.jpg", "fluffyport.png", "foursport.jpg", "furport.jpg", "grayport.jpg", "littlelady2port.png",
                 "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
                 "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
                 "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
