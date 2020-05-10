@@ -29,8 +29,13 @@ body {
     padding-right: 0px;
     padding-left: 0px;
 }
+
 .myImage {
     width: 100%;
+}
+
+button#signAdvice {
+    margin-bottom: 10px;
 }
 
 button#topicButton, button#signupButton {
