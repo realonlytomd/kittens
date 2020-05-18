@@ -72,7 +72,7 @@ button#loadTopics {
 
 @media only screen and (orientation: portrait) {
     button#topicButton, button#signupButton {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     h3 {

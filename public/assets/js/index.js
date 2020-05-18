@@ -69,8 +69,8 @@ $(document).ready(function(){
     // the timer function
     function timer() {
         // get a new randome new index
-        if ($("button#topicButton").css("font-size") === "16px") {
-            //console.log("In timer(), font-size should be 16: " + $("button#topicButton").css("font-size"));
+        if ($("button#topicButton").css("font-size") === "14px") {
+            //console.log("In timer(), font-size should be 14: " + $("button#topicButton").css("font-size"));
             kittenIndex = Math.floor(Math.random() * kittenPortPics.length);
         } else {
             //console.log("In timer(), font-size should be 26: " + $("button#topicButton").css("font-size"));
@@ -90,8 +90,8 @@ $(document).ready(function(){
         image.addClass("myImage");
         image.addClass("animated");
         image.addClass("slideInRight");
-        if ($("button#topicButton").css("font-size") === "16px") {
-            //console.log("In buildBackground(), fontsize should be 16: " + $("button#topicButton").css("font-size"));
+        if ($("button#topicButton").css("font-size") === "14px") {
+            //console.log("In buildBackground(), fontsize should be 14: " + $("button#topicButton").css("font-size"));
             image.attr("src", "assets/img/" + kittenPortPics[kittenIndex]);
         } else {
             //console.log("In buildBackground(), fontsize should be 26: " + $("button#topicButton").css("font-size"));
@@ -100,8 +100,8 @@ $(document).ready(function(){
         image.attr("alt", "cute");
         $("#carouselBackground").append(image);
         // now splice out this used index
-        if ($("button#topicButton").css("font-size") === "16px") {
-            //console.log("before splice: fontsize is 16: " + $("button#topicButton").css("font-size"));
+        if ($("button#topicButton").css("font-size") === "14px") {
+            //console.log("before splice: fontsize is 14: " + $("button#topicButton").css("font-size"));
             kittenPortPics.splice(parseInt(kittenIndex), 1);
         } else {
             //console.log("before splice: fontsize is 26: " + $("button#topicButton").css("font-size"));
