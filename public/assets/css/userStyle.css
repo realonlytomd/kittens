@@ -1,5 +1,5 @@
 html, body {
-    height: 100vh;
+    height: 100%;
     margin: 0;
 }
 
@@ -16,12 +16,6 @@ body {
  #userText {
      z-index: 100;
  }
-
-#carouselBackground {
-    margin-top: 0px;
-    pointer-events: none;
-    margin-bottom: 10px;
-}
 
 .no-gutters {
     margin-left: 0px;
