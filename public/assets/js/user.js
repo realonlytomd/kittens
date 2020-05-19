@@ -316,9 +316,9 @@ $(document).ready(function(){
     $.getJSON("/getAllTopics", function(allTopics) {
       console.log("all topics from db, allTopics: ", allTopics);
       for (i = 0; i < allTopics.length; i++) {
-        $("#topicsCurrent").append("<h4>Topic: </h4><p>" +
+        $("#topicsCurrent").append("<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
           allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
-          allTopics[i].answer + "</p><br />");
+          allTopics[i].answer + "</p>");
       }
     });
   });
