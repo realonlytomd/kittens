@@ -89,7 +89,7 @@ $(document).ready(function(){
         image.addClass("center-block");
         image.addClass("myImage");
         image.addClass("animated");
-        image.addClass("slideInRight");
+        image.addClass("fadeIn");
         if ($("button#topicButton").css("font-size") === "14px") {
             //console.log("In buildBackground(), fontsize should be 14: " + $("button#topicButton").css("font-size"));
             image.attr("src", "assets/img/" + kittenPortPics[kittenIndex]);
