@@ -41,7 +41,8 @@ $(document).ready(function(){
     // and show the counting down clock
     // will need an alarm or whatever to show countdown has been reached
     stopTimer();
-    startCount = 5;
+    startCount = parseInt($("li#startCount").html());
+    console.log("startCount: " + startCount);
     timer();
   });
 

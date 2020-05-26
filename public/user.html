@@ -24,6 +24,20 @@
           <h1>Kittens!: Users</h1>
           <h2>Welcome <span id="currentUser"></span>!</h2>
           <button id="feedKitten">Feed The Kitten!</button>
+          <h3>Select Interval to Feed Kitten</h3>
+          <div class="dropdown"> <!-- add error correction if user doesn't pic time-->
+            <button class="btn btn-default dropdown-toggle" type="button" 
+              data-toggle="dropdown">Minutes<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Select How Many Minutes Between Feedings</li>
+              <li id="startCount">30</li>
+              <li id="startCount">45</li>
+              <li id="startCount">45</li>
+              <li id="startCount">60</li>
+              <li id="startCount">90</li>
+              <li id="startCount">120</li>
+            </ul>
+          </div>
           <div id="feedTimer">
             <h2><span id="timerDisplay"></span></h2>
           </div>
