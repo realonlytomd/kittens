@@ -41,7 +41,7 @@ $(document).ready(function(){
     // and show the counting down clock
     // will need an alarm or whatever to show countdown has been reached
     stopTimer();
-    startCount = parseInt($("li#startCount").html());
+    startCount = $("#startCount").val().trim();
     console.log("startCount: " + startCount);
     timer();
   });
@@ -55,7 +55,7 @@ $(document).ready(function(){
     startCount = startCount - 1;
     console.log("startCount = " + startCount);
     // add play a sound as startCount reaches 0
-    myTimer = setTimeout(function(){ timer() }, 1000);
+    myTimer = setTimeout(function(){ timer() }, 60000);
     if (startCount === -1) {
       stopTimer();
       $("#feedTheKitten").modal("show");
