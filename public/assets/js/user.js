@@ -36,10 +36,6 @@ $(document).ready(function(){
   $(document).on("click", "#feedKitten", function(event) {
     event.preventDefault();
     // need to get inputs from user on how long to set the timer for
-    // so need another modal
-    // then the function to bring up the click on the DOM
-    // and show the counting down clock
-    // will need an alarm or whatever to show countdown has been reached
     stopTimer();
     startCount = $("#startCount").val().trim();
     console.log("startCount: " + startCount);
@@ -52,11 +48,13 @@ $(document).ready(function(){
     //timer clock is running.
     $("#feedTimer").show();
     $("span#timerDisplay").html(startCount);
+    $("span#timerLabel").text(" Minutes Left");
     startCount = startCount - 1;
     console.log("startCount = " + startCount);
     // add play a sound as startCount reaches 0
     myTimer = setTimeout(function(){ timer() }, 60000);
     if (startCount === -1) {
+
       stopTimer();
       $("#feedTheKitten").modal("show");
     }
@@ -65,6 +63,7 @@ $(document).ready(function(){
   //stop Timer function
   function stopTimer() {
     clearTimeout(myTimer);
+    $("span#timerLabel").text("");
     $("#feedTimer").hide();
   }
 

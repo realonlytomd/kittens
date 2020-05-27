@@ -23,10 +23,9 @@
         <div class="col-xs-10 col-xs-offset-1 text-center">
           <h1>Kittens!: Users</h1>
           <h2>Welcome <span id="currentUser"></span>!</h2>
-          <h3>Select Interval to Feed Kitten</h3>
           <form>
-            <label for="minutes">Minutes:</label>
-            <input type="number" id="startCount" name="minutes" min="0" max="240">
+            <label for="minutes">Input Interval to Feed Kitten:</label>
+            <input type="number" id="startCount" name="minutes" min="0" placeholder="Minutes">
             <input type="button" id="feedKitten" value="Feed The Kitten!">
           </form>
           <!--<div class="dropdown">
@@ -43,7 +42,7 @@
           </div>
           <button id="feedKitten">Feed The Kitten!</button> -->
           <div id="feedTimer">
-            <h2><span id="timerDisplay"></span> Minutes Left</h2>
+            <h2><span id="timerDisplay"></span><span id="timerLabel"></span></h2>
           </div>
         </div>
       </div>
@@ -140,7 +139,7 @@
           <button type="button" data-toggle="modal" data-target="#newKittenModal" id="createKitten">
             New Kitten
           </button>
-          <h2>Kittens Currently Being Fostered by This User</h2>
+          <h2>Kittens Currently Being Fostered by <span id="currentUser"></span></h2>
           <div id="currentKittens"></div>
           <div id="kittenMetrics"></div>
         </div>
