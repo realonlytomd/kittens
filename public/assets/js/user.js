@@ -46,24 +46,28 @@ $(document).ready(function(){
   function timer() {
     //this span is in a fixed div so user sees it on page while the
     //timer clock is running.
-    $("#feedTimer").show();
     $("span#timerDisplay").html(startCount);
-    $("span#timerLabel").text(" Minutes Left");
+    if (startCount <= 1) {
+      $("span#timerLabel").text(" Minute Left");
+      } else {
+        $("span#timerLabel").text(" Minutes Left");
+      }
+    $("#feedTimer").show();
     startCount = startCount - 1;
     console.log("startCount = " + startCount);
     // add play a sound as startCount reaches 0
     myTimer = setTimeout(function(){ timer() }, 60000);
     if (startCount === -1) {
-
-      stopTimer();
+      $("#countForm").trigger("reset");
       $("#feedTheKitten").modal("show");
+      stopTimer();
     }
   }
 
   //stop Timer function
   function stopTimer() {
     clearTimeout(myTimer);
-    $("span#timerLabel").text("");
+    //$("span#timerLabel").text("");
     $("#feedTimer").hide();
   }
 

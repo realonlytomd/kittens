@@ -40,6 +40,10 @@ button#topicButton, button#signupButton {
     margin-bottom: 10px;
 }
 
+input#feedKitten {
+    margin-top: 5px;
+}
+
 button#createKitten {
     margin-top: 10px;
 }
