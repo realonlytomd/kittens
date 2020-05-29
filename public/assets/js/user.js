@@ -141,45 +141,54 @@ $(document).ready(function(){
           $("#kittenSizeInput").val("");
           // then hide this modal
           $("#newKittenMetricModal").modal("hide");
-          window.location.reload();
+          // Previously, had reloaded page. Now, call function to get kitten data
+          // Without interrupting the timer if it's currently running.
+          //window.location.reload();
+          getAllData();
         });
   });
 
       // Now, this happens as the page loads.....
+  getAllData();
+      // AND, after a new kitten's metrics are entered.
+      // That way, if the timer is running, a page reload happens, and interrupts
+      // the timer - that won't happen.
+  function getAllData() {
       // empty out the div that shows the user's current kittens and metrics
   $("#currentKittens").empty();
-  // get the current user document
-  $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
-    console.log("currentUser[0]: ", currentUser[0]);
-    console.log("currentUser[0].name: ", currentUser[0].name);
-    $("span#currentUser").text(currentUser[0].name);
-    console.log("currentUser[0].kitten: ", currentUser[0].kitten);
-    // this .forEach goes through each kitten of the user
-    // It gets the kitten document and name of kitten, then prints row of buttons
-    // one for each kitten
-    // currenUser[0].kitten is an array
-    
-    currentUser[0].kitten.forEach(outerForEach);
-    
-      function outerForEach(item, index) {
-        console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
-        $.getJSON("/getAKitten" + item, function(curkat) {
-          // this logs the kitten's id and name
-          // then, metric array and length
-          console.log("curkat[0]._id: ", curkat[0]._id);
-          console.log("curkat[0].name: ", curkat[0].name);
-          console.log("curkat[0].breed: ", curkat[0].breed);
-          console.log("curkat[0].furlength: ", curkat[0].furlength);
-          console.log("curkat[0].furcolor: ", curkat[0].furcolor);
-          console.log("curkat[0].sex: ", curkat[0].sex);
-          // this prints the names to the DOM 
-          // as a button, with that kitten's id as data-id
-          $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +
-            curkat[0]._id + ">" +
-            curkat[0].name + "</button>");
-        });
-      }
-  });
+    // get the current user document
+    $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
+      console.log("currentUser[0]: ", currentUser[0]);
+      console.log("currentUser[0].name: ", currentUser[0].name);
+      $("span#currentUser").text(currentUser[0].name);
+      console.log("currentUser[0].kitten: ", currentUser[0].kitten);
+      // this .forEach goes through each kitten of the user
+      // It gets the kitten document and name of kitten, then prints row of buttons
+      // one for each kitten
+      // currenUser[0].kitten is an array
+      
+      currentUser[0].kitten.forEach(outerForEach);
+      
+        function outerForEach(item, index) {
+          console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
+          $.getJSON("/getAKitten" + item, function(curkat) {
+            // this logs the kitten's id and name
+            // then, metric array and length
+            console.log("curkat[0]._id: ", curkat[0]._id);
+            console.log("curkat[0].name: ", curkat[0].name);
+            console.log("curkat[0].breed: ", curkat[0].breed);
+            console.log("curkat[0].furlength: ", curkat[0].furlength);
+            console.log("curkat[0].furcolor: ", curkat[0].furcolor);
+            console.log("curkat[0].sex: ", curkat[0].sex);
+            // this prints the names to the DOM 
+            // as a button, with that kitten's id as data-id
+            $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +
+              curkat[0]._id + ">" +
+              curkat[0].name + "</button>");
+          });
+        }
+    });
+  }
    // this function lists an individual kitten's current metrics
    // based on the id of the kitten as attached to individual buttons
   $(document).on("click", "#listMetrics", function(event) {
