@@ -31,8 +31,11 @@ var sortedSizes = [];
 $(document).ready(function(){
   console.log("hello from user.js");
   console.log("from user.js, currentUserId is ", currentUserId);
+  // insert a logout function
+  $(document).on("click", "#logoutButton", function(event) {
 
-    // function to bring up the countdown clock to feed the kitten
+  });
+  // function to bring up the countdown clock to feed the kitten
   $(document).on("click", "#feedKitten", function(event) {
     event.preventDefault();
     // need to get inputs from user on how long to set the timer for
@@ -223,12 +226,6 @@ $(document).ready(function(){
           kittenAges.push(curmet[0].age);
           kittenWeights.push(curmet[0].weight);
           kittenSizes.push(curmet[0].size);
-          // for checking: writing these to DOM will be removed later as the assembled
-          // array of metrices must be sorted before printin to DOM
-          // $("#kittenMetrics").append("<h5>oldAge: " + 
-          //   curmet[0].age + "<br>oldWeight: " +
-          //   curmet[0].weight + "<br>oldLength: " +
-          //   curmet[0].size + "</h5><br>");
           console.log("kittenAges.length = " + kittenAges.length);
           console.log("curkat[0].metric.length = " + curkat[0].metric.length);
           // only print the arrays of kitten metrics to DOM if they are completely finished
