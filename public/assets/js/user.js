@@ -35,6 +35,22 @@ $(document).ready(function(){
   $(document).on("click", "#logoutButton", function(event) {
     event.preventDefault();
     console.log("This becomes the logout function!");
+    localStorage.setItem("currentUserLoggedIn", false);
+    // post to db to update loggedIn to false
+    // this is needed because loggedIn is set to true for the first time a user signs up
+    $.ajax({
+      method: "POST",
+      url: "/logoutUser/" + currentUserId,
+      data: {
+        _id: currentUserId,
+        loggedIn: false
+      }
+    })
+    .then(function(userUpdate) {
+      console.log("userUpdate: ", userUpdate);
+    });
+    window.location.replace("/");
+    return;
   });
   // function to bring up the countdown clock to feed the kitten
   $(document).on("click", "#feedKitten", function(event) {
@@ -164,13 +180,16 @@ $(document).ready(function(){
     $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
       console.log("currentUser[0]: ", currentUser[0]);
       console.log("currentUser[0].name: ", currentUser[0].name);
+      // since loggedIn is always false in the db, it must be written over here
+      // everytime the user's info is retrieved from the db
+      var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+      // need a timer to logout Users after a period of time.
+      console.log("currentUserLoggedIn: " + currentUserLoggedIn);
       // add test here to see if user is logged in
       //
-      console.log("currentUser[0].loggedIn is ", currentUser[0].loggedIn);
-      if (currentUser[0].loggedIn !== true) {
+      if (currentUserLoggedIn === false) {
         // go back to login
         window.location.replace("/");
-        // need this?
         return;
       } else {
         $("span#currentUser").text(currentUser[0].name);
@@ -187,12 +206,12 @@ $(document).ready(function(){
             $.getJSON("/getAKitten" + item, function(curkat) {
               // this logs the kitten's id and name
               // then, metric array and length
-              console.log("curkat[0]._id: ", curkat[0]._id);
-              console.log("curkat[0].name: ", curkat[0].name);
-              console.log("curkat[0].breed: ", curkat[0].breed);
-              console.log("curkat[0].furlength: ", curkat[0].furlength);
-              console.log("curkat[0].furcolor: ", curkat[0].furcolor);
-              console.log("curkat[0].sex: ", curkat[0].sex);
+              // console.log("curkat[0]._id: ", curkat[0]._id);
+              // console.log("curkat[0].name: ", curkat[0].name);
+              // console.log("curkat[0].breed: ", curkat[0].breed);
+              // console.log("curkat[0].furlength: ", curkat[0].furlength);
+              // console.log("curkat[0].furcolor: ", curkat[0].furcolor);
+              // console.log("curkat[0].sex: ", curkat[0].sex);
               // this prints the names to the DOM 
               // as a button, with that kitten's id as data-id
               $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +

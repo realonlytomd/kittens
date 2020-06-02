@@ -33,16 +33,19 @@ $(document).ready(function(){
         console.log("allUsers[i].name= " + allUsers[i].name);
         console.log("allUsers[i].password= " + allUsers[i].password);
         if ((currentUser === allUsers[i].name) && (currentPassword === allUsers[i].password)) {
+          // THIS is where a current user's logged in status is set to true.
+          // the db for users will always have their status set to false.
+          // It's never overwritten. Only while logged in on the user's brower
           allUsers[i].loggedIn = true;
-          // thinking: don't need loggedIN at all, because multiple users can be logged in
-          // at the same time. So, eventually, delete it out of the model
           console.log(allUsers[i].name + " is the current user");
           // and that user's id will be used to post to their data in the db
           currentUser_id = allUsers[i]._id;
           console.log("from login.js, currentUser_id is " + currentUser_id);
           // set to local storage to be accessible in user.js so
           // currently logged in user can post to their db values
-          localStorage.setItem('currentUserId', currentUser_id);
+          localStorage.setItem("currentUserId", currentUser_id);
+          // also need to remember this user is loggedIn, so true
+          localStorage.setItem("currentUserLoggedIn", allUsers[i].loggedIn);
           // zero out input fields
           $("#userName-input").val("");
           $("#password-input").val("");
@@ -100,6 +103,7 @@ $(document).ready(function(){
       // set localstorage to the newly created user id so they can input kitten data
       console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
       localStorage.setItem('currentUserId', dataCreateUser._id);
+      localStorage.setItem("currentUserLoggedIn", dataCreateUser.loggedIn);
       // but first, zero out input fields
       $("#newUserName-input").val("");
       $("#newPassword-input").val("");

@@ -100,6 +100,27 @@ module.exports = function(router) {
             });
     });
 
+    // Route for logging out a specific User by id
+    router.post("/logoutUser/:id", function(req, res) {
+        console.log("req.body._id: ", req.body._id);
+        console.log("req.body.loggedIn: ", req.body.loggedIn);
+        // Using the id passed in the id parameter, and make a query that finds the matching one in the db
+        db.User.findOneAndUpdate(
+            { _id: req.body._id },
+            { loggedIn: req.body.loggedIn },
+            { new: true }
+        )
+            .then(function(dbUser) {
+                console.log("dbUser: ", dbUser);
+                // If successful, send the correct User back to the client
+                res.json(dbUser);
+            })
+            .catch(function(err) {
+            // but if an error occurred, send it to the client
+                res.json(err);
+            });
+        });
+
     // Route for getting all of the Users from the db
     // For login.js
     router.get("/getAllUsers", function(req, res) {
