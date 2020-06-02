@@ -33,7 +33,8 @@ $(document).ready(function(){
   console.log("from user.js, currentUserId is ", currentUserId);
   // insert a logout function
   $(document).on("click", "#logoutButton", function(event) {
-
+    event.preventDefault();
+    console.log("This becomes the logout function!");
   });
   // function to bring up the countdown clock to feed the kitten
   $(document).on("click", "#feedKitten", function(event) {
@@ -163,33 +164,43 @@ $(document).ready(function(){
     $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
       console.log("currentUser[0]: ", currentUser[0]);
       console.log("currentUser[0].name: ", currentUser[0].name);
-      $("span#currentUser").text(currentUser[0].name);
-      console.log("currentUser[0].kitten: ", currentUser[0].kitten);
-      // this .forEach goes through each kitten of the user
-      // It gets the kitten document and name of kitten, then prints row of buttons
-      // one for each kitten
-      // currenUser[0].kitten is an array
-      
-      currentUser[0].kitten.forEach(outerForEach);
-      
-        function outerForEach(item, index) {
-          console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
-          $.getJSON("/getAKitten" + item, function(curkat) {
-            // this logs the kitten's id and name
-            // then, metric array and length
-            console.log("curkat[0]._id: ", curkat[0]._id);
-            console.log("curkat[0].name: ", curkat[0].name);
-            console.log("curkat[0].breed: ", curkat[0].breed);
-            console.log("curkat[0].furlength: ", curkat[0].furlength);
-            console.log("curkat[0].furcolor: ", curkat[0].furcolor);
-            console.log("curkat[0].sex: ", curkat[0].sex);
-            // this prints the names to the DOM 
-            // as a button, with that kitten's id as data-id
-            $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +
-              curkat[0]._id + ">" +
-              curkat[0].name + "</button>");
-          });
-        }
+      // add test here to see if user is logged in
+      //
+      console.log("currentUser[0].loggedIn is ", currentUser[0].loggedIn);
+      if (currentUser[0].loggedIn !== true) {
+        // go back to login
+        window.location.replace("/");
+        // need this?
+        return;
+      } else {
+        $("span#currentUser").text(currentUser[0].name);
+        console.log("currentUser[0].kitten: ", currentUser[0].kitten);
+        // this .forEach goes through each kitten of the user
+        // It gets the kitten document and name of kitten, then prints row of buttons
+        // one for each kitten
+        // currenUser[0].kitten is an array
+        
+        currentUser[0].kitten.forEach(outerForEach);
+        
+          function outerForEach(item, index) {
+            console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
+            $.getJSON("/getAKitten" + item, function(curkat) {
+              // this logs the kitten's id and name
+              // then, metric array and length
+              console.log("curkat[0]._id: ", curkat[0]._id);
+              console.log("curkat[0].name: ", curkat[0].name);
+              console.log("curkat[0].breed: ", curkat[0].breed);
+              console.log("curkat[0].furlength: ", curkat[0].furlength);
+              console.log("curkat[0].furcolor: ", curkat[0].furcolor);
+              console.log("curkat[0].sex: ", curkat[0].sex);
+              // this prints the names to the DOM 
+              // as a button, with that kitten's id as data-id
+              $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +
+                curkat[0]._id + ">" +
+                curkat[0].name + "</button>");
+            });
+          }
+      }
     });
   }
    // this function lists an individual kitten's current metrics

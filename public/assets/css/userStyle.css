@@ -34,7 +34,7 @@ button#signAdvice {
     margin-bottom: 10px;
 }
 
-button#topicButton, button#signupButton {
+button#topicButton, button#signupButton, button#logoutButton {
     font-size: 26px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -71,7 +71,7 @@ button#loadTopics {
 }
 
 @media only screen and (orientation: portrait) {
-    button#topicButton, button#signupButton {
+    button#topicButton, button#signupButton, button#logoutButton {
         font-size: 14px;
     }
 
