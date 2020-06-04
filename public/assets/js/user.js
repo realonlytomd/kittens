@@ -11,7 +11,7 @@ var myTimer;
 // get the id of the current user from login.js file for
 // currently logged in user.
 var currentUserId = localStorage.getItem("currentUserId");
-
+var currentUserLoggedIn;
 var currentKittenId = "";
 var kittenIds = [];
 var kittenNames = [];
@@ -34,16 +34,16 @@ $(document).ready(function(){
   // insert a logout function
   $(document).on("click", "#logoutButton", function(event) {
     event.preventDefault();
-    console.log("This becomes the logout function!");
-    localStorage.setItem("currentUserLoggedIn", false);
-    // post to db to update loggedIn to false
+    console.log("This is the logout function!");
+    localStorage.setItem("currentUserLoggedIn", "false");
+    // post to db to update loggedIn to "false"
     // this is needed because loggedIn is set to true for the first time a user signs up
     $.ajax({
       method: "POST",
       url: "/logoutUser/" + currentUserId,
       data: {
         _id: currentUserId,
-        loggedIn: false
+        loggedIn: "false"
       }
     })
     .then(function(userUpdate) {
@@ -180,18 +180,15 @@ $(document).ready(function(){
     $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
       console.log("currentUser[0]: ", currentUser[0]);
       console.log("currentUser[0].name: ", currentUser[0].name);
-      // since loggedIn is always false in the db, it must be written over here
+      console.log("currentUser[0].loggedIn: ", currentUser[0].loggedIn);
+      // since loggedIn is always "false" in the db, it must be written over here
       // everytime the user's info is retrieved from the db
-      var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+      currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+      console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
       // need a timer to logout Users after a period of time.
-      console.log("currentUserLoggedIn: " + currentUserLoggedIn);
       // add test here to see if user is logged in
       //
-      if (currentUserLoggedIn === false) {
-        // go back to login
-        window.location.replace("/");
-        return;
-      } else {
+      if (currentUserLoggedIn === "true") {
         $("span#currentUser").text(currentUser[0].name);
         console.log("currentUser[0].kitten: ", currentUser[0].kitten);
         // this .forEach goes through each kitten of the user
@@ -204,14 +201,6 @@ $(document).ready(function(){
           function outerForEach(item, index) {
             console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
             $.getJSON("/getAKitten" + item, function(curkat) {
-              // this logs the kitten's id and name
-              // then, metric array and length
-              // console.log("curkat[0]._id: ", curkat[0]._id);
-              // console.log("curkat[0].name: ", curkat[0].name);
-              // console.log("curkat[0].breed: ", curkat[0].breed);
-              // console.log("curkat[0].furlength: ", curkat[0].furlength);
-              // console.log("curkat[0].furcolor: ", curkat[0].furcolor);
-              // console.log("curkat[0].sex: ", curkat[0].sex);
               // this prints the names to the DOM 
               // as a button, with that kitten's id as data-id
               $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +
@@ -219,6 +208,10 @@ $(document).ready(function(){
                 curkat[0].name + "</button>");
             });
           }
+      } else {
+        // go back to login
+        window.location.replace("/");
+        return;
       }
     });
   }

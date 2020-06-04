@@ -16,10 +16,12 @@ var UserSchema = new Schema({
     required: true
   },
   // User's 'loggedIn' status is set to true if they are currently logged in.
+  // I could have used a Boolean, but I use setItem from localStorage, and
+  // it seems that in some browsers that can be set only as a string
   loggedIn: {
-    type: Boolean,
+    type: String,
     required: true,
-    default: false
+    default: "false"
   },
   // `kitten` is an object that that will reference the kittens possessed by the user.
   // The ref property links the ObjectId to the Kitten model

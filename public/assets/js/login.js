@@ -33,10 +33,10 @@ $(document).ready(function(){
         console.log("allUsers[i].name= " + allUsers[i].name);
         console.log("allUsers[i].password= " + allUsers[i].password);
         if ((currentUser === allUsers[i].name) && (currentPassword === allUsers[i].password)) {
-          // THIS is where a current user's logged in status is set to true.
-          // the db for users will always have their status set to false.
+          // THIS is where a current user's logged in status is set to "true".
+          // the db for users will always have their status set to "false".
           // It's never overwritten. Only while logged in on the user's brower
-          allUsers[i].loggedIn = true;
+          allUsers[i].loggedIn = "true";
           console.log(allUsers[i].name + " is the current user");
           // and that user's id will be used to post to their data in the db
           currentUser_id = allUsers[i]._id;
@@ -44,9 +44,9 @@ $(document).ready(function(){
           // set to local storage to be accessible in user.js so
           // currently logged in user can post to their db values
           localStorage.setItem("currentUserId", currentUser_id);
-          // also need to remember this user is loggedIn, so true
+          // also need to remember this user is loggedIn, so "true"
           localStorage.setItem("currentUserLoggedIn", allUsers[i].loggedIn);
-          // zero out input fields
+          // clear input fields
           $("#userName-input").val("");
           $("#password-input").val("");
           // take correctly logged in user to /user.
@@ -94,7 +94,7 @@ $(document).ready(function(){
       data: {
           name: userNameInput,
           password: passwordInput,
-          loggedIn: true
+          loggedIn: "true"
       }
     })
     .then(function(dataCreateUser) {
