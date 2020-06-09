@@ -8,7 +8,9 @@
 // like it does in stressed (DHM), randome index in the kittenPics array,
 // then after that's built, that index is spliced out, and a new one is picked
 // according to the timer, not a click from a user.  (I could add that to stress pics too)
+var currentUserLoggedIn;
 $(document).ready(function(){
+    localStorage.setItem("currentUserLoggedIn", "false"); // all users are not logged in on index page
     // build array of kitten pics
     var kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
         "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg", 

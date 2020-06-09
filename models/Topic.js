@@ -5,18 +5,17 @@ var Schema = mongoose.Schema;
 
 // Using the Schema constructor, create a new UserSchema object
 var UserSchema = new Schema({
-  // `name` of user is required and of type String
+  // `topic` is required and of type String
   topic: {
     type: String,
     required: true
   },
-  // User's `password` is required and of type String
+  // the answer is not required and of type String
   answer: {
-    type: String,
-    required: true
+    type: String
   }
 }, {
-  // adding timestamps: created at and updated at
+  // adding timestamps: created at and updated at, might be useful
   timestamps: true
 });
 

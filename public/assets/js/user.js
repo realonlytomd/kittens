@@ -294,9 +294,9 @@ $(document).ready(function(){
             //   kittenWeights[i] + "<br>Length: " +
             //   kittenSizes[i] + "</h5><br>");
             $("#kittenMetrics").append("<div class='metricInfo'><h5>Age: " +
-              sortedAges[i] + "<br>Weight: " +
-              sortedWeights[i] + "<br>Length: " +
-              sortedSizes[i] + "</h5></div>");
+              sortedAges[i] + " Weeks" + "<br>Weight: " +
+              sortedWeights[i] + " Ounces" +"<br>Length: " +
+              sortedSizes[i] + " Inches" +"</h5></div>");
           }
           //empty out arrays before clicking a new kitten
           kittenAges = [];
