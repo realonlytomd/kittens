@@ -67,7 +67,7 @@ p {
 }
 
 button#loadTopics {
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 @media only screen and (orientation: portrait) {

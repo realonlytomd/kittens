@@ -51,11 +51,18 @@
             <button type="submit" id="submitTopic">Submit</button>
         </div>
       </div>
+      <!-- put a div to display the current list of unanswered Questions in the db. --> 
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+          <button id="loadTopics">Show Questions and Topics</button>
+          <h3>Unanswered Questions currently in database:</h3>
+          <div id="unanswerQ"></div>
+        </div>
+      </div>
       <!-- put a div to display the current list of answered topics in the db. --> 
       <div class="row">
         <div class="col-xs-10 col-xs-offset-1">
-          <h1>Topics currently in database:</h1>
-          <button id="loadTopics">Load Topics</button>
+          <h3>Topics currently in database:</h3>
           <div id="topicsCurrent"></div>
         </div>
       </div>

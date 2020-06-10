@@ -23,11 +23,12 @@ $(document).ready(function(){
           method: "GET",
           url: "/createTopic",
           data: {
-              topic: $("#question").val()
+              topic: $("#question").val(),
+              answer: ""
           }
       })
-      .then(function(dataCreateTopic) {
-          console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
+      .then(function(dataCreateQuestion) {
+          console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateQuestion);
       });
       $("#topic").val("");
   });
@@ -64,9 +65,8 @@ $(document).ready(function(){
           allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
           allTopics[i].answer + "</p>");
         } else {
-          $("#topicsCurrent").append("<h4 style='border-top: 2px solid black;'>Topic: </h4><p id='answerMe'>" +
-          allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
-          allTopics[i].answer + "</p>");
+          $("#unanswerQ").append("<h4 style='border-top: 2px solid black;'>Question: </h4><p class='answerMe'>" +
+          allTopics[i].topic + "</p>");
         }
       }
     });
