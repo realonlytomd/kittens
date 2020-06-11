@@ -14,7 +14,9 @@ $(document).ready(function(){
   
 // first, take submits from the user on topics and answers to topics
 // and call the appropriate api
+//empty out divs that show topics sections as page loads
   $("#topicsCurrent").empty();
+  $("#unanswerQ").empty();
 
   // submitting a question for other users
   $(document).on("click", "#visitorQuestion", function(event) {
@@ -28,9 +30,9 @@ $(document).ready(function(){
           }
       })
       .then(function(dataCreateQuestion) {
-          console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateQuestion);
+          console.log("data from creation of question (dbTopic) in topic.js: ", dataCreateQuestion);
       });
-      $("#topic").val("");
+      $("#question").val("");
   });
 
   // submittin a topic and answer to db
@@ -54,6 +56,7 @@ $(document).ready(function(){
   $(document).on("click", "#loadTopics", function(event) {
     event.preventDefault();
     $("#topicsCurrent").empty();
+    $("#unanswerQ").empty();
     $.getJSON("/getAllTopics", function(allTopics) {
       console.log("all topics from db, allTopics: ", allTopics);
       for (i = 0; i < allTopics.length; i++) {
