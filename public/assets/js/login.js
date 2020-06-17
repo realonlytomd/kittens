@@ -1,14 +1,14 @@
 // this will become the signup and login code for the login.html page
 // 
-
+// initialize input variables
+var userNameInput = "";
+var passwordInput = "";
+var currentUser = "";
+var currentPassword = "";
+var currentUser_id = "";
 $(document).ready(function(){
   console.log("hello from login.js");
-  // initialize some variables
-  var userNameInput = "";
-  var passwordInput = "";
-  var currentUser = "";
-  var currentPassword = "";
-  var currentUser_id = "";
+  
   
    //Get users who've already registered and are re-logging in
   // Get their inputs from the html

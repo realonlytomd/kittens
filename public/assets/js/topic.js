@@ -1,8 +1,8 @@
 // js code for the topic.html page
-var currentUserLoggedIn;  // to test if this is a logged in user or just a visitor
-currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
 $(document).ready(function(){
   console.log("hello from topic.js");
+  console.log("in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
   // make sure visitors (not logged in Users) can't see the form to answer topics 
   if (currentUserLoggedIn === "false") {
     $("#loggedInTopicForm").hide();
@@ -30,7 +30,7 @@ $(document).ready(function(){
           }
       })
       .then(function(dataCreateQuestion) {
-          console.log("data from creation of question (dbTopic) in topic.js: ", dataCreateQuestion);
+          console.log("data from creation of question (dataCreateQuestion) in topic.js: ", dataCreateQuestion);
       });
       $("#question").val("");
   });
