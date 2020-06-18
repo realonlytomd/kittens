@@ -1,7 +1,23 @@
 // js code for the topic.html page
-var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
-$(document).ready(function(){ feedKittenTimer(); });
+// Set up the timer variables - so timer will work after leaving the user page
+var startCount;
+//var myTimer;
 $(document).ready(function(){
+  $(document).ready(function(){ feedKittenTimer(); });
+  console.log("in topic.js, just set var startCount: " + startCount);
+  startCount = parseInt(localStorage.getItem("startCount"));
+  console.log("in topic.js, just getItem startCount: " + startCount);
+  // trying: don't get myTimer
+  //myTimer = localStorage.getItem("myTimer");
+  // what is myTimer? an integer? string? object? it's a number
+  var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+  
+  // simulate the click event of starting the feed the kitten time
+  if (startCount > 0) {
+    $("#feedKitten").click();
+  }
+
+
   console.log("hello from topic.js");
   console.log("in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
   // make sure visitors (not logged in Users) can't see the form to answer topics 

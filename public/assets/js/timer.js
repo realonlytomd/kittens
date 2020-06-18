@@ -6,8 +6,14 @@ function feedKittenTimer() {
   $(document).on("click", "#feedKitten", function(event) {
     event.preventDefault();
     // need to get inputs from user on how long to set the timer for
+    console.log("$('#startCount').val().trim() at beginning of click event: " + $("#startCount").val().trim());
     stopTimer();
-    startCount = $("#startCount").val().trim();
+    if ($("#startCount").val().trim() !== undefined) {
+      startCount = $("#startCount").val().trim();
+    } else {
+      startCount = localStorage.getItem("startCount");
+    }
+    localStorage.setItem("startCount", startCount);
     console.log("startCount: " + startCount);
     timer();
   });
@@ -25,8 +31,13 @@ function feedKittenTimer() {
     $("#feedTimer").show();
     startCount = startCount - 1;
     console.log("startCount = " + startCount);
-    // add play a sound as startCount reaches 0
+    // add play a sound as startCount reaches 0?
     myTimer = setTimeout(function(){ timer() }, 60000);
+    console.log("what is myTimer: " + myTimer);
+    console.log("typeof myTimer: " + typeof myTimer);
+
+    // try this: don't store myTimer to local storage. let it be built in timer.js
+    //localStorage.setItem("myTimer", myTimer);
     if (startCount === -1) {
       $("#countForm").trigger("reset");
       $("#feedTheKitten").modal("show");
