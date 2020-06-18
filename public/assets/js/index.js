@@ -25,7 +25,7 @@ $(document).ready(function(){
         "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
         "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
         "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
-        "xmasballport.jpg", "yellowcloseport.jpg"];
+        "xmasballport.jpg", "yellowcloseport.jpg", "busterkittenport.png"];
     var kittenIndex;
     // $("#carouselBackground").append("<div id='innerCar' class='carousel slide'" +
     //     " data-ride='carousel' data-interval='5000' data-wrap='true'>" +
