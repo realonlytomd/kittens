@@ -1,5 +1,6 @@
 // js code for the topic.html page
 var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+$(document).ready(function(){ feedKittenTimer(); });
 $(document).ready(function(){
   console.log("hello from topic.js");
   console.log("in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
