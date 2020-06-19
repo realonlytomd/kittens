@@ -27,8 +27,9 @@ var kittenSizes = [];
 var sortedAges = [];
 var sortedWeights = [];
 var sortedSizes = [];
-$(document).ready(function(){ feedKittenTimer(); });
+
 $(document).ready(function(){
+  $(document).ready(function(){ feedKittenTimer(); });
   console.log("hello from user.js");
   console.log("from user.js, currentUserId is ", currentUserId);
   // insert a logout function

@@ -1,20 +1,33 @@
 // js code for the topic.html page
 // Set up the timer variables - so timer will work after leaving the user page
 var startCount;
-//var myTimer;
+var myTimer;
+
 $(document).ready(function(){
   $(document).ready(function(){ feedKittenTimer(); });
   console.log("in topic.js, just set var startCount: " + startCount);
   startCount = parseInt(localStorage.getItem("startCount"));
   console.log("in topic.js, just getItem startCount: " + startCount);
-  // trying: don't get myTimer
-  //myTimer = localStorage.getItem("myTimer");
+  console.log("what is type of startCount: " + typeof startCount);
+  myTimer = parseInt(localStorage.getItem("myTimer"));
   // what is myTimer? an integer? string? object? it's a number
   var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
   
   // simulate the click event of starting the feed the kitten time
   if (startCount > 0) {
-    $("#feedKitten").click();
+    //$("#feedKitten").click();
+    //$("input#feedKitten")[0].click();
+    //setTimeout(function(){ $("#feedKitten").click()}, 100);
+    //setTimeout(function(){ $("input#feedKitten")[0].click()}, 100);
+    // $("#feedKitten")[0].mousedown();
+    // $("#feedKitten")[0].mouseup();
+     // what about mouseup?
+    //jQuery().trigger(“mousedown”) or jQuery().trigger(“mouseup”);
+    
+    // just need to call the function clickFunction, not clicking the button
+    // because that doesn't exist on the topics page.
+    clickFunction();
+    
   }
 
 
