@@ -8,12 +8,14 @@
       event.preventDefault();
       clickFunction();
     });
+  }
     
     function clickFunction() {
       // need to get inputs from user on how long to set the timer for
-      console.log("$('#startCount').val().trim() at beginning of click event: " + $("#startCount").val().trim());
+      
       stopTimer();
-      if ($("#startCount").val().trim() !== undefined) {
+      if ($("#startCount").val() !== undefined) {
+        console.log("$('#startCount').val().trim() at beginning of click event: " + $("#startCount").val().trim());
         startCount = $("#startCount").val().trim();
       } else {
         startCount = localStorage.getItem("startCount");
@@ -56,4 +58,4 @@
       //$("span#timerLabel").text("");
       $("#feedTimer").hide();
     }
-  }
+  

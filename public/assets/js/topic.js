@@ -5,10 +5,11 @@ var myTimer;
 
 $(document).ready(function(){
   $(document).ready(function(){ feedKittenTimer(); });
+  $(document).ready(function(){ clickFunction(); });
   console.log("in topic.js, just set var startCount: " + startCount);
   startCount = parseInt(localStorage.getItem("startCount"));
   console.log("in topic.js, just getItem startCount: " + startCount);
-  console.log("what is type of startCount: " + typeof startCount);
+  console.log("what is type of startCount?: " + typeof startCount);
   myTimer = parseInt(localStorage.getItem("myTimer"));
   // what is myTimer? an integer? string? object? it's a number
   var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
