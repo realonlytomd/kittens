@@ -17,6 +17,9 @@
       if ($("#startCount").val() !== undefined) {
         console.log("$('#startCount').val().trim() at beginning of click event: " + $("#startCount").val().trim());
         startCount = $("#startCount").val().trim();
+        //reset form after retrieving input so input is undefined
+        // for timer to be started from other pages
+        $("#countForm").trigger("reset");
       } else {
         startCount = localStorage.getItem("startCount");
       }
@@ -29,13 +32,19 @@
     function timer() {
       //this span is in a fixed div so user sees it on page while the
       //timer clock is running.
-      $("span#timerDisplay").html(startCount);
-      if (startCount <= 1) {
-        $("span#timerLabel").text(" Minute Left");
-        } else {
-          $("span#timerLabel").text(" Minutes Left");
-        }
-      $("#feedTimer").show();
+
+      // this if is messed up - I don't want the timer banner to show
+      // if there is no timer, as in, the timer has run out,
+      // or has never been set...THAT is what I need to test for
+      if ((startCount !== undefined) || (startCount > 0)) {
+        $("span#timerDisplay").html(startCount);
+        if (startCount <= 1) {
+          $("span#timerLabel").text(" Minute Left");
+          } else {
+            $("span#timerLabel").text(" Minutes Left");
+          }
+        $("#feedTimer").show();
+      }
       startCount = startCount - 1;
       console.log("startCount = " + startCount);
       // add play a sound as startCount reaches 0?
@@ -43,8 +52,6 @@
       console.log("what is myTimer: " + myTimer);
       console.log("typeof myTimer: " + typeof myTimer);
       localStorage.setItem("myTimer", myTimer);
-      // try this: don't store myTimer to local storage. let it be built in timer.js
-      //localStorage.setItem("myTimer", myTimer);
       if (startCount === -1) {
         $("#countForm").trigger("reset");
         $("#feedTheKitten").modal("show");
