@@ -16,6 +16,7 @@ $(document).ready(function(){
   
   // simulate the click event of starting the feed the kitten time
   if (startCount > 0) {
+    console.log("in topic.js, testing if startCount > 0: " + startCount);
     clickFunction();
   }
 
