@@ -50,12 +50,13 @@
       console.log("in function timer() after --startCount, startCount = " + startCount);
       // add play a sound as startCount reaches 0?
       myTimer = setTimeout(function(){ timer() }, 60000);
-      console.log("what is myTimer: " + myTimer);
-      console.log("typeof myTimer: " + typeof myTimer);
+      //console.log("what is myTimer: " + myTimer);
+      //console.log("typeof myTimer: " + typeof myTimer);
       localStorage.setItem("myTimer", myTimer);
       if (startCount === -1) {
         $("#countForm").trigger("reset");
         $("#feedTheKitten").modal("show");
+        localStorage.setItem("startCount", startCount);
         stopTimer();
       }
     }
@@ -63,7 +64,6 @@
     //stop Timer function
     function stopTimer() {
       clearTimeout(myTimer);
-      //$("span#timerLabel").text("");
       $("#feedTimer").hide();
     }
   

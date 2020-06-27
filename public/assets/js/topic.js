@@ -4,25 +4,28 @@ var startCount;
 var myTimer;
 
 $(document).ready(function(){
-  $(document).ready(function(){ feedKittenTimer(); });
-  $(document).ready(function(){ clickFunction(); });
+  //try taking this out?
+  //$(document).ready(function(){ feedKittenTimer(); });
+  //$(document).ready(function(){ clickFunction(); });
+  console.log("hello from topic.js");
   console.log("in topic.js, have just set var startCount: " + startCount);
   startCount = parseInt(localStorage.getItem("startCount"));
   console.log("in topic.js, just getItem startCount: " + startCount);
-  console.log("what is type of startCount?: " + typeof startCount);
+  //console.log("what is type of startCount?: " + typeof startCount);
   myTimer = parseInt(localStorage.getItem("myTimer"));
   // what is myTimer? an integer? string? object? it's a number
   var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
-  
+  //console.log("in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
   // simulate the click event of starting the feed the kitten time
   if (startCount > 0) {
-    console.log("in topic.js, testing if startCount > 0: " + startCount);
+    console.log("in topic.js, testing if startCount > 0, startCount: " + startCount);
     clickFunction();
+  } else {
+    console.log("startCount is NOT greater than 1");
   }
 
 
-  console.log("hello from topic.js");
-  console.log("in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
+  
   // make sure visitors (not logged in Users) can't see the form to answer topics 
   if (currentUserLoggedIn === "false") {
     $("#loggedInTopicForm").hide();
