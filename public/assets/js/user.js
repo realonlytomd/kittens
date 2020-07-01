@@ -32,6 +32,19 @@ $(document).ready(function(){
   $(document).ready(function(){ feedKittenTimer(); });
   console.log("hello from user.js");
   console.log("from user.js, currentUserId is ", currentUserId);
+  // This code is used if a user returns from the topics page,
+  // or another page, and there is a feed kitten timer currently going off.
+  // it acts as the same code in topic.js.
+  startCount = parseInt(localStorage.getItem("startCount"));
+  console.log("in user.js, getItem startCount: " + startCount);
+  myTimer = parseInt(localStorage.getItem("myTimer"));
+  // If a timer is running, bypass the click event to start timer function
+  if (startCount > 0) {
+    console.log("in user.js, testing if startCount > 0, startCount: " + startCount);
+    clickFunction();
+  } else {
+    console.log("startCount is NOT greater than 0");
+  }
   // insert a logout function
   $(document).on("click", "#logoutButton", function(event) {
     event.preventDefault();
@@ -140,9 +153,9 @@ $(document).ready(function(){
   $("#currentKittens").empty();
     // get the current user document
     $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
-      console.log("currentUser[0]: ", currentUser[0]);
-      console.log("currentUser[0].name: ", currentUser[0].name);
-      console.log("currentUser[0].loggedIn: ", currentUser[0].loggedIn);
+      // console.log("currentUser[0]: ", currentUser[0]);
+      // console.log("currentUser[0].name: ", currentUser[0].name);
+      // console.log("currentUser[0].loggedIn: ", currentUser[0].loggedIn);
       // since loggedIn is always "false" in the db, it must be written over here
       // everytime the user's info is retrieved from the db
       currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
@@ -152,7 +165,7 @@ $(document).ready(function(){
       //
       if (currentUserLoggedIn === "true") {
         $("span#currentUser").text(currentUser[0].name);
-        console.log("currentUser[0].kitten: ", currentUser[0].kitten);
+        //console.log("currentUser[0].kitten: ", currentUser[0].kitten);
         // this .forEach goes through each kitten of the user
         // It gets the kitten document and name of kitten, then prints row of buttons
         // one for each kitten
@@ -161,7 +174,7 @@ $(document).ready(function(){
         currentUser[0].kitten.forEach(outerForEach);
         
           function outerForEach(item, index) {
-            console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
+            //console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
             $.getJSON("/getAKitten" + item, function(curkat) {
               // this prints the names to the DOM 
               // as a button, with that kitten's id as data-id
