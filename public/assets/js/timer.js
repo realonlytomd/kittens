@@ -16,7 +16,8 @@
     stopTimer();
     console.log("before if, $('#startCount').val(): " + $("#startCount").val());
     console.log("what is type of startCount?: " + typeof startCount);
-    if (($("#startCount").val() !== undefined))  {
+    // check to see if the input value exists (or is empty or undefined)
+    if (($("#startCount").val()))  {
       console.log("$('#startCount').val().trim() at beginning of click event: " + $("#startCount").val().trim());
       startCount = $("#startCount").val().trim();
       console.log("after setting to .val().trim(), startCount: " + startCount);
