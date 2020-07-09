@@ -9,8 +9,21 @@
 // then after that's built, that index is spliced out, and a new one is picked
 // according to the timer, not a click from a user.  (I could add that to stress pics too)
 
+// set up variable for continuing the feed kitten timer if it is running
+var startCount;
+var myTimer;
+
 $(document).ready(function(){
-    // localStorage.setItem("currentUserLoggedIn", "false"); // all users are not logged in on index page
+    console.log("in index.js, have just set var startCount: " + startCount);
+    startCount = parseInt(localStorage.getItem("startCount"));
+    console.log("in index.js, just getItem startCount: " + startCount);
+    if (startCount > 0) {
+        console.log("in topic.js, testing if startCount > 0, startCount: " + startCount);
+        clickFunction();
+      } else {
+        console.log("startCount is NOT greater than 0");
+      }
+    myTimer = parseInt(localStorage.getItem("myTimer"));
     // build array of kitten pics
     var kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
         "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg",

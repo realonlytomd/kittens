@@ -49,6 +49,11 @@ $(document).ready(function(){
   $(document).on("click", "#logoutButton", function(event) {
     event.preventDefault();
     console.log("This is the logout function!");
+    //
+    // add modal to ask user if they are sure
+    // and if a feed kitten timer is running
+    // add a cancel timer button
+    // need to set the variable startCount to zero in local storage
     localStorage.setItem("currentUserLoggedIn", "false");
     // post to db to update loggedIn to "false"
     // this is needed because loggedIn is set to true for the first time a user signs up
