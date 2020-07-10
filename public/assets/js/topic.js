@@ -86,7 +86,9 @@ $(document).ready(function(){
           allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
           allTopics[i].answer + "</p>");
         } else {
-          $("#unanswerQ").append("<h4 style='border-top: 2px solid black;'>Question: </h4><p class='answerMe'>" +
+          $("#unanswerQ").append("<h4 style='border-top: 2px solid black;'>Question: </h4>" +
+          "<p class='answerMe' data-name='" + 
+          allTopics[i].topic + "'>" + 
           allTopics[i].topic + "</p>");
         }
       }
@@ -98,7 +100,7 @@ $(document).ready(function(){
     event.preventDefault();
     // the code .modal("show") brings up the modal from a click event, not .show() as used above
     // the value of the text of the chosed question to be used in the modal to get the answer
-    $("#chosenQ").val("")
+    $("#chosenQ").html($(this).attr("data-name"));
     $("#answerQuestion").modal("show");
   });
 });
