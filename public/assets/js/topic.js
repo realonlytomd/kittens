@@ -53,7 +53,7 @@ $(document).ready(function(){
       $("#question").val("");
   });
 
-  // submittin a topic and answer to db
+  // submitting a topic and answer to db
   $(document).on("click", "#submitTopic", function(event) {
     event.preventDefault();
       $.ajax({
@@ -91,6 +91,15 @@ $(document).ready(function(){
         }
       }
     });
-  });  
+  });
+
+  // if a user knows the answer to a question posed by another user
+  $(document).on("click", ".answerMe", function(event) {
+    event.preventDefault();
+    // the code .modal("show") brings up the modal from a click event, not .show() as used above
+    // the value of the text of the chosed question to be used in the modal to get the answer
+    $("#chosenQ").val("")
+    $("#answerQuestion").modal("show");
+  });
 });
     
