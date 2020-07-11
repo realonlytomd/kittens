@@ -85,6 +85,27 @@ module.exports = function(router) {
             });
     });
 
+    // Route to provide answer to an asked Topic (question)
+    router.post("/answerTopic/:topic", function(req, res) {
+        console.log("req.body.topic: ", req.body.topic);
+        console.log("req.body.answer: ", req.body.answer);
+        // Using the id passed in the id parameter, and make a query that finds the matching one in the db
+        db.Topic.findOneAndUpdate(
+            { topic: req.body.topic },
+            { answer: req.body.answer },
+            { new: true }
+        )
+            .then(function(dbTopic) {
+                console.log("dbTopic: ", dbTopic);
+                // If successful, send the answered Topic back to the client
+                res.json(dbTopic);
+            })
+            .catch(function(err) {
+            // but if an error occurred, send it to the client
+                res.json(err);
+            });
+        });
+
     // Route for creating a new user
     router.get("/createUser", function(req, res) {
         console.log("from /createUser, req.query: ", req.query);
@@ -220,7 +241,7 @@ module.exports = function(router) {
             .then(function(dbCurrentUser) {
                 res.json(dbCurrentUser);
                 console.log("from  route /getCurrentUser:id, dbCurrentUser: ", dbCurrentUser);
-                console.log("dbCurrentUser.kitten.length", dbCurrentUser[0].kitten.length);
+                console.log("dbCurrentUser.kitten.length: ", dbCurrentUser[0].kitten.length);
             })
             .catch(function(err) {
             // However, if an error occurred, send it to the client

@@ -2,6 +2,7 @@
 // Set up the timer variables - so timer will work after leaving the user page
 var startCount;
 var myTimer;
+var chosenQuestion;
 
 $(document).ready(function(){
   console.log("hello from topic.js");
@@ -33,8 +34,9 @@ $(document).ready(function(){
 // first, take submits from the user on topics and answers to topics
 // and call the appropriate api
 //empty out divs that show topics sections as page loads
-  $("#topicsCurrent").empty();
   $("#unanswerQ").empty();
+  $("#topicsCurrent").empty();
+  
 
   // submitting a question for other users
   $(document).on("click", "#visitorQuestion", function(event) {
@@ -98,10 +100,29 @@ $(document).ready(function(){
   $(document).on("click", ".answerMe", function(event) {
     event.preventDefault();
     // the code .modal("show") brings up the modal from a click event, not .show() as used above
-    // the value of the text of the chosed question to be used in the modal to get the answer
-    //$("#chosenQ").html($(this).attr("data-name"));
+    // the value of the text of the chosen question to be used in the modal to get the answer
     $("#chosenQ").text($(this).text());
+    chosenQuestion = $(this).text();
+    console.log("chosenQuestion variable: " + chosenQuestion);
     $("#answerQuestion").modal("show");
+  });
+
+  // submitting an answer to just a questions to the db
+  $(document).on("click", "#submitNewAnswer", function(event) {
+    event.preventDefault();
+      $.ajax({
+          method: "POST",
+          url: "/answerTopic/" + chosenQuestion,
+          data: {
+              topic: chosenQuestion,
+              answer: $("#newAnswer").val()
+          }
+      })
+      .then(function(dataChosenQuestion) {
+          console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+      });
+      $("#newAnswer").val("");
+      $("#answerQuestion").modal("hide");
   });
 });
     
