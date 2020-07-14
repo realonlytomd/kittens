@@ -99,12 +99,17 @@ $(document).ready(function(){
   // if a user knows the answer to a question posed by another user
   $(document).on("click", ".answerMe", function(event) {
     event.preventDefault();
-    // the code .modal("show") brings up the modal from a click event, not .show() as used above
-    // the value of the text of the chosen question to be used in the modal to get the answer
-    $("#chosenQ").text($(this).text());
-    chosenQuestion = $(this).text();
-    console.log("chosenQuestion variable: " + chosenQuestion);
-    $("#answerQuestion").modal("show");
+    // first, make sure the user is registered and logged in
+    if (currentUserLoggedIn === "false") {
+      $("#notLoggedIn").modal("show");
+    } else {
+      // the code .modal("show") brings up the modal from a click event, not .show() as used above
+      // the value of the text of the chosen question to be used in the modal to get the answer
+      $("#chosenQ").text($(this).text());
+      chosenQuestion = $(this).text();
+      console.log("chosenQuestion variable: " + chosenQuestion);
+      $("#answerQuestion").modal("show");
+    }
   });
 
   // submitting an answer to just a questions to the db
