@@ -26,9 +26,13 @@ $(document).ready(function(){
   if (currentUserLoggedIn === "false") {
     $("#loggedInTopicForm").hide();
     $("#visitorTopicForm").show();
+    $("#unansweredTitle").hide();
+    $("#answeredTitle").hide();
   } else {
     $("#loggedInTopicForm").show();
     $("#visitorTopicForm").hide();
+    $("#unansweredTitle").hide();
+    $("#answeredTitle").hide();
   }
   
 // first, take submits from the user on topics and answers to topics
@@ -75,6 +79,8 @@ $(document).ready(function(){
 
   $(document).on("click", "#loadTopics", function(event) {
     event.preventDefault();
+    $("#unansweredTitle").show();
+    $("#answeredTitle").show();
     $("#topicsCurrent").empty();
     $("#unanswerQ").empty();
     $.getJSON("/getAllTopics", function(allTopics) {
@@ -84,11 +90,13 @@ $(document).ready(function(){
         // if so, then add a way to click on the topic
         // if not, then print as before
         if (allTopics[i].answer !== "") {
-          $("#topicsCurrent").append("<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
+          $("#topicsCurrent").append(
+          "<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
           allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
           allTopics[i].answer + "</p>");
         } else {
-          $("#unanswerQ").append("<h4 style='border-top: 2px solid black;'>Question: </h4>" +
+          $("#unanswerQ").append(
+          "<h4 style='border-top: 2px solid black;'>Question: </h4>" +
           "<p class='answerMe'>" + 
           allTopics[i].topic + "</p>");
         }

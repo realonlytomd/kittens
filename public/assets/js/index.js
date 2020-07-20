@@ -105,4 +105,14 @@ $(document).ready(function(){
         }
     }
     
+    // check to see if user is already logged in and returned to home page
+    // for whatever reason. If user is logged in, don't show the signup or login button
+    var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+    if (currentUserLoggedIn === "true") {
+        $("#signupButton").hide();
+        $("#usersButton").show();
+    } else {
+        $("#signupButton").show();
+        $("#usersButton").hide();
+    }
 });
