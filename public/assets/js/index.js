@@ -89,7 +89,7 @@ $(document).ready(function(){
         if ((kittenPortPics.length === 0) || (kittenLandPics.length === 0)) {
             kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
                 "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg", 
-                "chairland.jpg", "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
+                "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
                 "fourwaterland.jpg", "groupland.jpg", "littleladyland.png", "momland.jpg", 
                 "pairsland.jpg", "regalwaterland.jpg", "scrambleland.jpg", "screamland.png", 
                 "sleepy2land.png", "threehugland.jpg", "threesland.jpg", "tubland.jpg", "washland.jpg"];
