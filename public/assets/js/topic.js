@@ -3,6 +3,7 @@
 var startCount;
 var myTimer;
 var chosenQuestion;
+var currentUserLoggedIn;
 
 $(document).ready(function(){
   console.log("hello from topic.js");
@@ -12,8 +13,8 @@ $(document).ready(function(){
   //console.log("what is type of startCount?: " + typeof startCount);
   myTimer = parseInt(localStorage.getItem("myTimer"));
   // what is myTimer?  it's a number
-  var currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
-  // console.log("in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
+  currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+  console.log("in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
   // If a timer is running, bypass the click event to start timer function
   if (startCount > 0) {
     console.log("in topic.js, testing if startCount > 0, startCount: " + startCount);
@@ -23,7 +24,7 @@ $(document).ready(function(){
   }
 
   // make sure visitors (not logged in Users) can't see the form to answer topics 
-  if (currentUserLoggedIn === "false") {
+  if (currentUserLoggedIn === "false" || currentUserLoggedIn === null) {
     $("#loggedInTopicForm").hide();
     $("#visitorTopicForm").show();
     $("#unansweredTitle").hide();
@@ -108,7 +109,7 @@ $(document).ready(function(){
   $(document).on("click", ".answerMe", function(event) {
     event.preventDefault();
     // first, make sure the user is registered and logged in
-    if (currentUserLoggedIn === "false") {
+    if (currentUserLoggedIn === "false" || currentUserLoggedIn === null) {
       $("#notLoggedIn").modal("show");
     } else {
       // the code .modal("show") brings up the modal from a click event, not .show() as used above
