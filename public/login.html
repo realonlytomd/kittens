@@ -38,29 +38,26 @@
         </div>
           <!-- End of Bootstrap modal code -->
         <div class="row text-center">
-          <div class="col-xs-12">
+          <!-- for screens larger than tiny, or landscape orientations, use sm-->
+          <div id="loginDiv" class="col-xs-12 col-sm-6 col-sm-offset-3">
             <h1>Welcome to Foster That Kitten</h1>
-            <div id="loginDiv">
-              <h2 class="text-center" id="logininLogin"><span class="namebox">Registered Users</span></h2>
-              <form class="login">
-                <div class="form-group">
-                  <label for="userName-input">Username</label>
-                  <input type="text" class="form-control" id="userName-input" placeholder="Username">
-                </div>
-                <div class="form-group">
-                  <label for="password-input">Password</label>
-                  <input type="password" class="form-control" id="password-input" placeholder="Password">
-                </div>
-                <button type="submit" id="currentUserLogin">Login</button>
-              </form>
-            </div>
+            <h2 class="text-center" id="logininLogin"><span class="namebox">Registered Users</span></h2>
+            <form class="login">
+              <div class="form-group">
+                <label for="userName-input">Username</label>
+                <input type="text" class="form-control" id="userName-input" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label for="password-input">Password</label>
+                <input type="password" class="form-control" id="password-input" placeholder="Password">
+              </div>
+              <button type="submit" id="currentUserLogin">Login</button>
+            </form>
             <h2><span class="namebox">New User Sign Up Form</span></h2>
             <!-- Button trigger modal -->
-            <div class="text-center">
-              <button id="signAdvice" type="button" data-toggle="modal" data-target="#myModalSignUp">
-                  Sign Up Advice
-              </button>
-            </div>
+            <button id="signAdvice" type="button" data-toggle="modal" data-target="#myModalSignUp">
+                Sign Up Advice
+            </button>
             <!-- Modal -->
             <div class="modal fade" id="myModalSignUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
