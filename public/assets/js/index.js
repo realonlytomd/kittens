@@ -71,9 +71,11 @@ $(document).ready(function(){
         if ($("button#topicButton").css("font-size") === "14px") {
             //console.log("In buildBackground(), fontsize should be 14: " + $("button#topicButton").css("font-size"));
             image.attr("src", "assets/img/" + kittenPortPics[kittenIndex]);
+            console.log("kittenIndex = " + kittenIndex);
         } else {
             //console.log("In buildBackground(), fontsize should be 26: " + $("button#topicButton").css("font-size"));
             image.attr("src", "assets/img/" + kittenLandPics[kittenIndex]);
+            console.log("kittenIndex = " + kittenIndex);
         }
         image.attr("alt", "cute");
         $("#carouselBackground").append(image);
@@ -81,27 +83,29 @@ $(document).ready(function(){
         if ($("button#topicButton").css("font-size") === "14px") {
             //console.log("before splice: fontsize is 14: " + $("button#topicButton").css("font-size"));
             kittenPortPics.splice(parseInt(kittenIndex), 1);
+            console.log("kittenPortPics.length = " + kittenPortPics.length);
         } else {
             //console.log("before splice: fontsize is 26: " + $("button#topicButton").css("font-size"));
             kittenLandPics.splice(parseInt(kittenIndex), 1);
+            console.log("kittenLandPics.length = " + kittenLandPics.length);
         }
         // if the last index has been removed, rebuild the array
         if ((kittenPortPics.length === 0) || (kittenLandPics.length === 0)) {
             kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
-                "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg", 
-                "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
-                "fourwaterland.jpg", "groupland.jpg", "littleladyland.png", "momland.jpg", 
-                "pairsland.jpg", "regalwaterland.jpg", "scrambleland.jpg", "screamland.png", 
-                "sleepy2land.png", "threehugland.jpg", "threesland.jpg", "tubland.jpg", "washland.jpg"];
+            "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg",
+            "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
+            "fourwaterland.jpg", "groupland.jpg", "littleladyland.png", "momland.jpg", 
+            "pairsland.jpg", "regalwaterland.jpg", "scrambleland.jpg", "screamland.png", 
+            "sleepy2land.png", "threehugland.jpg", "threesland.jpg", "tubland.jpg", "washland.jpg"];
             
             kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
-                "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "chairport.jpg", "closeupport.jpg",
-                "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
-                "faroffport.jpg", "fluffyport.png", "foursport.jpg", "furport.jpg", "grayport.jpg", "littlelady2port.png",
-                "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
-                "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
-                "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
-                "xmasballport.jpg", "yellowcloseport.jpg"];
+            "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "closeupport.jpg",
+            "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
+            "faroffport.jpg", "fluffyport.png", "foursport.jpg", "furport.jpg", "grayport.jpg", "littlelady2port.png",
+            "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
+            "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
+            "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
+            "xmasballport.jpg", "yellowcloseport.jpg", "busterkittenport.png"];
         }
     }
     
