@@ -59,11 +59,11 @@ $(document).ready(function(){
         }
       }
       console.log("this log in doesn't match any users in db");
-      // so, this for loop is working,
+      alert("The information you entered is incorrect.");
+
       // btw, a non-logged in user should have access to topics, but only a 
       // logged in user should be able to add to topics. *important"
       // If it does  -- need to decide where user goes - topic page?
-      // List of kittens they have?
       // Instructions about entering kittens.
     });
     $("#userName-input").val("");
