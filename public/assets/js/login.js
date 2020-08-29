@@ -59,7 +59,11 @@ $(document).ready(function(){
         }
       }
       console.log("this log in doesn't match any users in db");
-      alert("The information you entered is incorrect.");
+      var questions = "The information you entered is incorrect. Click Cancel to try again, or click " +
+      "OK to reset your password."
+      if (confirm(questions)) {
+        console.log("user wishes to change password");
+      }
 
       // btw, a non-logged in user should have access to topics, but only a 
       // logged in user should be able to add to topics. *important"
