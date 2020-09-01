@@ -59,10 +59,19 @@ $(document).ready(function(){
         }
       }
       console.log("this log in doesn't match any users in db");
-      var questions = "The information you entered is incorrect. Click Cancel to try again, or click " +
-      "OK to reset your password."
+      var questions = "The information you entered is incorrect." + 
+        "\nClick Cancel to try again, or click OK to reset your password."
       if (confirm(questions)) {
         console.log("user wishes to change password");
+        // A modal appears asking the user to re-answer their original 3 security questions
+        // If all match - provide an input field to user to give new password
+        // and a confirmation space for it again. Calls a route to change the user's
+        // password in the db.
+        //
+        $("#secQReanswer").modal("show");
+        // make a new function that retrieves answers to security qeustions.
+        // and compare those answers to previously supplied answer in db
+        //
       }
 
       // btw, a non-logged in user should have access to topics, but only a 
@@ -72,6 +81,27 @@ $(document).ready(function(){
     });
     $("#userName-input").val("");
     $("#password-input").val("");
+  });
+
+  // function called from inside modal to answer the security questions before resetting password
+  $(document).on("click", "#submitSecQ", function(event) {
+    event.preventDefault();
+    console.log("inside function that compares security questions to previous answers");
+    $("#secQReanswer").modal("hide");
+    // retrieve the user inputted values 
+    //
+    // compare with db
+    //
+    // 
+    //empty out the input fields
+    $("#secQOne").val("");
+    $("#secQTwo").val("");
+    $("#secQThree").val("");
+    // if correct
+    // pull up the modal to reset the password
+    $("#passwordReset").modal("show");
+    // or tell user to try again.
+    
   });
 
   // get user input submitted from a new user
