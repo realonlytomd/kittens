@@ -15,6 +15,21 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  // `questionOne` first security question of user is required and of type String
+  questionOne: {
+    type: String,
+    required: true
+  },
+  // `questionTwo` second security question of user is required and of type String
+  questionTwo: {
+    type: String,
+    required: true
+  },
+  // `questionThree` third security question of user is required and of type String
+  questionThree: {
+    type: String,
+    required: true
+  },
   // User's 'loggedIn' status is set to true if they are currently logged in.
   // I could have used a Boolean, but I use setItem from localStorage, and
   // it seems that in some browsers that can be set only as a string
@@ -23,7 +38,7 @@ var UserSchema = new Schema({
     required: true,
     default: "false"
   },
-  // `kitten` is an object that that will reference the kittens possessed by the user.
+  // `kitten` is an object that will reference the kittens possessed by the user.
   // The ref property links the ObjectId to the Kitten model
   // So it's possible to populate a User with multiple kittens, use an array of ObjectIds
   kitten: [{

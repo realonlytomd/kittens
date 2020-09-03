@@ -6,6 +6,9 @@ var passwordInput = "";
 var currentUser = "";
 var currentPassword = "";
 var currentUser_id = "";
+var questionOneReanswer;
+var questionTwoReanswer;
+var questionThreeReanswer;
 $(document).ready(function(){
   console.log("hello from login.js");
   
@@ -68,27 +71,27 @@ $(document).ready(function(){
         // and a confirmation space for it again. Calls a route to change the user's
         // password in the db.
         //
-        $("#secQReanswer").modal("show");
+        $("#secQAnswer").modal("show");
         // make a new function that retrieves answers to security qeustions.
         // and compare those answers to previously supplied answer in db
         //
       }
-
-      // btw, a non-logged in user should have access to topics, but only a 
-      // logged in user should be able to add to topics. *important"
-      // If it does  -- need to decide where user goes - topic page?
       // Instructions about entering kittens.
     });
     $("#userName-input").val("");
     $("#password-input").val("");
   });
 
-  // function called from inside modal to answer the security questions before resetting password
+  // function called from inside modal to answer the security questions AGAIN before resetting password
   $(document).on("click", "#submitSecQ", function(event) {
     event.preventDefault();
     console.log("inside function that compares security questions to previous answers");
-    $("#secQReanswer").modal("hide");
-    // retrieve the user inputted values 
+    // hide the previous modal
+    $("#secQAnswer").modal("hide");
+    // retrieve the user inputted values and assign them to reanswer variables.
+    questionOneReanswer = $("#secQOne").val().trim();
+    questionTwoReanswer = $("#secQTwo").val().trim();
+    questionThreeReanswer = $("#secQThree").val().trim();
     //
     // compare with db
     //
@@ -117,6 +120,10 @@ $(document).ready(function(){
     console.log("before passwordInput: " + passwordInput);
     passwordInput = passwordInput.toLowerCase();
     console.log("after passwordInput: " + passwordInput);
+
+    // bring up modal to answer security questions.
+    $("#secQAnswer").modal("show");
+    // 
     
     // Need to add a check to see that both userNameInput and passwordInput actualy exist
     //

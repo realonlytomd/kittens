@@ -58,7 +58,7 @@
             <button id="signAdvice" type="button" data-toggle="modal" data-target="#myModalSignUp">
                 Sign Up Advice
             </button>
-            <!-- Modal -->
+            <!-- Modal for a new user to register-->
             <div class="modal fade" id="myModalSignUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -89,17 +89,13 @@
                 <label for="newPassword-input">Password</label>
                 <input type="password" class="form-control" id="newPassword-input" placeholder="6 digits">
               </div>
-              <div style="display: none" id="alert" class="alert alert-danger" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error:</span> <span class="msg"></span>
-              </div>
               <button type="submit" id="signupUser">Sign Up</button>
             </form>
             <br />
           </div>
         </div>
-              <!-- Modal for answering sequrity questions when resetting password -->
-        <div class="modal fade" id="secQReanswer" role="dialog">
+              <!-- Modal for answering sequrity questions first time AND when resetting password -->
+        <div class="modal fade" id="secQAnswer" role="dialog">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header" style="padding:35px 50px;">
