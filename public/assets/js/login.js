@@ -6,11 +6,13 @@ var passwordInput = "";
 var currentUser = "";
 var currentPassword = "";
 var currentUser_id = "";
+var currentUserLoggedIn;
 var questionOneReanswer;
 var questionTwoReanswer;
 var questionThreeReanswer;
 $(document).ready(function(){
   console.log("hello from login.js");
+  console.log("what is currentUserLoggedIn: " + currentUserLoggedIn);
   
   
    //Get users who've already registered and are re-logging in
@@ -93,18 +95,27 @@ $(document).ready(function(){
     questionTwoReanswer = $("#secQTwo").val().trim();
     questionThreeReanswer = $("#secQThree").val().trim();
     //
-    // compare with db
-    //
-    // 
-    //empty out the input fields
-    $("#secQOne").val("");
-    $("#secQTwo").val("");
-    $("#secQThree").val("");
-    // if correct
-    // pull up the modal to reset the password
-    $("#passwordReset").modal("show");
-    // or tell user to try again.
-    
+    // need if statement, if first time user signup, 
+    // currentUserLoggedIn will be undefined because user hasn't logged in ever,
+    // then call function to put this data in db
+    // and add a break;
+    if (currentUserLoggedIn !== false) {
+      putUserInfoDb();
+      
+    } else {
+      // or, if resetting password... currentUserLoggedIn will be false, since user is not logged in
+      // compare these security questonswith db, 
+      //
+      // 
+      //empty out the input fields from both if and else....
+      $("#secQOne").val("");
+      $("#secQTwo").val("");
+      $("#secQThree").val("");
+      // if correct
+      // pull up the modal to reset the password if that's what we're needing to do.
+      $("#passwordReset").modal("show");
+      // or tell user to try again.
+    }
   });
 
   // get user input submitted from a new user
@@ -124,9 +135,12 @@ $(document).ready(function(){
     // bring up modal to answer security questions.
     $("#secQAnswer").modal("show");
     // 
+  }); 
+  //below is currently hanging out but needs to be put inside a function...
     
-    // Need to add a check to see that both userNameInput and passwordInput actualy exist
-    //
+  
+  function putUserInfoDb() {
+  // Need to add a check to see that both userNameInput and passwordInput actualy exist
     //
     // then put these values into the mongo db
     $.ajax({
@@ -145,12 +159,14 @@ $(document).ready(function(){
       console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
       localStorage.setItem("currentUserId", dataCreateUser._id);
       localStorage.setItem("currentUserLoggedIn", dataCreateUser.loggedIn);
+      console.log("This is currentUserLoggedIn after putting user in db: " + currentUserLoggedIn);
       // but first, zero out input fields
       $("#newUserName-input").val("");
       $("#newPassword-input").val("");
       window.location.replace("/user");
     });
+  }
     
-  });
+  
   
 });
