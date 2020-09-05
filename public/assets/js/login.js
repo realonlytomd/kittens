@@ -7,9 +7,12 @@ var currentUser = "";
 var currentPassword = "";
 var currentUser_id = "";
 var currentUserLoggedIn;
-var questionOneReanswer;
-var questionTwoReanswer;
-var questionThreeReanswer;
+var qOneInput;
+var qTwoInput;
+var qThreeInput;
+// don't think this is needed for security question asking becuase just need one user
+// var allUsers; // this variable is all the info with every user. need it to compare passwords and sec. quesetions
+// var i; // this is the index of the currently logged in user. used for same reason as above.
 $(document).ready(function(){
   console.log("hello from login.js");
   console.log("what is currentUserLoggedIn: " + currentUserLoggedIn);
@@ -69,56 +72,58 @@ $(document).ready(function(){
       if (confirm(questions)) {
         console.log("user wishes to change password");
         // A modal appears asking the user to re-answer their original 3 security questions
-        // If all match - provide an input field to user to give new password
-        // and a confirmation space for it again. Calls a route to change the user's
-        // password in the db.
-        //
         $("#secQAnswer").modal("show");
-        // make a new function that retrieves answers to security qeustions.
-        // and compare those answers to previously supplied answer in db
+        // when the user clicks the submit button in that modal, the function below:
+        // #submitSecQ is called.
         //
       }
-      // Instructions about entering kittens.
     });
     $("#userName-input").val("");
     $("#password-input").val("");
   });
 
-  // function called from inside modal to answer the security questions AGAIN before resetting password
+  // function called from inside modal to answer the security questions
   $(document).on("click", "#submitSecQ", function(event) {
     event.preventDefault();
     console.log("inside function that compares security questions to previous answers");
     // hide the previous modal
     $("#secQAnswer").modal("hide");
     // retrieve the user inputted values and assign them to reanswer variables.
-    questionOneReanswer = $("#secQOne").val().trim();
-    questionTwoReanswer = $("#secQTwo").val().trim();
-    questionThreeReanswer = $("#secQThree").val().trim();
+    qOneInput = $("#secQOne").val().trim();
+    qTwoInput = $("#secQTwo").val().trim();
+    qThreeInput = $("#secQThree").val().trim();
     //
     // need if statement, if first time user signup, 
     // currentUserLoggedIn will be undefined because user hasn't logged in ever,
     // then call function to put this data in db
-    // and add a break;
     if (currentUserLoggedIn !== false) {
+      // call function to put a new user info in db
+      console.log("inside currentUserLoggedIn !== false, so it's a new user...");
       putUserInfoDb();
       
-    } else {
-      // or, if resetting password... currentUserLoggedIn will be false, since user is not logged in
-      // compare these security questonswith db, 
-      //
-      // 
-      //empty out the input fields from both if and else....
-      $("#secQOne").val("");
-      $("#secQTwo").val("");
-      $("#secQThree").val("");
+    } else { // a current user is trying to reset their password
+      // currentUserLoggedIn will be false, since user is not logged in
+      // compare these security questons with db, 
+      console.log("a registered user is trying to reset their password");
+      //get current security questions out of db
+      // but just for THE CURRENT USER TRYING TO LOGIN
+
+      // compare the new answers with the old answers
+      
       // if correct
       // pull up the modal to reset the password if that's what we're needing to do.
       $("#passwordReset").modal("show");
-      // or tell user to try again.
+      // if not, tell user to try again.
+      // What to do if user is never correct?
     }
+    // empty out inputs for security questions
+    $("#secQOne").val("");
+    $("#secQTwo").val("");
+    $("#secQThree").val("");
   });
 
   // get user input submitted from a new user
+  // need to add storage of security questions....
   $(document).on("click", "#signupUser", function(event) {
     event.preventDefault();
     userNameInput = $("#newUserName-input").val().trim();
@@ -134,11 +139,10 @@ $(document).ready(function(){
 
     // bring up modal to answer security questions.
     $("#secQAnswer").modal("show");
+
     // 
-  }); 
-  //below is currently hanging out but needs to be put inside a function...
-    
-  
+  });
+
   function putUserInfoDb() {
   // Need to add a check to see that both userNameInput and passwordInput actualy exist
     //
@@ -149,6 +153,9 @@ $(document).ready(function(){
       data: {
           name: userNameInput,
           password: passwordInput,
+          questionOne: qOneInput,
+          questionTwo: qTwoInput,
+          questionThree: qThreeInput,
           loggedIn: "true"
       }
     })
@@ -159,7 +166,7 @@ $(document).ready(function(){
       console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
       localStorage.setItem("currentUserId", dataCreateUser._id);
       localStorage.setItem("currentUserLoggedIn", dataCreateUser.loggedIn);
-      console.log("This is currentUserLoggedIn after putting user in db: " + currentUserLoggedIn);
+      console.log("This is currentUserLoggedIn after putting user in db: " + dataCreateUser.loggedIn);
       // but first, zero out input fields
       $("#newUserName-input").val("");
       $("#newPassword-input").val("");
