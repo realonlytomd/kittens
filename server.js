@@ -41,8 +41,8 @@ app.use(express.static("public"));
 //may not need this since I added the function(err) callback below
 mongoose.Promise = Promise;
 // set up for deploying on heroku and developing local
-  if (process.env.MONGODB_URI) {
-    mongoose.connect(process.env.MONGODB_URI);
+  if (process.env.DB_URI) {
+    mongoose.connect(process.env.DB_URI);
   } else {
     mongoose.connect("mongodb://localhost:27017/littlecats", { 
       useNewUrlParser: true, 
