@@ -10,6 +10,9 @@ var currentUserLoggedIn;
 var qOneInput;
 var qTwoInput;
 var qThreeInput;
+var qOneDb;
+var qTwoDb;
+var qThreeDb;
 // don't think this is needed for security question asking becuase just need one user
 // var allUsers; // this variable is all the info with every user. need it to compare passwords and sec. quesetions
 // var i; // this is the index of the currently logged in user. used for same reason as above.
@@ -18,8 +21,8 @@ $(document).ready(function(){
   console.log("what is currentUserLoggedIn: " + currentUserLoggedIn);
   
   
-   //Get users who've already registered and are re-logging in
-  // Get their inputs from the html
+   //For users who've already registered and are re-logging in
+
   $(document).on("click", "#currentUserLogin", function(event) {
     // didn't work previously without the event.preventDefault - always use
     event.preventDefault();
@@ -65,13 +68,23 @@ $(document).ready(function(){
         } else {
           console.log(allUsers[i].name + " is not the current user");
         }
+        if (currentUser === allUsers[i].name) {
+          // answers to security questions stored in db
+          console.log("currentUser: " + currentUser + "is the particular user in db");
+          qOneDb = allUsers[i].questionOne;
+          qTwoDb = allUsers[i].questionTwo;
+          qThreeDb = allUsers[i].questionThree;
+          console.log("qOneDB, qTwoD, qThreeDb are: " + qOneDb + " " + qTwoDb + " " + qThreeDb);
+        }
       }
       console.log("this log in doesn't match any users in db");
+      // for now, assuming that the user name is correct, but password is wrong
       var questions = "The information you entered is incorrect." + 
         "\nClick Cancel to try again, or click OK to reset your password."
+        // using an alert 
       if (confirm(questions)) {
         console.log("user wishes to change password");
-        // A modal appears asking the user to re-answer their original 3 security questions
+        // The id secQAnswer modal appears asking the user to re-answer their original 3 security questions
         $("#secQAnswer").modal("show");
         // when the user clicks the submit button in that modal, the function below:
         // #submitSecQ is called.
@@ -100,19 +113,23 @@ $(document).ready(function(){
       // call function to put a new user info in db
       console.log("inside currentUserLoggedIn !== false, so it's a new user...");
       putUserInfoDb();
-      
     } else { // a current user is trying to reset their password
       // currentUserLoggedIn will be false, since user is not logged in
       // compare these security questons with db, 
       console.log("a registered user is trying to reset their password");
-      //get current security questions out of db
-      // but just for THE CURRENT USER TRYING TO LOGIN
-
+      // but just for THE USER TRYING TO LOGIN
+      // we have current security questions answers: 
+      // qOneInput, qTwoInput, qThreeInput 
+      // need the old security answers out of db for the user. They are 
+      // qOneDB, qTwoD, qThreeDb
       // compare the new answers with the old answers
-      
-      // if correct
-      // pull up the modal to reset the password if that's what we're needing to do.
-      $("#passwordReset").modal("show");
+      if ((qOneInput === qOneDb) && (qTwoInput === qTwoDb) && (qThreeInput === qThreeDb)) {
+        // security questions are correct, this is the correct user
+        // so reset their password
+        // pull up the modal to reset the password...
+        console.log("correct answers, so need to reset user's password");
+        $("#passwordReset").modal("show");
+      }
       // if not, tell user to try again.
       // What to do if user is never correct?
     }

@@ -235,7 +235,7 @@ module.exports = function(router) {
     // Route for getting all of the kittens from a particular user from the db
     //This .get only gets the current user
     router.get("/getCurrentUser:id", function(req, res) {
-        console.log("inside api-routes: req.params: ", req.params);
+        console.log("inside api-routes: /getCurrentUser:id, req.params: ", req.params);
         // need to find the correct user, THEN all their kittens, 
         db.User.find({ _id: req.params.id}) // This is to limit the find to just current user
             .then(function(dbCurrentUser) {
