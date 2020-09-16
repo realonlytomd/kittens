@@ -6,10 +6,11 @@ var passwordInput = "";
 var currentUser = "";
 var currentPassword = "";
 var currentUser_id = "";
-var currentUserLoggedIn;
+var currentUserLoggedIn; // set to local storage, so needs to be a string
 var qOneInput;
 var qTwoInput;
 var qThreeInput;
+// the three answers from db for the current user trying to log in is temp. stored in these vars
 var qOneDb;
 var qTwoDb;
 var qThreeDb;
@@ -47,7 +48,7 @@ $(document).ready(function(){
           // THIS is where a current user's logged in status is set to "true".
           // the db for users will always have their status set to "false".
           // It's never overwritten. Only while logged in on the user's brower
-          allUsers[i].loggedIn = "true";
+          currentUserLoggedIn = "true";
           console.log(allUsers[i].name + " is the current user");
           // and that user's id will be used to post to their data in the db
           currentUser_id = allUsers[i]._id;
@@ -56,7 +57,7 @@ $(document).ready(function(){
           // currently logged in user can post to their db values
           localStorage.setItem("currentUserId", currentUser_id);
           // also need to remember this user is loggedIn, so "true"
-          localStorage.setItem("currentUserLoggedIn", allUsers[i].loggedIn);
+          localStorage.setItem("currentUserLoggedIn", currentUserLoggedIn);
           // clear input fields
           $("#userName-input").val("");
           $("#password-input").val("");
@@ -70,11 +71,13 @@ $(document).ready(function(){
         }
         if (currentUser === allUsers[i].name) {
           // answers to security questions stored in db
-          console.log("currentUser: " + currentUser + "is the particular user in db");
+          console.log("currentUser: " + currentUser + " is the user currently logging in");
           qOneDb = allUsers[i].questionOne;
           qTwoDb = allUsers[i].questionTwo;
           qThreeDb = allUsers[i].questionThree;
-          console.log("qOneDB, qTwoD, qThreeDb are: " + qOneDb + " " + qTwoDb + " " + qThreeDb);
+          console.log("Their current answers to the sec. q's from db: qOneDB, qTwoD, qThreeDb are: " + qOneDb + " " + qTwoDb + " " + qThreeDb);
+          // since we know that a registered user is trying to log in, get their currentUserLoggedIn status
+          currentUserLoggedIn = "false";  // instead of undefined, as it would be for a non-registered user
         }
       }
       console.log("this log in doesn't match any users in db");
@@ -105,14 +108,17 @@ $(document).ready(function(){
     qOneInput = $("#secQOne").val().trim();
     qTwoInput = $("#secQTwo").val().trim();
     qThreeInput = $("#secQThree").val().trim();
+    console.log("Their current answers to security q's: " + qOneInput + " " + qTwoInput + " " + qThreeInput);
+
     //
     // need if statement, if first time user signup, 
     // currentUserLoggedIn will be undefined because user hasn't logged in ever,
     // then call function to put this data in db
-    if (currentUserLoggedIn !== false) {
+    console.log("currentUserLoggedIn, before checking if !== false: " + currentUserLoggedIn);
+    if (currentUserLoggedIn !== "false") {
       // call function to put a new user info in db
-      console.log("inside currentUserLoggedIn !== false, so it's a new user...");
-      putUserInfoDb();
+      console.log("inside currentUserLoggedIn, !== false, so it's a new user...");
+      // putUserInfoDb();
     } else { // a current user is trying to reset their password
       // currentUserLoggedIn will be false, since user is not logged in
       // compare these security questons with db, 
@@ -129,6 +135,7 @@ $(document).ready(function(){
         // pull up the modal to reset the password...
         console.log("correct answers, so need to reset user's password");
         $("#passwordReset").modal("show");
+        // build funtion that takes answer to resetting password
       }
       // if not, tell user to try again.
       // What to do if user is never correct?
@@ -137,6 +144,12 @@ $(document).ready(function(){
     $("#secQOne").val("");
     $("#secQTwo").val("");
     $("#secQThree").val("");
+  });
+
+  // function called from inside modal to reset password
+  $(document).on("click", "#passwordReset", function(event) {
+    event.preventDefault();
+    console.log("inside function to reset password of user in the db");
   });
 
   // get user input submitted from a new user

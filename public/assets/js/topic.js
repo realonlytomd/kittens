@@ -109,6 +109,7 @@ $(document).ready(function(){
   $(document).on("click", ".answerMe", function(event) {
     event.preventDefault();
     // first, make sure the user is registered and logged in
+    // should this be undefined???
     if (currentUserLoggedIn === "false" || currentUserLoggedIn === null) {
       $("#notLoggedIn").modal("show");
     } else {
