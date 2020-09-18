@@ -63,20 +63,19 @@ $(document).ready(function(){
           $("#password-input").val("");
           // take correctly logged in user to /user.
           // if they don't have the correct login, then take them back to login page@!!!!!!
-          // add this later
           window.location.replace("/user");
           return;
         } else {
           console.log(allUsers[i].name + " is not the current user");
         }
         if (currentUser === allUsers[i].name) {
-          // answers to security questions stored in db
           console.log("currentUser: " + currentUser + " is the user currently logging in");
+          // answers to security questions stored in db
           qOneDb = allUsers[i].questionOne;
           qTwoDb = allUsers[i].questionTwo;
           qThreeDb = allUsers[i].questionThree;
           console.log("Their current answers to the sec. q's from db: qOneDB, qTwoD, qThreeDb are: " + qOneDb + " " + qTwoDb + " " + qThreeDb);
-          // since we know that a registered user is trying to log in, get their currentUserLoggedIn status
+          // since we know that a registered user is trying to log in, set their currentUserLoggedIn status
           currentUserLoggedIn = "false";  // instead of undefined, as it would be for a non-registered user
         }
       }
@@ -120,8 +119,7 @@ $(document).ready(function(){
       console.log("inside currentUserLoggedIn, !== false, so it's a new user...");
       // putUserInfoDb();
     } else { // a current user is trying to reset their password
-      // currentUserLoggedIn will be false, since user is not logged in
-      // compare these security questons with db, 
+      // compare these security questions with db, 
       console.log("a registered user is trying to reset their password");
       // but just for THE USER TRYING TO LOGIN
       // we have current security questions answers: 
@@ -147,9 +145,30 @@ $(document).ready(function(){
   });
 
   // function called from inside modal to reset password
-  $(document).on("click", "#passwordReset", function(event) {
+  $(document).on("click", "#submitNewPass", function(event) {
     event.preventDefault();
     console.log("inside function to reset password of user in the db");
+    // get user inputs to new password and confirmation
+    newPassInput = $("#newPassword1").val().trim();
+    newPassConfirmInput = $("#newPassword2").val().trim();
+    // compare the two answers to make sure they are the same
+
+    // route the input to api to store in user's db
+    $.ajax({
+      method: "POST",
+      url: "/updatePassword/" + currentUser,
+      data: {
+          user: currentUser,
+          password: newPassInput
+      }
+    })
+    .then(function(dataNewPassword) {
+      console.log("data from changing user's password in db, login.js: ", dataNewPassword);
+    });
+  $("#newAnswer").val("");
+  $("#answerQuestion").modal("hide");
+
+
   });
 
   // get user input submitted from a new user

@@ -104,7 +104,7 @@ module.exports = function(router) {
             // but if an error occurred, send it to the client
                 res.json(err);
             });
-        });
+    });
 
     // Route for creating a new user
     router.get("/createUser", function(req, res) {
@@ -120,6 +120,29 @@ module.exports = function(router) {
             return res.json(err);
             });
     });
+
+    //Route to change a user's password
+    // CHECK THIS!
+    router.post("/updatePassword/:currentUser", function(req, res) {
+        console.log("req.body.user: ", req.body.user);
+        console.log("req.body.password: ", req.body.password);
+        // Using the id passed in the id parameter, and make a query that finds the matching one in the db
+        db.User.findOneAndUpdate(
+            { user: req.body.user },
+            { password: req.body.password },
+            { new: true }
+        )
+            .then(function(dbUser) {
+                console.log("dbTopic: ", dbUser);
+                // If successful, send the user and new password back to the client
+                res.json(dbUser);
+            })
+            .catch(function(err) {
+            // but if an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
 
     // Route for logging out a specific User by id
     router.post("/logoutUser/:id", function(req, res) {
