@@ -124,16 +124,16 @@ module.exports = function(router) {
     //Route to change a user's password
     // CHECK THIS!
     router.post("/updatePassword/:currentUser", function(req, res) {
-        console.log("req.body.user: ", req.body.user);
+        console.log("req.body.name: ", req.body.name);
         console.log("req.body.password: ", req.body.password);
         // Using the id passed in the id parameter, and make a query that finds the matching one in the db
         db.User.findOneAndUpdate(
-            { user: req.body.user },
+            { name: req.body.name },
             { password: req.body.password },
-            { new: true }
+            { useFindAndModify: false }
         )
             .then(function(dbUser) {
-                console.log("dbTopic: ", dbUser);
+                console.log("dbUser: ", dbUser);
                 // If successful, send the user and new password back to the client
                 res.json(dbUser);
             })

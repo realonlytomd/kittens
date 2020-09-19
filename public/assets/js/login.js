@@ -152,23 +152,27 @@ $(document).ready(function(){
     newPassInput = $("#newPassword1").val().trim();
     newPassConfirmInput = $("#newPassword2").val().trim();
     // compare the two answers to make sure they are the same
-
-    // route the input to api to store in user's db
-    $.ajax({
-      method: "POST",
-      url: "/updatePassword/" + currentUser,
-      data: {
-          user: currentUser,
-          password: newPassInput
-      }
-    })
-    .then(function(dataNewPassword) {
-      console.log("data from changing user's password in db, login.js: ", dataNewPassword);
-    });
-  $("#newAnswer").val("");
-  $("#answerQuestion").modal("hide");
-
-
+    if (newPassInput === newPassConfirmInput) {
+      // route the input to api to store in user's db
+      $.ajax({
+        method: "POST",
+        url: "/updatePassword/" + currentUser,
+        data: {
+            name: currentUser,
+            password: newPassInput
+        }
+      })
+      .then(function(dataNewPassword) {
+        console.log("data from changing user's password in db, login.js: ", dataNewPassword);
+        $("#newPassword1").val("");
+        $("#newPassword2").val("");
+        $("#passwordReset").modal("hide");
+      });
+    } else {
+      alert ("Your passwords do not match." + "\nPlease try again.");
+      $("#newPassword1").val("");
+      $("#newPassword2").val("");
+    }
   });
 
   // get user input submitted from a new user
