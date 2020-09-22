@@ -130,7 +130,7 @@ module.exports = function(router) {
         db.User.findOneAndUpdate(
             { name: req.body.name },
             { password: req.body.password },
-            { useFindAndModify: false }
+            { new: true }
         )
             .then(function(dbUser) {
                 console.log("dbUser: ", dbUser);

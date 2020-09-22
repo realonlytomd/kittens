@@ -79,7 +79,7 @@ $(document).ready(function(){
           currentUserLoggedIn = "false";  // instead of undefined, as it would be for a non-registered user
         }
       }
-      console.log("this log in doesn't match any users in db");
+      console.log("this login doesn't match both user and password in db");
       // for now, assuming that the user name is correct, but password is wrong
       var questions = "The information you entered is incorrect." + 
         "\nClick Cancel to try again, or click OK to reset your password."

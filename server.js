@@ -46,7 +46,8 @@ mongoose.Promise = Promise;
   } else {
     mongoose.connect("mongodb://localhost:27017/littlecats", { 
       useNewUrlParser: true, 
-      useUnifiedTopology: true 
+      useUnifiedTopology: true,
+      useFindAndModify: false
     }, function(err){
       if(err){
       console.log("am I gettting an error?", err);
