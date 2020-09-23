@@ -20,10 +20,8 @@ var qThreeDb;
 $(document).ready(function(){
   console.log("hello from login.js");
   console.log("what is currentUserLoggedIn: " + currentUserLoggedIn);
-  
-  
-   //For users who've already registered and are re-logging in
 
+   //For users who've already registered and are re-logging in
   $(document).on("click", "#currentUserLogin", function(event) {
     // didn't work previously without the event.preventDefault - always use
     event.preventDefault();
@@ -66,8 +64,11 @@ $(document).ready(function(){
           window.location.replace("/user");
           return;
         } else {
-          console.log(allUsers[i].name + " is not the current user");
+          console.log(allUsers[i].name + " does not have correct inputs");
         }
+        // run another if - if the person trying to log in is currently in the db, get their answers
+        // to the  security questions, set the loggedIn to false so we know they have a registration,
+        // then ask them to reset their password.
         if (currentUser === allUsers[i].name) {
           console.log("currentUser: " + currentUser + " is the user currently logging in");
           // answers to security questions stored in db
@@ -98,6 +99,8 @@ $(document).ready(function(){
   });
 
   // function called from inside modal to answer the security questions
+  // This needs to apply to both new users, and users trying to reset their passwords
+  //  The modal with submit id=submitSecQ is pulled up also from signing up a new user
   $(document).on("click", "#submitSecQ", function(event) {
     event.preventDefault();
     console.log("inside function that compares security questions to previous answers");
@@ -117,7 +120,8 @@ $(document).ready(function(){
     if (currentUserLoggedIn !== "false") {
       // call function to put a new user info in db
       console.log("inside currentUserLoggedIn, !== false, so it's a new user...");
-      // putUserInfoDb();
+      putUserInfoDb();
+      return;
     } else { // a current user is trying to reset their password
       // compare these security questions with db, 
       console.log("a registered user is trying to reset their password");
