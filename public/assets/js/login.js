@@ -19,7 +19,7 @@ var qThreeDb;
 // var i; // this is the index of the currently logged in user. used for same reason as above.
 $(document).ready(function(){
   console.log("hello from login.js");
-  console.log("what is currentUserLoggedIn: " + currentUserLoggedIn);
+  console.log("currentUserLoggedIn is: " + currentUserLoggedIn);
 
    //For users who've already registered and are re-logging in
   $(document).on("click", "#currentUserLogin", function(event) {
@@ -30,9 +30,10 @@ $(document).ready(function(){
     currentUser = currentUser.charAt(0).toUpperCase() + currentUser.slice(1).toLowerCase();
     console.log("after currentUser: " + currentUser);
     currentPassword = $("#password-input").val().trim();
-    console.log("before currentPassword: " + currentPassword);
-    currentPassword = currentPassword.toLowerCase();
-    console.log("after currentPassword: " + currentPassword);
+    console.log("currentPassword: " + currentPassword);
+    // I'm commenting out the following line, as some users would like different cases for password
+    // currentPassword = currentPassword.toLowerCase();
+    // console.log("after currentPassword: " + currentPassword);
     // Then get all the current users who've ever logged in 
     $.getJSON("/getAllUsers", function(allUsers) {
       console.log("allUsers after getting them from db: ", allUsers);
@@ -190,14 +191,12 @@ $(document).ready(function(){
     
     console.log("after userNameInput: " + userNameInput);
     passwordInput = $("#newPassword-input").val().trim();
-    console.log("before passwordInput: " + passwordInput);
-    passwordInput = passwordInput.toLowerCase();
-    console.log("after passwordInput: " + passwordInput);
+    console.log("passwordInput: " + passwordInput);
+    // passwordInput = passwordInput.toLowerCase();
+    // console.log("after passwordInput: " + passwordInput);
 
     // bring up modal to answer security questions.
     $("#secQAnswer").modal("show");
-
-    // 
   });
 
   function putUserInfoDb() {
