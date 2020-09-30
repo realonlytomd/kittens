@@ -12,6 +12,7 @@ var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
 
 // initialize sorted arrays
+var sortedIds = [];
 var sortedAges = [];
 var sortedWeights = [];
 var sortedSizes = [];
@@ -22,8 +23,9 @@ module.exports = function(router) {
     // route to take kitten metric arrays into the server side,
     // and perform sort fuctions (using require("sort-ids")) that isn't available client side,
     // and then feed it back to the client to be displayed on DOM
-    router.get("/sortArrays", function(req, res) {
+    router.get("/sortArrays/", function(req, res) {
         console.log("from /sortArrays, req.query: ", req.query);
+        console.log("from /sortArrays, req.query.ids: ", req.query.ids);
         console.log("from /sortArrays, req.query.ages: ", req.query.ages);
         console.log("from /sortArrays, req.query.weights: ", req.query.weights);
         console.log("from /sortArrays, req.query.sizes: ", req.query.sizes);
@@ -35,23 +37,24 @@ module.exports = function(router) {
         console.log("newIndex: ", newIndex);
         // reorder method below seems to be breaking, so do a for loop to reorder arrays
         for (var i=0; i<numberKittenAges.length; i++) {
+            sortedIds[i]=req.query.ids[newIndex[i]];
             sortedAges[i]=req.query.ages[newIndex[i]];
             sortedWeights[i]=req.query.weights[newIndex[i]];
             sortedSizes[i]=req.query.sizes[newIndex[i]];
         }
-        // var sortedAges = reorder(req.query.ages, ages);
-        // var sortedWeights = reorder(req.query.weights, ages);
-        // var sortedSizes = reorder(req.query.sizes, ages);
+        console.log("sortedIds: " + sortedIds);
         console.log("sortedAges: " + sortedAges);
         console.log("sortedWights: " + sortedWeights);
         console.log("sortedSizes: " + sortedSizes);
         var sortedMetrics = {
+            ids: sortedIds,
             ages: sortedAges,
             weights: sortedWeights,
             sizes: sortedSizes
         };
         console.log("sortedMetrics: ", sortedMetrics);
         res.json(sortedMetrics);
+        sortedIds = [];
         sortedAges = [];
         sortedWeights = [];
         sortedSizes = [];

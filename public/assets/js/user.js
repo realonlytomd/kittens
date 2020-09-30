@@ -19,11 +19,13 @@ var kittenBreeds = [];
 var kittenFurlengths = [];
 var kittenFurcolors = [];
 var kittenSexes = [];
+var metricIds = [];
 var kittenAges = [];
 var kittenWeights = [];
 var kittenSizes = [];
 // these are needed across functions as they are sorted in one, and printed to DOM
 
+var sortedMetricIds = [];
 var sortedAges = [];
 var sortedWeights = [];
 var sortedSizes = [];
@@ -125,13 +127,13 @@ $(document).ready(function(){
   $(document).on("click", "#submitKittenMetrics", function(event) {
     event.preventDefault();
       $.ajax({
-          method: "POST",
-          url: "/kittenMetrics/" + currentKittenId,
-          data: {
-              age: $("#kittenAgeInput").val().trim(),
-              weight: $("#kittenWeightInput").val().trim(),
-              size: $("#kittenSizeInput").val().trim()
-          }
+        method: "POST",
+        url: "/kittenMetrics/" + currentKittenId,
+        data: {
+            age: $("#kittenAgeInput").val().trim(),
+            weight: $("#kittenWeightInput").val().trim(),
+            size: $("#kittenSizeInput").val().trim()
+        }
       })
       .then(function(allDataKittenUser) {
           console.log("User after kitten metrics (allDataKittenUser) in user.js: ", allDataKittenUser);
@@ -220,12 +222,14 @@ $(document).ready(function(){
       curkat[0].metric.forEach(innerForEach);
 
       function innerForEach(innerItem, innerIndex) {
-        console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " - " + innerItem);
+        console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
         $.getJSON("/getAMetric" + innerItem, function(curmet) {
+          console.log("this innerItem or _id: " + curmet[0]._id);
           console.log("curmet[0].age: ", curmet[0].age);
           console.log("curmet[0].weight: ", curmet[0].weight);
           console.log("curmet[0].size: ", curmet[0].size);
           //create the arrays of kitten metrics
+          metricIds.push(curmet[0]._id);
           kittenAges.push(curmet[0].age);
           kittenWeights.push(curmet[0].weight);
           kittenSizes.push(curmet[0].size);
@@ -234,14 +238,16 @@ $(document).ready(function(){
           // only print the arrays of kitten metrics to DOM if they are completely finished
           if (kittenAges.length === curkat[0].metric.length) {
             // perform sort function to get arrays in order of kitten ages
+            console.log("metricIds: " + metricIds);
             console.log("kittenAges: " + kittenAges);
             console.log("kittenWights: " + kittenWeights);
             console.log("kittenSizes: " + kittenSizes);
             // now feed the arrays to the server side
             $.ajax({
               method: "GET",
-              url: "/sortArrays",
+              url: "/sortArrays/",
               data: {
+                ids: metricIds,
                 ages: kittenAges,
                 weights: kittenWeights,
                 sizes: kittenSizes
@@ -249,9 +255,11 @@ $(document).ready(function(){
             })
             .then(function(sortedMetrics) {
               console.log("from creation of sortedMetrcis: ", sortedMetrics);
+              sortedMetricIds = sortedMetrics.ids;
               sortedAges = sortedMetrics.ages;
               sortedWeights = sortedMetrics.weights;
               sortedSizes = sortedMetrics.sizes;
+              console.log("sortedMetricIds: " + sortedMetricIds);
               console.log("sortedAges: " + sortedAges);
               console.log("sortedWights: " + sortedWeights);
               console.log("sortedSizes: " + sortedSizes);
@@ -273,15 +281,18 @@ $(document).ready(function(){
             //   kittenAges[i] + "<br>Weight: " +
             //   kittenWeights[i] + "<br>Length: " +
             //   kittenSizes[i] + "</h5><br>");
-            $("#kittenMetrics").append("<div class='metricInfo'><h5>Age: " +
+            $("#kittenMetrics").append("<div class='metricInfo' data_id=" +
+              sortedMetricIds[i] + "><h5>Age: " +
               sortedAges[i] + " Weeks" + "<br>Weight: " +
               sortedWeights[i] + " Ounces" +"<br>Length: " +
               sortedSizes[i] + " Inches" +"</h5></div>");
           }
           //empty out arrays before clicking a new kitten
+          metricIds = [];
           kittenAges = [];
           kittenWeights = [];
           kittenSizes = [];
+          sortedMetricIds = [];
           sortedAges = [];
           sortedWeights = [];
           sortedSizes = [];
