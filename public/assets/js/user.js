@@ -276,12 +276,9 @@ $(document).ready(function(){
         console.log("inside function showDom, sortedAges: " + sortedAges);
           for (i=0; i<kittenAges.length; i++) {
             console.log("I'm INSIDE THE FOR LOOP");
-            // finally, write info from db to DOM for user
-            // $("#kittenMetrics").append("<h5>Age: " + 
-            //   kittenAges[i] + "<br>Weight: " +
-            //   kittenWeights[i] + "<br>Length: " +
-            //   kittenSizes[i] + "</h5><br>");
-            $("#kittenMetrics").append("<div class='metricInfo' data_id=" +
+            $("#kittenMetrics").append("<div class='metricInfo'" +
+              //"onmouseover='showBorder(this)' onmouseout='removeBorder(this)' 
+              "data_id=" +
               sortedMetricIds[i] + "><h5>Age: " +
               sortedAges[i] + " Weeks" + "<br>Weight: " +
               sortedWeights[i] + " Ounces" +"<br>Length: " +
@@ -299,6 +296,17 @@ $(document).ready(function(){
       }
     });
   });
+  // try this other way to do mouse overs, jQuery.onmouseover = function() {mouseOver()};
+  $(".metricInfo").onmouseover = function() {showBorder()};
+  $(".metricInfo").onmouseout = function() {removeBorder()};
+  // functions called when user mouses over the metric divs
+  function showBorder() {
+    $(".metricInfo").style = "border-width = 5px";
+  }
+
+  function removeBorder() {
+    $(".metricInfo").style = "border-width = 1px";
+  }
       
       
     // This function is used as user clicks on the Add Metrics button (rendered from above)
