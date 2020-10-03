@@ -297,16 +297,23 @@ $(document).ready(function(){
     });
   });
   // try this other way to do mouse overs, jQuery.onmouseover = function() {mouseOver()};
-  $(".metricInfo").onmouseover = function() {showBorder()};
-  $(".metricInfo").onmouseout = function() {removeBorder()};
+  // this is oddly so wrong!  figure it out later
+  
+  $(document).on("click", "h5", function(event) {
+    event.preventDefault();
+    $("h5").style = "color: red";
+    console.log("ahhhhhhh");
+    });
+  //$(".metricInfo").onmouseout = function() {removeBorder()};
   // functions called when user mouses over the metric divs
-  function showBorder() {
-    $(".metricInfo").style = "border-width = 5px";
-  }
+  // function showBorder() {
+  //   $(".metricInfo").style = "border-width: 5px";
+  //   $(".metricInfo").style.color = "red";
+  // }
 
-  function removeBorder() {
-    $(".metricInfo").style = "border-width = 1px";
-  }
+  // function removeBorder() {
+  //   $(".metricInfo").style = "border-width: 1px";
+  // }
       
       
     // This function is used as user clicks on the Add Metrics button (rendered from above)
