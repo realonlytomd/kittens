@@ -64,6 +64,7 @@ button.kittenButtons {
 }
 
 .metricInfo {
+    margin-top: 8px;
     cursor: pointer;
     width: 130px;
     display: inline-block;

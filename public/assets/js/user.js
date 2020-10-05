@@ -296,24 +296,20 @@ $(document).ready(function(){
       }
     });
   });
-  // try this other way to do mouse overs, jQuery.onmouseover = function() {mouseOver()};
-  // this is oddly so wrong!  figure it out later
-  
-  $(document).on("click", "h5", function(event) {
+ 
+ // functions to show the user edit and delete options for kitten metric fields. 
+ // currently, this makes the border thicker. Now add delete and edit characters.
+  $(document).on("mouseover", ".metricInfo", function(event) {
     event.preventDefault();
-    $("h5").style = "color: red";
+    $(this).css('border-width', '5px');
     console.log("ahhhhhhh");
-    });
-  //$(".metricInfo").onmouseout = function() {removeBorder()};
-  // functions called when user mouses over the metric divs
-  // function showBorder() {
-  //   $(".metricInfo").style = "border-width: 5px";
-  //   $(".metricInfo").style.color = "red";
-  // }
+  });
 
-  // function removeBorder() {
-  //   $(".metricInfo").style = "border-width: 1px";
-  // }
+  $(document).on("mouseout", ".metricInfo", function(event) {
+    event.preventDefault();
+    $(this).css('border-width', '1px');
+    console.log("ahhh out");
+  });
       
       
     // This function is used as user clicks on the Add Metrics button (rendered from above)
