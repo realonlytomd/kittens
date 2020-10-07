@@ -85,6 +85,17 @@ button#loadTopics {
     margin-top: 20px;
 }
 
+.littleX {
+    margin-top: -40px;
+    color: red;
+}
+
+.littleE {
+    margin-top: -40px;
+    margin-left: 50px;
+    color: red;
+}
+
 
 
 @media only screen and (orientation: portrait) {

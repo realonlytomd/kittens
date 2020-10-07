@@ -276,9 +276,7 @@ $(document).ready(function(){
         console.log("inside function showDom, sortedAges: " + sortedAges);
           for (i=0; i<kittenAges.length; i++) {
             console.log("I'm INSIDE THE FOR LOOP");
-            $("#kittenMetrics").append("<div class='metricInfo'" +
-              //"onmouseover='showBorder(this)' onmouseout='removeBorder(this)' 
-              "data_id=" +
+            $("#kittenMetrics").append("<div class='metricInfo' data_id=" +
               sortedMetricIds[i] + "><h5>Age: " +
               sortedAges[i] + " Weeks" + "<br>Weight: " +
               sortedWeights[i] + " Ounces" +"<br>Length: " +
@@ -302,13 +300,18 @@ $(document).ready(function(){
   $(document).on("mouseover", ".metricInfo", function(event) {
     event.preventDefault();
     $(this).css('border-width', '5px');
-    console.log("ahhhhhhh");
+    $(this).append("<button type='button' class='btn btn-default btn-xs littleX'>" +
+      "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
+
+      $(this).append("<button type='button' class='btn btn-default btn-xs littleE'>" +
+      "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
   });
 
   $(document).on("mouseout", ".metricInfo", function(event) {
     event.preventDefault();
     $(this).css('border-width', '1px');
-    console.log("ahhh out");
+    $(".littleX").remove();
+    $(".littleE").remove();
   });
       
       
