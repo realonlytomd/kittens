@@ -30,6 +30,9 @@ var sortedAges = [];
 var sortedWeights = [];
 var sortedSizes = [];
 
+// boolean that is true when delete and edit buttons already exist in div somewhere
+var littleButton = false;
+
 $(document).ready(function(){
   $(document).ready(function(){ feedKittenTimer(); });
   console.log("hello from user.js");
@@ -277,7 +280,7 @@ $(document).ready(function(){
           for (i=0; i<kittenAges.length; i++) {
             console.log("I'm INSIDE THE FOR LOOP");
             $("#kittenMetrics").append("<div class='metricInfo' data_id=" +
-              sortedMetricIds[i] + "><h5>Age: " +
+              sortedMetricIds[i] + "><h5 class='metricGroup'>Age: " +
               sortedAges[i] + " Weeks" + "<br>Weight: " +
               sortedWeights[i] + " Ounces" +"<br>Length: " +
               sortedSizes[i] + " Inches" +"</h5></div>");
@@ -296,22 +299,68 @@ $(document).ready(function(){
   });
  
  // functions to show the user edit and delete options for kitten metric fields. 
- // currently, this makes the border thicker. Now add delete and edit characters.
-  $(document).on("mouseover", ".metricInfo", function(event) {
+ // User clicks, and the buttons appear.
+  $(document).on("click", ".metricInfo", function(event) {
     event.preventDefault();
-    $(this).css('border-width', '5px');
-    $(this).append("<button type='button' class='btn btn-default btn-xs littleX'>" +
+    
+    // Need to NOT do this .append if they are already there. try if statement
+    if (littleButton === true) {
+      console.log("delete and edit buttons already exist");
+    } else {
+      $(this).css({
+        'border-width': '5px'
+      });
+        // .children method adds the edit and delete buttons to the end of the
+      // h5 element.
+      // but inside the .metricInfo element. Chose to be at end of .metricInfo anyway
+      $(this).append("<button type='button' class='btn btn-default btn-xs littleX'>" +
       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-
       $(this).append("<button type='button' class='btn btn-default btn-xs littleE'>" +
       "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
+        // the .off method would only allow the click event to happen once, just experimenting
+        //$(this).off(event);
+        // set boolean to true that delete and edit buttons already exist
+        littleButton = true;
+    }
   });
 
-  $(document).on("mouseout", ".metricInfo", function(event) {
+  // Need to add this back for clicking anywhere else on page, if using "click"
+  // This block of code is used when mouse pulled away. 
+  $(document).on("mouseleave", ".metricInfo", function(event) {
     event.preventDefault();
-    $(this).css('border-width', '1px');
+      $(this).css({
+        'border-width': '1px'
+      });
     $(".littleX").remove();
     $(".littleE").remove();
+    littleButton = false;
+  });
+
+  // Function to delete one set of metric info of a kitten, selected by user
+  $(document).on("click", ".littleX", function(event) {
+    event.preventDefault();
+    console.log("Inside DELETE set of metric info!");
+    $(".metricInfo").css({
+      'border-width': '1px'
+    });
+    $(".littleX").remove();
+    $(".littleE").remove();
+    littleButton = false;
+    // delete this group of metric info from the db,
+    // and redraw the DOM
+  });
+  
+  // Function to edit one set of metric info of a kitten, selected by user
+  $(document).on("click", ".littleE", function(event) {
+    event.preventDefault();
+    console.log("Inside EDIT set of metric info!");
+    $(".metricInfo").css({
+      'border-width': '1px'
+    });
+    $(".littleX").remove();
+    $(".littleE").remove();
+    littleButton = false;
+    // bring up modal to edit existing information for this group of kitten metrics
   });
       
       

@@ -86,13 +86,11 @@ button#loadTopics {
 }
 
 .littleX {
-    margin-top: -40px;
     color: red;
 }
 
 .littleE {
-    margin-top: -40px;
-    margin-left: 50px;
+    margin-left: 40px;
     color: red;
 }
 
