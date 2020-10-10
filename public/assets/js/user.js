@@ -298,43 +298,57 @@ $(document).ready(function(){
     });
   });
  
- // functions to show the user edit and delete options for kitten metric fields. 
- // User clicks, and the buttons appear.
-  $(document).on("click", ".metricInfo", function(event) {
+ //  user clicks anywhere on document
+  $(document).on("click", "body", function(event) {
     event.preventDefault();
-    
-    // Need to NOT do this .append if they are already there. try if statement
-    if (littleButton === true) {
-      console.log("delete and edit buttons already exist");
-    } else {
-      $(this).css({
-        'border-width': '5px'
-      });
-        // .children method adds the edit and delete buttons to the end of the
-      // h5 element.
-      // but inside the .metricInfo element. Chose to be at end of .metricInfo anyway
-      $(this).append("<button type='button' class='btn btn-default btn-xs littleX'>" +
-      "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-      $(this).append("<button type='button' class='btn btn-default btn-xs littleE'>" +
-      "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
-        // the .off method would only allow the click event to happen once, just experimenting
-        //$(this).off(event);
-        // set boolean to true that delete and edit buttons already exist
-        littleButton = true;
+    console.log("user has clicked on the body!");
+    console.log("littleButton is: " + littleButton);
+    if (littleButton === true) { // the edit and delete buttons should be removed if clicked
+      // anywhere but themselves
+      console.log("Check to see if littleButton is true: " + littleButton);
+      if ($(event.target).hasClass("littleX") || $(event.target).hasClass("littleE")) {
+          // then user has clicked on one of the buttons,
+          // and seperate functions will be called.
+          console.log("User has clicked on a delete or edit buton!");
+      } else { // user clicked somewhere other than the delete or edit button
+        console.log("delete and edit buttons already exist, but were not chosen.");
+        removeButtons();
+      }
+    } else { // needs to ask if the click event was on .metricInfo
+      console.log("littlebutton shoould be false: " + littleButton);
+      if ($(event.target).hasClass("metricInfo")) {
+        addButtons()
+      } else {
+        // user has clicked somewhere on page but not on .metricInfo
+        // don't do anything. (maybe here add if other classes are clicked??)
+      }
     }
   });
 
-  // Need to add this back for clicking anywhere else on page, if using "click"
-  // This block of code is used when mouse pulled away. 
-  $(document).on("mouseleave", ".metricInfo", function(event) {
-    event.preventDefault();
-      $(this).css({
+  // This function addes the thick border and the delete and edit buttons to 
+  // a clicked .metricInfo div.
+  function addButtons() {
+    $(this).css({
+      'border-width': '5px'
+    });
+    // but inside the .metricInfo element. Chose to be at end of .metricInfo anyway
+    $(this).append("<button type='button' class='btn btn-default btn-xs littleX'>" +
+    "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
+    $(this).append("<button type='button' class='btn btn-default btn-xs littleE'>" +
+    "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
+      // set boolean to true that delete and edit buttons already exist
+      littleButton = true;
+  }
+  
+  // This function removes the delete and edit buttons if they already exist. 
+  function removeButtons() {
+    $(".metricInfo").css({
         'border-width': '1px'
       });
     $(".littleX").remove();
     $(".littleE").remove();
     littleButton = false;
-  });
+  }
 
   // Function to delete one set of metric info of a kitten, selected by user
   $(document).on("click", ".littleX", function(event) {
@@ -375,7 +389,8 @@ $(document).ready(function(){
 
   // take submits from the user on topics and answers to topics
   // and call the appropriate api to store in the topics db
-  $("#topicsCurrent").empty();
+  // why was this here?
+  //$("#topicsCurrent").empty();
   $(document).on("click", "#submitTopic", function(event) {
     event.preventDefault();
       $.ajax({
