@@ -303,6 +303,8 @@ $(document).ready(function(){
  //  user clicks anywhere on document
   $(document).on("click", "body", function(event) {
     event.preventDefault();
+    // remove this event handler for <a> elements
+    $(document).off("click", "a");
     console.log("user has clicked on the body!");
     console.log("littleButton is: " + littleButton);
     if (littleButton === true) { // the edit and delete buttons should be removed if clicked
@@ -362,31 +364,6 @@ $(document).ready(function(){
   }
   });
 
-  // This function addes the thick border and the delete and edit buttons to 
-  // a clicked .metricGroup div.
-  function addButtons() {
-    $(this).css({
-      'border-width': '5px'
-    });
-    // append the delete and edit buttons
-    $(this).append("<button type='button' class='btn btn-default btn-xs littleX'>" +
-    "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-    $(this).append("<button type='button' class='btn btn-default btn-xs littleE'>" +
-    "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
-      // set boolean to true that delete and edit buttons exist
-      littleButton = true;
-  }
-  
-  // This function removes the delete and edit buttons if they already exist. 
-  function removeButtons() {
-    $(".metricInfo").css({
-        'border-width': '1px'
-      });
-    $(".littleX").remove();
-    $(".littleE").remove();
-    littleButton = false;
-  }
-
   // Function to delete one set of metric info of a kitten, selected by user
   $(document).on("click", ".littleX", function(event) {
     event.preventDefault();
@@ -398,7 +375,9 @@ $(document).ready(function(){
     $(".littleE").remove();
     littleButton = false;
     // delete this group of metric info from the db,
+
     // and redraw the DOM
+
   });
   
   // Function to edit one set of metric info of a kitten, selected by user
@@ -414,51 +393,11 @@ $(document).ready(function(){
     // bring up modal to edit existing information for this group of kitten metrics
   });
       
-      
     // This function is used as user clicks on the Add Metrics button (rendered from above)
     // to add metrics to an existing kitten, also while other metrics have been listed
   $(document).on("click", "#submitNewKittenMetrics", function(event) {
     event.preventDefault();
     $("#newKittenMetricModal").modal("show");
     currentKittenId = $(this).attr("data-id");
-  });
-
-
-  // take submits from the user on topics and answers to topics
-  // and call the appropriate api to store in the topics db
-  // why was this here?
-  //$("#topicsCurrent").empty();
-  $(document).on("click", "#submitTopic", function(event) {
-    event.preventDefault();
-      $.ajax({
-          method: "GET",
-          url: "/createTopic",
-          data: {
-              topic: $("#topic").val(),
-              answer: $("#answer").val()
-          }
-      })
-      .then(function(dataCreateTopic) {
-          console.log("data from creation of topic (dbTopic) in user.js: ", dataCreateTopic);
-      });
-      // empty out the input fields
-      $("#topic").val("");
-      $("#answer").val("");
-  });
-  // Include a button to load all the current topics from the topics db
-  // This is the same as in the topics.js file as...
-  // The function exists from both pages.
-  
-  $(document).on("click", "#loadTopics", function(event) {
-    event.preventDefault();
-    $("#topicsCurrent").empty();
-    $.getJSON("/getAllTopics", function(allTopics) {
-      console.log("all topics from db, allTopics: ", allTopics);
-      for (i = 0; i < allTopics.length; i++) {
-        $("#topicsCurrent").append("<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
-          allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
-          allTopics[i].answer + "</p>");
-      }
-    });
   });
 });
