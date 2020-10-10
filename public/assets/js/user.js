@@ -32,6 +32,8 @@ var sortedSizes = [];
 
 // boolean that is true when delete and edit buttons already exist in div somewhere
 var littleButton = false;
+// setting target for whatever the user actually clicks - an object?
+var target;
 
 $(document).ready(function(){
   $(document).ready(function(){ feedKittenTimer(); });
@@ -315,13 +317,18 @@ $(document).ready(function(){
         removeButtons();
       }
     } else { // needs to ask if the click event was on .metricInfo
-      console.log("littlebutton shoould be false: " + littleButton);
+      console.log("littlebutton should be false: " + littleButton);
           // Ooops. I have to click the outer box (outside the metricGroup)
           // for the addButtons function to be in the right place
           // I need to be able to click anywhere in the div including on the
           // metricGroup div for the same things to happen. 
       if ($(event.target).hasClass("metricInfo")) {
-        console.log("the event.target worked!");
+        console.log("user clicked in metricInfo");
+        target = $(event.target)
+        addButtons();
+      } else if ($(event.target).hasClass("metricGroup")) {
+        console.log("user clicked in metricGroup");
+        target = $(event.target).parent()
         addButtons();
       } else {
         console.log("the current target (click) is NOT the .metricGroup");
@@ -332,13 +339,13 @@ $(document).ready(function(){
     // This function addes the thick border and the delete and edit buttons to 
     // a clicked .metricGroup div. event.currentTarget refers to the higher element.
     function addButtons() {
-    $(event.target).css({
+    target.css({
       'border-width': '5px'
     });
     // append the delete and edit buttons
-    $(event.target).append("<button type='button' class='btn btn-default btn-xs littleX'>" +
+    target.append("<button type='button' class='btn btn-default btn-xs littleX'>" +
     "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-    $(event.target).append("<button type='button' class='btn btn-default btn-xs littleE'>" +
+    target.append("<button type='button' class='btn btn-default btn-xs littleE'>" +
     "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
       // set boolean to true that delete and edit buttons exist
       littleButton = true;
