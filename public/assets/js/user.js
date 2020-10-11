@@ -300,12 +300,10 @@ $(document).ready(function(){
     });
   });
  
- //  user clicks anywhere on document
-  $(document).on("click", "body", function(event) {
+ //  user clicks anywhere on document inside of nav and footer
+  $(document).on("click", ".wrapper", function(event) {
     event.preventDefault();
-    // remove this event handler for <a> elements
-    $(document).off("click", "a");
-    console.log("user has clicked on the body!");
+    console.log("user has clicked on the wrapper!");
     console.log("littleButton is: " + littleButton);
     if (littleButton === true) { // the edit and delete buttons should be removed if clicked
       // anywhere but themselves
