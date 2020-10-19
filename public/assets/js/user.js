@@ -281,7 +281,8 @@ $(document).ready(function(){
         console.log("inside function showDom, sortedAges: " + sortedAges);
           for (i=0; i<kittenAges.length; i++) {
             console.log("I'm INSIDE THE FOR LOOP");
-            $("#kittenMetrics").append("<div class='metricInfo' data_id=" +
+            $("#kittenMetrics").append("<div class='metricInfo' data_idKitten=" + 
+              currentKittenId + " data_id=" + 
               sortedMetricIds[i] + "><h5 class='metricGroup'>Age: " +
               sortedAges[i] + " Weeks" + "<br>Weight: " +
               sortedWeights[i] + " Ounces" +"<br>Length: " +
@@ -328,9 +329,11 @@ $(document).ready(function(){
         addButtons();
       } else if ($(event.target).hasClass("metricGroup")) {
         console.log("user clicked in metricGroup");
+        // .parent method adds the buttons the metric Info div, even though
+        // the group of metrics was clicked.
         target = $(event.target).parent()
         addButtons();
-      } else {
+      } else { // user has clicked elsewhere than the metric info div
         console.log("the current target (click) is NOT the .metricGroup");
         // user has clicked somewhere on page but not on .metricInfo
         // don't do anything. (maybe here add if other classes are clicked??)
@@ -349,9 +352,11 @@ $(document).ready(function(){
     "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
       // set boolean to true that delete and edit buttons exist
       littleButton = true;
-  }
+    }
   
-    // This function removes the delete and edit buttons if they already exist. 
+  });
+
+  // This function removes the delete and edit buttons if they already exist. 
     function removeButtons() {
     $(".metricInfo").css({
         'border-width': '1px'
@@ -360,22 +365,36 @@ $(document).ready(function(){
     $(".littleE").remove();
     littleButton = false;
   }
-  });
 
   // Function to delete one set of metric info of a kitten, selected by user
+  // PROBLEM! THE DATA ID AND KITTEN ID ISN'T GOING TO THE RIGHT TARGET WHEN IT'S CLICKED
   $(document).on("click", ".littleX", function(event) {
     event.preventDefault();
     console.log("Inside DELETE set of metric info!");
-    $(".metricInfo").css({
-      'border-width': '1px'
-    });
-    $(".littleX").remove();
-    $(".littleE").remove();
-    littleButton = false;
+    removeButtons();
     // delete this group of metric info from the db,
-
-    // and redraw the DOM
-
+    // First, the id associated with these metrics, and the id of the kitten
+    var thisId = $(this).attr("data_id");
+    var thisKittenId = $(this).attr("data_idKitten")
+    console.log("thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
+       
+        // Run a DELETE request to delete the reference in the kitten document to these specific metrics
+    $.ajax({
+      method: "POST",
+      url: "/kittens/overwrite/" + thisKittenId
+    })
+      // still need to empty the notes div as before
+      .then (function(dbKitten) {
+        console.log("dbKitten after POST/kittens/overwrite/id: ", dbKitten);
+         // Run a DELETE request to delete the actual metrics from the metric db
+        $.ajax({
+          method: "DELETE",
+          url: "/kittens/another/" + thisId
+        })
+          .then (function(dbMetric) {
+            console.log("dbMetric after delete: ", dbMetric);
+          });
+      });
   });
   
   // Function to edit one set of metric info of a kitten, selected by user

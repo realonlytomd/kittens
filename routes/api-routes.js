@@ -305,6 +305,45 @@ module.exports = function(router) {
             res.json(err);
             });
     });
+
+
+    // This route deletes the reference to a metric document in the associated kitten document
+    router.post("/kittens/overwrite/:id", function(req, res) {
+        console.log("overwrite a kitten's metric reference: req.params.id: ", req.params.id);
+    // delete the note and pass the req.body to the entry - WHY AM I DOING THIS?
+    // seems I want to write over the current reference with null...hmmm.
+    db.Kitten.findOneAndUpdate(
+        { _id: req.params.id },
+        { note: null },
+        { new: true }
+    )
+            .then(function(dbKitten) {
+                console.log("after .then db.Kitten.findOneAndUpdate note to null, dbKitten: ", dbKitten);
+                res.json(dbKitten);
+            })
+            .catch(function(err) {
+            // If an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
+    // This route deletes just one set of kitten metrics
+    router.delete("/kittens/another/:id", function(req, res) {
+        console.log("in kittens/another, req.params: ", req.params);
+        // delete the whole metric group
+        db.Metric.deleteOne(
+            { _id: req.params.id }
+        )
+        .then(function(dbMetric) {
+            //  
+            console.log("delete a Metric group, dbMetric: ", dbMetric);
+            res.json(dbMetric);
+        })
+        .catch(function(err) {
+            // but if an error occurred, send it to the client
+            res.json(err);
+        });
+    })
     // **********older code, using for reference*******888
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {
