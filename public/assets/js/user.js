@@ -34,6 +34,9 @@ var sortedSizes = [];
 var littleButton = false;
 // setting target for whatever the user actually clicks - an object?
 var target;
+// The id associated with metrics for deleting and editing, and the id of the kitten
+var thisId;
+var thisKittenId;
 
 $(document).ready(function(){
   $(document).ready(function(){ feedKittenTimer(); });
@@ -281,9 +284,9 @@ $(document).ready(function(){
         console.log("inside function showDom, sortedAges: " + sortedAges);
           for (i=0; i<kittenAges.length; i++) {
             console.log("I'm INSIDE THE FOR LOOP");
-            $("#kittenMetrics").append("<div class='metricInfo' data_idKitten=" + 
+            $("#kittenMetrics").append("<div class='metricInfo'><h5 class='metricGroup' data_idKitten=" + 
               currentKittenId + " data_id=" + 
-              sortedMetricIds[i] + "><h5 class='metricGroup'>Age: " +
+              sortedMetricIds[i] + ">Age: " +
               sortedAges[i] + " Weeks" + "<br>Weight: " +
               sortedWeights[i] + " Ounces" +"<br>Length: " +
               sortedSizes[i] + " Inches" +"</h5></div>");
@@ -317,21 +320,23 @@ $(document).ready(function(){
         console.log("delete and edit buttons already exist, but were not chosen.");
         removeButtons();
       }
-    } else { // needs to ask if the click event was on .metricInfo
+    } else { // needs to ask if the click event was on .metricGroup
       console.log("littlebutton should be false: " + littleButton);
-          // Ooops. I have to click the outer box (outside the metricGroup)
-          // for the addButtons function to be in the right place
-          // I need to be able to click anywhere in the div including on the
-          // metricGroup div for the same things to happen. 
+          //  No little buttons, user must click on the metricGroup div
+          // If metricInfo is clicked, no different than if user had clicked elsewhere
+          // in wrapper
       if ($(event.target).hasClass("metricInfo")) {
         console.log("user clicked in metricInfo");
-        target = $(event.target)
-        addButtons();
+        //target = $(event.target)
       } else if ($(event.target).hasClass("metricGroup")) {
         console.log("user clicked in metricGroup");
         // .parent method adds the buttons the metric Info div, even though
         // the group of metrics was clicked.
-        target = $(event.target).parent()
+        target = $(event.target).parent();
+        // First, the id associated with these metrics, and the id of the kitten
+        thisId = $(event.target).attr("data_id");
+        thisKittenId = $(event.target).attr("data_idKitten");
+        console.log("AFTER clicked .metricGroup, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
         addButtons();
       } else { // user has clicked elsewhere than the metric info div
         console.log("the current target (click) is NOT the .metricGroup");
@@ -345,11 +350,14 @@ $(document).ready(function(){
     target.css({
       'border-width': '5px'
     });
-    // append the delete and edit buttons
-    target.append("<button type='button' class='btn btn-default btn-xs littleX'>" +
-    "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-    target.append("<button type='button' class='btn btn-default btn-xs littleE'>" +
-    "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
+    console.log("INSIDE addButtons, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
+    // append the delete and edit buttons, with data of metric document id, and kitten document id
+    target.append("<button type='button' class='btn btn-default btn-xs littleX' data_idKitten=" + 
+    thisKittenId + " data_id=" + 
+    thisId + "><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
+    target.append("<button type='button' class='btn btn-default btn-xs littleE' data_idKitten=" + 
+    thisKittenId + " data_id=" + 
+    thisId + "><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
       // set boolean to true that delete and edit buttons exist
       littleButton = true;
     }
@@ -374,27 +382,28 @@ $(document).ready(function(){
     removeButtons();
     // delete this group of metric info from the db,
     // First, the id associated with these metrics, and the id of the kitten
-    var thisId = $(this).attr("data_id");
-    var thisKittenId = $(this).attr("data_idKitten")
-    console.log("thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
-       
-        // Run a DELETE request to delete the reference in the kitten document to these specific metrics
+    thisId = $(this).attr("data_id");
+    thisKittenId = $(this).attr("data_idKitten")
+    console.log("AFTER clicking littleX, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
+    // Run a DELETE request to delete the reference in the kitten document to these specific metrics
     $.ajax({
-      method: "POST",
-      url: "/kittens/overwrite/" + thisKittenId
+      method: "DELETE",
+      url: "/kittens/another/" + thisId
     })
-      // still need to empty the notes div as before
-      .then (function(dbKitten) {
-        console.log("dbKitten after POST/kittens/overwrite/id: ", dbKitten);
-         // Run a DELETE request to delete the actual metrics from the metric db
+      .then (function(dbMetric) {
+        console.log("dbMetric after delete: ", dbMetric);
         $.ajax({
-          method: "DELETE",
-          url: "/kittens/another/" + thisId
+          method: "POST",
+          url: "/kittens/overwrite/" + thisKittenId
         })
-          .then (function(dbMetric) {
-            console.log("dbMetric after delete: ", dbMetric);
+          // still need to empty the notes div as before
+          .then (function(dbKitten) {
+            console.log("dbKitten after POST/kittens/overwrite/id: ", dbKitten);
+              // Run a DELETE request to delete the actual metrics from the metric db
+            
           });
       });
+        
   });
   
   // Function to edit one set of metric info of a kitten, selected by user

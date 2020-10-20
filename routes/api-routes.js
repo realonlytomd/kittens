@@ -314,7 +314,7 @@ module.exports = function(router) {
     // seems I want to write over the current reference with null...hmmm.
     db.Kitten.findOneAndUpdate(
         { _id: req.params.id },
-        { note: null },
+        { note: null }, // This is not note, it's the kitten metric id...
         { new: true }
     )
             .then(function(dbKitten) {
