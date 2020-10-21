@@ -241,11 +241,11 @@ module.exports = function(router) {
             .then(function(dbMetric) {
                 console.log("AFTER .CREATE METRICS - api-routes.js, dbMetric: ", dbMetric);
                 // pushing the new kitten name into the document kitten array
-            return db.Kitten.findOneAndUpdate(
-                { _id: req.params.id },
-                { $push: { metric: dbMetric._id } }, 
-                { new: true }
-                );
+                return db.Kitten.findOneAndUpdate(
+                    { _id: req.params.id },
+                    { $push: { metric: dbMetric._id } }, 
+                    { new: true }
+                    );
             })
             .then(function(dbKitten) {
                 // send back the correct kitten with new data in the metric arrays
@@ -308,17 +308,17 @@ module.exports = function(router) {
 
 
     // This route deletes the reference to a metric document in the associated kitten document
-    router.post("/kittens/overwrite/:id", function(req, res) {
-        console.log("overwrite a kitten's metric reference: req.params.id: ", req.params.id);
-    // delete the note and pass the req.body to the entry - WHY AM I DOING THIS?
-    // seems I want to write over the current reference with null...hmmm.
+    router.post("/kittens/removeRef/:id", function(req, res) {
+        console.log("remove a kitten's metric reference: kitten id: ", req.params.id);
+        console.log("how was data transferred, req.body: ", req.body);
+    // delete the id of the metric and pass the req.body to the entry
     db.Kitten.findOneAndUpdate(
         { _id: req.params.id },
-        { note: null }, // This is not note, it's the kitten metric id...
+        { $pull: { metric: req.body.metricId }}, // this dbMetric._id should be the metric id to be removed
         { new: true }
     )
             .then(function(dbKitten) {
-                console.log("after .then db.Kitten.findOneAndUpdate note to null, dbKitten: ", dbKitten);
+                console.log("after .then db.Kitten.findOneAndUpdate $pull, dbKitten: ", dbKitten);
                 res.json(dbKitten);
             })
             .catch(function(err) {
@@ -328,7 +328,7 @@ module.exports = function(router) {
     });
 
     // This route deletes just one set of kitten metrics
-    router.delete("/kittens/another/:id", function(req, res) {
+    router.delete("/metrics/delete/:id", function(req, res) {
         console.log("in kittens/another, req.params: ", req.params);
         // delete the whole metric group
         db.Metric.deleteOne(

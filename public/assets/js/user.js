@@ -330,7 +330,7 @@ $(document).ready(function(){
         //target = $(event.target)
       } else if ($(event.target).hasClass("metricGroup")) {
         console.log("user clicked in metricGroup");
-        // .parent method adds the buttons the metric Info div, even though
+        // .parent method adds the buttons to the metric Info div, even though
         // the group of metrics was clicked.
         target = $(event.target).parent();
         // First, the id associated with these metrics, and the id of the kitten
@@ -388,13 +388,15 @@ $(document).ready(function(){
     // Run a DELETE request to delete the reference in the kitten document to these specific metrics
     $.ajax({
       method: "DELETE",
-      url: "/kittens/another/" + thisId
+      url: "/metrics/delete/" + thisId
     })
-      .then (function(dbMetric) {
-        console.log("dbMetric after delete: ", dbMetric);
+      .then (function(dbMetric) { 
+        console.log("dbMetric after delete: ", dbMetric); // shows a successful delete of 1 document
+        // and then delete (or "pull") the reference to that just deleted document
         $.ajax({
           method: "POST",
-          url: "/kittens/overwrite/" + thisKittenId
+          url: "/kittens/removeRef/" + thisKittenId,
+          data: {metricId: thisId}
         })
           // still need to empty the notes div as before
           .then (function(dbKitten) {
