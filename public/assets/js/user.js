@@ -131,7 +131,7 @@ $(document).ready(function(){
   });
 
   // then, the user enters the metrics for a kitten in the modal, and submits it.
-  // that id is stored in the kitten document
+  // that reference id is stored in the kitten document
   $(document).on("click", "#submitKittenMetrics", function(event) {
     event.preventDefault();
       $.ajax({
@@ -155,6 +155,10 @@ $(document).ready(function(){
           // Without interrupting the timer if it's currently running.
           //window.location.reload();
           getAllData();
+        })
+        .then(function() {
+          console.log("insde 2nd .then after submitting new kitten metrics");
+          writeKittenDom();
         });
   });
 
@@ -165,7 +169,7 @@ $(document).ready(function(){
       // the timer - that won't happen.
   function getAllData() {
       // empty out the div that shows the user's current kittens and metrics
-  $("#currentKittens").empty();
+    $("#currentKittens").empty();
     // get the current user document
     $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
       // console.log("currentUser[0]: ", currentUser[0]);
@@ -209,9 +213,15 @@ $(document).ready(function(){
    // based on the id of the kitten as attached to individual buttons
   $(document).on("click", "#listMetrics", function(event) {
     event.preventDefault();
-    $("#kittenMetrics").empty();
     currentKittenId = $(this).attr("data-id");
-    // gets the array of metrics associated with the current kitten
+    writeKittenDom();
+  });
+  
+  // function called after a particular kitten button is clicked - gets and displays kitten data
+  function writeKittenDom() {
+    console.log("currentKittenId inside writeKittendom: " + currentKittenId);
+    $("#kittenMetrics").empty();
+      // gets the array of metrics associated with the current kitten
     $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
       // appends the name of the current kitten and other constants
       $("#kittenMetrics").append("<h4>Kitten: " + 
@@ -302,7 +312,7 @@ $(document).ready(function(){
           sortedSizes = [];
       }
     });
-  });
+  }
  
  //  user clicks anywhere on document inside of nav and footer
   $(document).on("click", ".wrapper", function(event) {
@@ -344,9 +354,11 @@ $(document).ready(function(){
         // don't do anything. (maybe here add if other classes are clicked??)
       }
     }
-    // This function addes the thick border and the delete and edit buttons to 
-    // a clicked .metricGroup div. event.currentTarget refers to the higher element.
-    function addButtons() {
+  });
+
+  // This function addes the thick border and the delete and edit buttons to 
+  // a clicked .metricGroup div. 
+  function addButtons() {
     target.css({
       'border-width': '5px'
     });
@@ -359,10 +371,8 @@ $(document).ready(function(){
     thisKittenId + " data_id=" + 
     thisId + "><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
       // set boolean to true that delete and edit buttons exist
-      littleButton = true;
-    }
-  
-  });
+    littleButton = true;
+  }
 
   // This function removes the delete and edit buttons if they already exist. 
     function removeButtons() {
@@ -385,27 +395,25 @@ $(document).ready(function(){
     thisId = $(this).attr("data_id");
     thisKittenId = $(this).attr("data_idKitten")
     console.log("AFTER clicking littleX, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
-    // Run a DELETE request to delete the reference in the kitten document to these specific metrics
+    // DELETE these specific metrics from the metrics collection
     $.ajax({
       method: "DELETE",
       url: "/metrics/delete/" + thisId
     })
       .then (function(dbMetric) { 
         console.log("dbMetric after delete: ", dbMetric); // shows a successful delete of 1 document
-        // and then delete (or "pull") the reference to that just deleted document
+        // and then delete (or "pull") the reference to that just deleted document from the kitten document
         $.ajax({
           method: "POST",
           url: "/kittens/removeRef/" + thisKittenId,
           data: {metricId: thisId}
         })
-          // still need to empty the notes div as before
           .then (function(dbKitten) {
             console.log("dbKitten after POST/kittens/overwrite/id: ", dbKitten);
-              // Run a DELETE request to delete the actual metrics from the metric db
-            
+            // still need to reload the metrics div
+            writeKittenDom();
           });
       });
-        
   });
   
   // Function to edit one set of metric info of a kitten, selected by user
