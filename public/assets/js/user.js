@@ -37,6 +37,9 @@ var target;
 // The id associated with metrics for deleting and editing, and the id of the kitten
 var thisId;
 var thisKittenId;
+var thisAge;
+var thisWeight;
+var thisSize;
 
 $(document).ready(function(){
   $(document).ready(function(){ feedKittenTimer(); });
@@ -293,10 +296,13 @@ $(document).ready(function(){
         console.log("inside function showDom, kittenAges: " + kittenAges);
         console.log("inside function showDom, sortedAges: " + sortedAges);
           for (i=0; i<kittenAges.length; i++) {
-            console.log("I'm INSIDE THE FOR LOOP");
+            console.log("I'm INSIDE THE showDom FORLOOP");
             $("#kittenMetrics").append("<div class='metricInfo'><h5 class='metricGroup' data_idKitten=" + 
               currentKittenId + " data_id=" + 
-              sortedMetricIds[i] + ">Age: " +
+              sortedMetricIds[i] + " data_age=" +
+              sortedAges[i] + " data_weight=" +
+              sortedWeights[i] + " data_size=" +
+              sortedSizes[i] + ">Age: " +
               sortedAges[i] + " Weeks" + "<br>Weight: " +
               sortedWeights[i] + " Ounces" +"<br>Length: " +
               sortedSizes[i] + " Inches" +"</h5></div>");
@@ -346,6 +352,9 @@ $(document).ready(function(){
         // First, the id associated with these metrics, and the id of the kitten
         thisId = $(event.target).attr("data_id");
         thisKittenId = $(event.target).attr("data_idKitten");
+        thisAge = $(event.target).attr("data_age");
+        thisWeight = $(event.target).attr("data_weight");
+        thisSize = $(event.target).attr("data_size");
         console.log("AFTER clicked .metricGroup, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
         addButtons();
       } else { // user has clicked elsewhere than the metric info div
@@ -427,6 +436,13 @@ $(document).ready(function(){
     $(".littleE").remove();
     littleButton = false;
     // bring up modal to edit existing information for this group of kitten metrics
+    // check if all the variables are correctly defined
+    console.log("AFTER clicking littleE," +
+    " thisID: "  + thisId + 
+    " thisKittenId: " + thisKittenId +
+    " thisAge:" + thisAge +
+    " thisWeight:" + thisWeight +
+    " thisSize:" + thisSize);
   });
       
     // This function is used as user clicks on the Add Metrics button (rendered from above)
