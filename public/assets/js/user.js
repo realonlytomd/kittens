@@ -443,6 +443,12 @@ $(document).ready(function(){
     " thisAge:" + thisAge +
     " thisWeight:" + thisWeight +
     " thisSize:" + thisSize);
+    $("#newKittenMetricModal").modal("show");
+    $("#kittenAgeInput").val(thisAge);
+    $("#kittenWeightInput").val(thisWeight);
+    $("#kittenSizeInput").val(thisSize);
+    // this sort of works, but NOT. It's adding to kitten metrics, not posting over 
+    // and existing kitten metric.  So need to do a findOneAndUpdate I guess.
   });
       
     // This function is used as user clicks on the Add Metrics button (rendered from above)
