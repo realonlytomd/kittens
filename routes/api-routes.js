@@ -347,11 +347,12 @@ module.exports = function(router) {
 
     //Route to edit an individual set of metrics for a kitten
     router.post("/editMetrics/:metricID", function(req, res) {
-        console.log("req.body._id: ", req.body.id);
+        console.log("req: ", req);
+        console.log("req.params.id: ", req.params.metricID);
         console.log("req.body: ", req.body);
         // find the intended set of metrics, and change the numbers accordingly
         db.Metric.findOneAndUpdate(
-            { _id: req.body.id},
+            { _id: req.params.metricID},
             { age: req.body.age },
             { weight: req.body.weight },
             { size: req.body.size },
@@ -367,6 +368,7 @@ module.exports = function(router) {
                 res.json(err);
             });
     });
+
     // **********older code, using for reference*******888
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {

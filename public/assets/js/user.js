@@ -425,11 +425,11 @@ $(document).ready(function(){
           url: "/kittens/removeRef/" + thisKittenId,
           data: {metricId: thisId}
         })
-          .then (function(dbKitten) {
-            console.log("dbKitten after POST/kittens/overwrite/id: ", dbKitten);
-            // still need to reload the metrics div
-            writeKittenDom();
-          });
+        .then (function(dbKitten) {
+          console.log("dbKitten after POST/kittens/overwrite/id: ", dbKitten);
+          // still need to reload the metrics div
+          writeKittenDom();
+        });
       });
   });
   
@@ -460,9 +460,26 @@ $(document).ready(function(){
   $(document).on("click", "#submitEditedKittenMetrics", function(event) {
     event.preventDefault();
     console.log("inside submitEditedKittenMetrics");
+    $.ajax({
+      method: "POST",
+      url: "/editMetrics/" + thisId,
+      data: {
+          age: $("#newKittenAgeInput").val().trim(),
+          weight: $("#newKittenWeightInput").val().trim(),
+          size: $("#newKittenSizeInput").val().trim()
+      }
+    })
+    .then(function(editedMetricdb) {
+        console.log("User after kitten metrics (allDataKittenUser) in user.js: ", editedMetricdb);
+        // empty out the input fields
+        $("#newKittenAgeInput").val("");
+        $("#newKittenWeightInput").val("");
+        $("#newKittenSizeInput").val("");
+        // then hide this modal
+        $("#editKittenMetricModal").modal("hide");
+        //reload the metric div showing the changes
+        writeKittenDom();
+      });
   });
-      
-   
-
 
 });
