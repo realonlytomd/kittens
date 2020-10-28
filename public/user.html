@@ -113,7 +113,7 @@
         </div>
       </div>
       <!-- End of Bootstrap modal code -->
-      <!-- Second Modal for entering kitten's metrics name-->
+      <!-- Modal for entering new kitten's metrics AND for adding metrics to existing kitten -->
       <div class="modal fade" id="newKittenMetricModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -143,7 +143,38 @@
           </div>
         </div>
       </div>
-<!-- End of Bootstrap modal code -->
+      <!-- End of Bootstrap modal code -->
+      <!-- Modal for editing kitten's metrics -->
+      <div class="modal fade" id="editKittenMetricModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h2 class="modal-title text-center" id="myModalLabel">Edit These Kitten Metrics</h2>
+            </div>
+            <div class="modal-body">
+              <!-- entry form for editing info about the current kitten-->
+              <div class="form-group">
+                <label for="kittenAgeInput">Kitten Age:</label>
+                <input type="number" class="form-control" name="age" id="newKittenAgeInput" placeholder="Enter the Kitten's Age in Weeks">
+              </div>
+              <div class="form-group">
+                <label for="kittenWeightInput">Kitten Weight:</label>
+                <input type="number" class="form-control" name="weight" id="newKittenWeightInput" placeholder="Enter the Kitten's Weight in Ounces">
+              </div>
+              <div class="form-group">
+                <label for="kittenSizeInput">Kitten Size:</label>
+                <input type="number" class="form-control" name="size" id="NewKittenSizeInput" placeholder="Enter the Kitten's Length in Inches">
+              </div>
+              <button type="submit" id="submitEditedKittenMetrics">Submit</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of Bootstrap modal code -->
       <div class="row">
         <div class="col-xs-12 text-center">
           <button type="button" data-toggle="modal" data-target="#newKittenModal" id="createKitten">

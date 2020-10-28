@@ -343,7 +343,30 @@ module.exports = function(router) {
             // but if an error occurred, send it to the client
             res.json(err);
         });
-    })
+    });
+
+    //Route to edit an individual set of metrics for a kitten
+    router.post("/editMetrics/:metricID", function(req, res) {
+        console.log("req.body._id: ", req.body.id);
+        console.log("req.body: ", req.body);
+        // find the intended set of metrics, and change the numbers accordingly
+        db.Metric.findOneAndUpdate(
+            { _id: req.body.id},
+            { age: req.body.age },
+            { weight: req.body.weight },
+            { size: req.body.size },
+            { new: true } //send new one back
+        )
+            .then(function(dbMetric) {
+                console.log("dbUser: ", dbMetric);
+                // If successful, send the metric and newly edited data back to the client
+                res.json(dbMetric);
+            })
+            .catch(function(err) {
+            // but if an error occurred, send it to the client
+                res.json(err);
+            });
+    });
     // **********older code, using for reference*******888
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {

@@ -319,6 +319,14 @@ $(document).ready(function(){
       }
     });
   }
+
+   // This function is used as user clicks on the Add Metrics button (rendered from above)
+  // to add metrics to an existing kitten, also while other metrics have been listed
+  $(document).on("click", "#submitNewKittenMetrics", function(event) {
+    event.preventDefault();
+    $("#newKittenMetricModal").modal("show");
+    currentKittenId = $(this).attr("data-id");
+  });
  
  //  user clicks anywhere on document inside of nav and footer
   $(document).on("click", ".wrapper", function(event) {
@@ -443,19 +451,18 @@ $(document).ready(function(){
     " thisAge:" + thisAge +
     " thisWeight:" + thisWeight +
     " thisSize:" + thisSize);
-    $("#newKittenMetricModal").modal("show");
-    $("#kittenAgeInput").val(thisAge);
-    $("#kittenWeightInput").val(thisWeight);
-    $("#kittenSizeInput").val(thisSize);
-    // this sort of works, but NOT. It's adding to kitten metrics, not posting over 
-    // and existing kitten metric.  So need to do a findOneAndUpdate I guess.
+    $("#editKittenMetricModal").modal("show");
+    $("#newKittenAgeInput").val(thisAge);
+    $("#newKittenWeightInput").val(thisWeight);
+    $("#newKittenSizeInput").val(thisSize);
+  });
+
+  $(document).on("click", "#submitEditedKittenMetrics", function(event) {
+    event.preventDefault();
+    console.log("inside submitEditedKittenMetrics");
   });
       
-    // This function is used as user clicks on the Add Metrics button (rendered from above)
-    // to add metrics to an existing kitten, also while other metrics have been listed
-  $(document).on("click", "#submitNewKittenMetrics", function(event) {
-    event.preventDefault();
-    $("#newKittenMetricModal").modal("show");
-    currentKittenId = $(this).attr("data-id");
-  });
+   
+
+
 });
