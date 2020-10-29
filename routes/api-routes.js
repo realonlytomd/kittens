@@ -347,19 +347,19 @@ module.exports = function(router) {
 
     //Route to edit an individual set of metrics for a kitten
     router.post("/editMetrics/:metricID", function(req, res) {
-        console.log("req: ", req);
-        console.log("req.params.id: ", req.params.metricID);
+        console.log("req.params.metricID: ", req.params.metricID);
         console.log("req.body: ", req.body);
+        console.log("req.body.age: ", req.body.age);
+        console.log("req.body.weight: ", req.body.weight);
+        console.log("req.body.size: ", req.body.size);
         // find the intended set of metrics, and change the numbers accordingly
-        db.Metric.findOneAndUpdate(
-            { _id: req.params.metricID},
-            { age: req.body.age },
-            { weight: req.body.weight },
-            { size: req.body.size },
+        db.Metric.findOneAndUpdate (
+            { _id: req.params.metricID },
+            {$set: { age: req.body.age , weight: req.body.weight , size: req.body.size }},
             { new: true } //send new one back
         )
             .then(function(dbMetric) {
-                console.log("dbUser: ", dbMetric);
+                console.log("dbMetric: ", dbMetric);
                 // If successful, send the metric and newly edited data back to the client
                 res.json(dbMetric);
             })
