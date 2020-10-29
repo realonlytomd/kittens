@@ -38,7 +38,7 @@ var UserSchema = new Schema({
     required: true,
     default: "false"
   },
-  // `kitten` is an object that will reference the kittens possessed by the user.
+  // `kitten` is an array that will reference the kittens possessed by the user.
   // The ref property links the ObjectId to the Kitten model
   // So it's possible to populate a User with multiple kittens, use an array of ObjectIds
   kitten: [{
