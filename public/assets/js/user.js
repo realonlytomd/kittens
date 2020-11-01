@@ -227,7 +227,8 @@ $(document).ready(function(){
       // gets the array of metrics associated with the current kitten
     $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
       // appends the name of the current kitten and other constants
-      $("#kittenMetrics").append("<h4>Kitten: " + 
+      $("#kittenMetrics").append("<h5>Click <span id='editThisKitten'style='color:red'>HERE</span> to Edit or Delete " +
+      curkat[0].name + "</h5><h4>Kitten: " + 
       curkat[0].name + "<br>Breed: " +
       curkat[0].breed + "<br>Fur Length: " +
       curkat[0].furlength + "<br>Fur Color: " +
@@ -235,7 +236,7 @@ $(document).ready(function(){
       curkat[0].sex +  "</h4>");
       // print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
-        curkat[0]._id + ">Add Metrics</button><br>");
+        curkat[0]._id + ">Add Metrics</button><br><br><h5>Click in a Metric Box to Delete or Edit</h5>");
       console.log("curkat[0].metric: ", curkat[0].metric);
       console.log("curkat[0].metric.length: " + curkat[0].metric.length);
 
@@ -319,6 +320,17 @@ $(document).ready(function(){
       }
     });
   }
+
+  // This function brings up a modal to edit currently stored kitten information, not the metrics
+  // This is where I left off.
+  // bring up same modal as entering a new kitten? will need to add edit or delete kitten buttons,
+  // might be too confusing,
+  // so, if like editing kitten metrics, make a similar modal, but with submit edits,
+  // and a delete button (this could be added later)
+  $(document).on("click", "#editThisKitten", function(event) {
+    event.preventDefault();
+    console.log("Inside edit this kitten function.");
+  });
 
    // This function is used as user clicks on the Add Metrics button (rendered from above)
   // to add metrics to an existing kitten, also while other metrics have been listed
