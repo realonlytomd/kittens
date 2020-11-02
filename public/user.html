@@ -113,6 +113,45 @@
         </div>
       </div>
       <!-- End of Bootstrap modal code -->
+      <!-- Modal for editing an existing kitten -->
+      <div class="modal fade" id="editKittenModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h2 class="modal-title text-center" id="myModalLabel">Edit the Kitten</h2>
+            </div>
+            <div class="modal-body">
+              <!-- entry form for editing info about the currently chosen kitten-->
+              <div class="form-group">
+                <label for="editKittenNameInput">Kitten Name:</label>
+                <input type="text" class="form-control" name="name" id="editKittenNameInput" placeholder="Enter a Name">
+              </div>
+              <div class="form-group">
+                <label for="editKittenBreedInput">Kitten Breed:</label>
+                <input type="text" class="form-control" name="breed" id="editKittenBreedInput" placeholder="Enter the Breed of the Kitten">
+              </div>
+              <div class="form-group">
+                <label for="editKittenFurlengthInput">Kitten Fur Length:</label>
+                <input type="text" class="form-control" name="furlength" id="editKittenFurlengthInput" placeholder="Enter the General Fur Length of the Kitten">
+              </div>
+              <div class="form-group">
+                <label for="editKittenFurcolorInput">Kitten Fur Color:</label>
+                <input type="text" class="form-control" name="furcolor" id="editKittenFurcolorInput" placeholder="Enter the Fur Color of the Kitten">
+              </div>
+              <div class="form-group">
+                <label for="editKittenSexInput">Kitten Sex:</label>
+                <input type="text" class="form-control" name="sex" id="editKittenSexInput" placeholder="Enter the Sex of the Kitten">
+              </div>
+              <button type="submit" id="submitEditKitten">Submit</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of modal code-->      
       <!-- Modal for entering new kitten's metrics AND for adding metrics to existing kitten -->
       <div class="modal fade" id="newKittenMetricModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

@@ -37,6 +37,11 @@ var target;
 // The id associated with metrics for deleting and editing, and the id of the kitten
 var thisId;
 var thisKittenId;
+var thisName;
+var thisBreed;
+var thisFurlength;
+var thisFurcolor;
+var thisSex;
 var thisAge;
 var thisWeight;
 var thisSize;
@@ -227,7 +232,12 @@ $(document).ready(function(){
       // gets the array of metrics associated with the current kitten
     $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
       // appends the name of the current kitten and other constants
-      $("#kittenMetrics").append("<h5>Click <span id='editThisKitten'style='color:red'>HERE</span> to Edit or Delete " +
+      $("#kittenMetrics").append("<h5>Click <span id='editThisKitten' style='color:red'" +
+      " data-name = " + curkat[0].name +
+      " data-breed = " + curkat[0].breed +
+      " data-furlength = " + curkat[0].furlength +
+      " data-furcolor = " + curkat[0].furcolor +
+      " data-sex = " + curkat[0].sex + ">HERE</span> to Edit or Delete " +
       curkat[0].name + "</h5><h4>Kitten: " + 
       curkat[0].name + "<br>Breed: " +
       curkat[0].breed + "<br>Fur Length: " +
@@ -323,13 +333,31 @@ $(document).ready(function(){
 
   // This function brings up a modal to edit currently stored kitten information, not the metrics
   // This is where I left off.
-  // bring up same modal as entering a new kitten? will need to add edit or delete kitten buttons,
-  // might be too confusing,
-  // so, if like editing kitten metrics, make a similar modal, but with submit edits,
-  // and a delete button (this could be added later)
+ 
+  // and add a delete button 
   $(document).on("click", "#editThisKitten", function(event) {
     event.preventDefault();
     console.log("Inside edit this kitten function.");
+    // retrieve data about "this" kitten from clicking HERE
+    thisName=$(this).attr("data-name");
+    thisBreed=$(this).attr("data-breed");
+    thisFurlength=$(this).attr("data-furlength");
+    thisFurcolor=$(this).attr("data-furcolor");
+    thisSex=$(this).attr("data-sex");
+    console.log("thisName: " + thisName);
+    $("#editKittenModal").modal("show");
+    // fill the form with data currently in db. not correct yet
+    $("#editKittenNameInput").val(thisName);
+    $("#editKittenBreedInput").val(thisBreed);
+    $("#editKittenFurlengthInput").val(thisFurlength);
+    $("#editKittenFurcolorInput").val(thisFurcolor);
+    $("#editKittenSexInput").val(thisSex);
+    // so modal comes up with the info correct, now, retrieve the info (.val()),
+    // and submit it to the db - .set
+    //NEXT, add a delete button inside the modal
+    // And delete that kitten - what happens to the metric data referenced
+    // to THAT kitten???
+    //  Thats the big question.  Look again Wednesday morning!
   });
 
    // This function is used as user clicks on the Add Metrics button (rendered from above)
