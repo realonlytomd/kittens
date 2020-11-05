@@ -332,13 +332,12 @@ $(document).ready(function(){
   }
 
   // This function brings up a modal to edit currently stored kitten information, not the metrics
-  // This is where I left off.
  
   // and add a delete button 
   $(document).on("click", "#editThisKitten", function(event) {
     event.preventDefault();
     console.log("Inside edit this kitten function.");
-    // retrieve data about "this" kitten from clicking HERE
+    // retrieve data about "this" kitten from user clicking HERE
     thisName=$(this).attr("data-name");
     thisBreed=$(this).attr("data-breed");
     thisFurlength=$(this).attr("data-furlength");
@@ -346,19 +345,52 @@ $(document).ready(function(){
     thisSex=$(this).attr("data-sex");
     console.log("thisName: " + thisName);
     $("#editKittenModal").modal("show");
-    // fill the form with data currently in db. not correct yet
+    // fill the form with data currently in db. 
     $("#editKittenNameInput").val(thisName);
     $("#editKittenBreedInput").val(thisBreed);
     $("#editKittenFurlengthInput").val(thisFurlength);
     $("#editKittenFurcolorInput").val(thisFurcolor);
     $("#editKittenSexInput").val(thisSex);
-    // so modal comes up with the info correct, now, retrieve the info (.val()),
-    // and submit it to the db - .set
+    // the modal comes up with the info correct, 
+  });
+    
+    //now, retrieve the info (.val()) the user puts in modal to edit the kitten,
+    // and submit it to the db using .set
+    $(document).on("click", "#submitEditKitten", function(event) {
+      event.preventDefault();
+      console.log("inside submitEditKitten");
+      $.ajax({
+        method: "POST",
+        url: "/editKitten/" + currentKittenId,
+        data: {
+          name: $("#editKittenNameInput").val().trim(),
+          breed: $("#editKittenBreedInput").val().trim(),
+          furlength:$("#editKittenFurlengthInput").val().trim(),
+          furcolor: $("#editKittenFurcolorInput").val().trim(),
+          sex: $("#editKittenSexInput").val().trim()
+        }
+      })
+      .then(function(editedKittendb) {
+          console.log("User after kitten metrics (allDataKittenUser) in user.js: ", editedKittendb);
+          // empty out the input fields
+          $("#editKittenNameInput").val("");
+          $("#editKittenBreedInput").val("");
+          $("#editKittenFurlengthInput").val("");
+          $("#editKittenFurcolorInput").val("");
+          $("#editKittenSexInput").val("");
+          // then hide this modal
+          $("#editKittenModal").modal("hide");
+          //reload the kitten div showing the changes
+          writeKittenDom();
+        });
+    });
+
+// this is where i left off
     //NEXT, add a delete button inside the modal
     // And delete that kitten - what happens to the metric data referenced
     // to THAT kitten???
     //  Thats the big question.  Look again Wednesday morning!
-  });
+ 
 
    // This function is used as user clicks on the Add Metrics button (rendered from above)
   // to add metrics to an existing kitten, also while other metrics have been listed

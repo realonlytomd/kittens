@@ -233,6 +233,8 @@ module.exports = function(router) {
             });
     });
 
+
+
     // need to find the correct kitten, then fill in the metrics with the selected metric array
     router.post("/kittenMetrics/:id", function(req, res) {
         console.log("BEFORE KITTEN HAS METRICS - req.body: ", req.body);
@@ -362,6 +364,38 @@ module.exports = function(router) {
                 console.log("dbMetric: ", dbMetric);
                 // If successful, send the metric and newly edited data back to the client
                 res.json(dbMetric);
+            })
+            .catch(function(err) {
+            // but if an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
+    //Route to edit a kitten's properties
+    router.post("/editKitten/:kittenId", function(req, res) {
+        console.log("req.params.kittenId: ", req.params.kittenId);
+        //console.log("req.body: ", req.body);
+        console.log("req.body.name: ", req.body.name);
+        console.log("req.body.breed: ", req.body.breed);
+        console.log("req.body.furlength: ", req.body.furlength);
+        console.log("req.body.furcolor: ", req.body.furcolor);
+        console.log("req.body.sex: ", req.body.sex);
+        // find the intended kitten properties, and change the values accordingly
+        db.Kitten.findOneAndUpdate (
+            { _id: req.params.kittenId },
+            {$set: { 
+                name: req.body.name, 
+                breed: req.body.breed, 
+                furlength: req.body.furlength,
+                furcolor: req.body.furcolor,
+                sex: req.body.sex
+            }},
+            { new: true } //send new one back
+        )
+            .then(function(dbKitten) {
+                console.log("dbKitten: ", dbKitten);
+                // If successful, send the newly edited data back to the client
+                res.json(dbKitten);
             })
             .catch(function(err) {
             // but if an error occurred, send it to the client
