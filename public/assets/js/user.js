@@ -399,9 +399,30 @@ $(document).ready(function(){
     event.preventDefault();
     $("#deleteForSure").modal("hide");
     console.log("I just clicked yes to delete the kitten");
+    console.log("currentUserId: " + currentUserId);
+    console.log("currentKittenId: " + currentKittenId);
     // this is where I left off
     //  - what happens to the metric data referenced
     // to THAT kitten???
+    // DELETE this specific kitten from the user collection
+    $.ajax({
+      method: "DELETE",
+      url: "/kitten/delete/" + currentKittenId
+    })
+      .then (function(dbKitten) { 
+        console.log("dbKitten after delete: ", dbKitten); // shows a successful delete of 1 document
+        // and then delete (or "pull") the reference to that just deleted document from the user document
+        $.ajax({
+          method: "POST",
+          url: "/user/removeRef/" + currentUserId, // check this
+          data: {kittenId: currentKittenId}
+        })
+        .then (function(dbUser) {
+          console.log("dbUser after POST/user/removeRef/id: ", dbUser);
+          // redraw page to show current kittens of current user
+          getAllData(); // I think this should be further back - getAllData??
+        });
+      });
   });
   
 
@@ -416,29 +437,29 @@ $(document).ready(function(){
  //  user clicks anywhere on document inside of nav and footer
   $(document).on("click", ".wrapper", function(event) {
     event.preventDefault();
-    console.log("user has clicked on the wrapper!");
-    console.log("littleButton is: " + littleButton);
+    //console.log("user has clicked on the wrapper!");
+    //console.log("littleButton is: " + littleButton);
     if (littleButton === true) { // the edit and delete buttons should be removed if clicked
       // anywhere but themselves
-      console.log("Check to see if littleButton is true: " + littleButton);
+      //console.log("Check to see if littleButton is true: " + littleButton);
       if ($(event.target).hasClass("littleX") || $(event.target).hasClass("littleE")) {
           // then user has clicked on one of the buttons,
           // and seperate functions will be called.
-          console.log("User has clicked on a delete or edit buton!");
+          //console.log("User has clicked on a delete or edit buton!");
       } else { // user clicked somewhere other than the delete or edit button
-        console.log("delete and edit buttons already exist, but were not chosen.");
+        //console.log("delete and edit buttons already exist, but were not chosen.");
         removeButtons();
       }
     } else { // needs to ask if the click event was on .metricGroup
-      console.log("littlebutton should be false: " + littleButton);
+      //console.log("littlebutton should be false: " + littleButton);
           //  No little buttons, user must click on the metricGroup div
           // If metricInfo is clicked, no different than if user had clicked elsewhere
           // in wrapper
       if ($(event.target).hasClass("metricInfo")) {
-        console.log("user clicked in metricInfo");
+        //console.log("user clicked in metricInfo");
         //target = $(event.target)
       } else if ($(event.target).hasClass("metricGroup")) {
-        console.log("user clicked in metricGroup");
+        //console.log("user clicked in metricGroup");
         // .parent method adds the buttons to the metric Info div, even though
         // the group of metrics was clicked.
         target = $(event.target).parent();
@@ -451,7 +472,7 @@ $(document).ready(function(){
         console.log("AFTER clicked .metricGroup, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
         addButtons();
       } else { // user has clicked elsewhere than the metric info div
-        console.log("the current target (click) is NOT the .metricGroup");
+        //console.log("the current target (click) is NOT the .metricGroup");
         // user has clicked somewhere on page but not on .metricInfo
         // don't do anything. (maybe here add if other classes are clicked??)
       }

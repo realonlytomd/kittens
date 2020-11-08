@@ -309,6 +309,45 @@ module.exports = function(router) {
     });
 
 
+     // This route deletes the reference to the kitten document in the associated user document
+    router.post("/user/removeRef/:id", function(req, res) {
+        console.log("remove a kitten reference: user id: ", req.params.id);
+        console.log("data transferred to remove kitten reference, req.body: ", req.body);
+    // delete (or pull) the id of the kitten and pass the req.body to the entry
+    db.User.findOneAndUpdate(
+        { _id: req.params.id },
+        { $pull: { kitten: req.body.kittenId }}, // this kitten._id should be the metric id to be removed
+        { new: true }
+    )
+        .then(function(dbUser) {
+            console.log("after .then db.User.findOneAndUpdate $pull, dbUser: ", dbUser);
+            res.json(dbUser);
+        })
+        .catch(function(err) {
+        // If an error occurred, send it to the client
+            res.json(err);
+        });
+    });
+
+    // This route deletes the kitten the user wants to delete
+    router.delete("/kitten/delete/:id", function(req, res) {
+        console.log("in kitten/delete, req.params: ", req.params);
+        // delete the whole metric group
+        db.Kitten.deleteOne(
+            { _id: req.params.id }
+        )
+        .then(function(dbKitten) {
+            //  
+            console.log("delete a kitten, dbKitten: ", dbKitten);
+            res.json(dbKitten);
+        })
+        .catch(function(err) {
+            // but if an error occurred, send it to the client
+            res.json(err);
+        });
+    });
+
+
     // This route deletes the reference to a metric document in the associated kitten document
     router.post("/kittens/removeRef/:id", function(req, res) {
         console.log("remove a kitten's metric reference: kitten id: ", req.params.id);
