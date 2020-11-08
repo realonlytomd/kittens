@@ -64,6 +64,10 @@ button.kittenButtons {
     margin-top: 5px;
 }
 
+span#editThisKitten {
+    cursor: pointer;
+}
+
 .metricInfo {
     margin-top: 8px;
     cursor: pointer;

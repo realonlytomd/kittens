@@ -385,12 +385,25 @@ $(document).ready(function(){
         });
     });
 
-// this is where i left off
-    //NEXT, add a delete button inside the modal
-    // And delete that kitten - what happens to the metric data referenced
+    //NEXT, add a delete button inside the modal - done
+    // pull up the modal to ask user if they're sure.
+    
+  $(document).on("click", "#deleteKitten", function(event) {
+    event.preventDefault();
+    $("#editKittenModal").modal("hide");
+    $("#deleteForSure").modal("show");
+  });
+
+    // And delete that kitten
+  $(document).on("click", "#deleteKittenYes", function(event) {
+    event.preventDefault();
+    $("#deleteForSure").modal("hide");
+    console.log("I just clicked yes to delete the kitten");
+    // this is where I left off
+    //  - what happens to the metric data referenced
     // to THAT kitten???
-    //  Thats the big question.  Look again Wednesday morning!
- 
+  });
+  
 
    // This function is used as user clicks on the Add Metrics button (rendered from above)
   // to add metrics to an existing kitten, also while other metrics have been listed
