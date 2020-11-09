@@ -274,6 +274,11 @@ $(document).ready(function(){
             console.log("kittenAges: " + kittenAges);
             console.log("kittenWights: " + kittenWeights);
             console.log("kittenSizes: " + kittenSizes);
+            // this array is emptied out here instead of after being built
+            // so the user has access to it if needed to delete all the metrics
+            // associated with a kitten
+            sortedMetricIds = [];
+
             // now feed the arrays to the server side
             $.ajax({
               method: "GET",
@@ -291,7 +296,7 @@ $(document).ready(function(){
               sortedAges = sortedMetrics.ages;
               sortedWeights = sortedMetrics.weights;
               sortedSizes = sortedMetrics.sizes;
-              console.log("sortedMetricIds: " + sortedMetricIds);
+              console.log("CHECK THIS!!!! sortedMetricIds: " + sortedMetricIds);
               console.log("sortedAges: " + sortedAges);
               console.log("sortedWights: " + sortedWeights);
               console.log("sortedSizes: " + sortedSizes);
@@ -323,16 +328,18 @@ $(document).ready(function(){
           kittenAges = [];
           kittenWeights = [];
           kittenSizes = [];
-          sortedMetricIds = [];
+          // try: keep this array in case user wants to delete all the metrics referenced from
+          // a kitten they are deleting.
+          //sortedMetricIds = [];
           sortedAges = [];
           sortedWeights = [];
           sortedSizes = [];
+          console.log("CHECK THIS TOO!!!! sortedMetricIds: " + sortedMetricIds);
       }
     });
   }
 
   // This function brings up a modal to edit currently stored kitten information, not the metrics
- 
   // and add a delete button 
   $(document).on("click", "#editThisKitten", function(event) {
     event.preventDefault();
@@ -385,9 +392,7 @@ $(document).ready(function(){
         });
     });
 
-    //NEXT, add a delete button inside the modal - done
-    // pull up the modal to ask user if they're sure.
-    
+    // pull up the modal to ask user if they're sure they want to delete the kitten
   $(document).on("click", "#deleteKitten", function(event) {
     event.preventDefault();
     $("#editKittenModal").modal("hide");
@@ -401,9 +406,14 @@ $(document).ready(function(){
     console.log("I just clicked yes to delete the kitten");
     console.log("currentUserId: " + currentUserId);
     console.log("currentKittenId: " + currentKittenId);
-    // this is where I left off
+    console.log("CHECK THIS LASTLY!!!! sortedMetricIds: " + sortedMetricIds);
     //  - what happens to the metric data referenced
-    // to THAT kitten???
+    // to THAT kitten??? It doesn NOT go away. Need to find those metric id's
+    // and delete them then delete the kitten, then delete the ref to that kitten in
+    // the user collection (or document?)
+    // So, we KNOW the currentKittenId
+    // what does that give us?  We have sortedMetricIds - the array of metric refs for this chosen kitten
+
     // DELETE this specific kitten from the user collection
     $.ajax({
       method: "DELETE",
@@ -414,14 +424,25 @@ $(document).ready(function(){
         // and then delete (or "pull") the reference to that just deleted document from the user document
         $.ajax({
           method: "POST",
-          url: "/user/removeRef/" + currentUserId, // check this
+          url: "/user/removeRef/" + currentUserId,
           data: {kittenId: currentKittenId}
         })
-        .then (function(dbUser) {
-          console.log("dbUser after POST/user/removeRef/id: ", dbUser);
-          // redraw page to show current kittens of current user
-          getAllData(); // I think this should be further back - getAllData??
-        });
+          .then (function(dbUser) {
+            console.log("dbUser after POST/user/removeRef/id: ", dbUser);
+            // now delete the metrics referenced from the kitten collection
+            for (i=0; i<sortedMetricIds.length; i++) {
+              $.ajax({
+                method: "DELETE",
+                url: "/metrics/delete/" + sortedMetricIds[i]
+              })
+              .then (function(dbMetric) {
+                console.log("and counter: " + i + "is index to which metric data after deleting a kitten, dbMetric: ", dbMetric);
+              });
+            }
+            // redraw page to show current kittens of current user
+            getAllData();
+            $("#kittenMetrics").empty();
+          });
       });
   });
   
