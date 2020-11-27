@@ -231,14 +231,24 @@ $(document).ready(function(){
     $("#kittenMetrics").empty();
       // gets the array of metrics associated with the current kitten
     $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
+      console.log("WHAT'S IN HERE curkat[0]: ", curkat[0]);
+      console.log("more specific, curkat[0].furcolor is: ", curkat[0].furcolor);
+      // strings with multiple words are not being assigned.
+      // try to to write the h5 element with data attributes instead.
+      var showSpan = $("<span>");
+      showSpan.attr("id", "editThisKitten");
+      showSpan.css("color","red");
+      showSpan.attr("data-name", curkat[0].name);
+      showSpan.attr("data-breed", curkat[0].breed);
+      showSpan.attr("data-furlength", curkat[0].furlength);
+      showSpan.attr("data-furcolor", curkat[0].furcolor);
+      showSpan.attr("data-sex", curkat[0].sex);
+      showSpan.text("CLICK HERE");
+      //this works!
       // appends the name of the current kitten and other constants
-      $("#kittenMetrics").append("<h5>Click <span id='editThisKitten' style='color:red'" +
-      " data-name = " + curkat[0].name +
-      " data-breed = " + curkat[0].breed +
-      " data-furlength = " + curkat[0].furlength +
-      " data-furcolor = " + curkat[0].furcolor +
-      " data-sex = " + curkat[0].sex + ">HERE</span> to Edit or Delete " +
-      curkat[0].name + "</h5><h4>Kitten: " + 
+      $("#kittenMetrics").append(showSpan);
+      $("#kittenMetrics").append("<p id='keepInline'> to Edit or Delete " +
+      curkat[0].name + "</p><h4>Kitten: " + 
       curkat[0].name + "<br>Breed: " +
       curkat[0].breed + "<br>Fur Length: " +
       curkat[0].furlength + "<br>Fur Color: " +
@@ -345,11 +355,11 @@ $(document).ready(function(){
     event.preventDefault();
     console.log("Inside edit this kitten function.");
     // retrieve data about "this" kitten from user clicking HERE
-    thisName=$(this).attr("data-name");
-    thisBreed=$(this).attr("data-breed");
-    thisFurlength=$(this).attr("data-furlength");
-    thisFurcolor=$(this).attr("data-furcolor");
-    thisSex=$(this).attr("data-sex");
+    thisName = $(this).attr("data-name");
+    thisBreed = $(this).attr("data-breed");
+    thisFurlength = $(this).attr("data-furlength");
+    thisFurcolor = $(this).attr("data-furcolor");
+    thisSex = $(this).attr("data-sex");
     console.log("thisName: " + thisName);
     $("#editKittenModal").modal("show");
     // fill the form with data currently in db. 

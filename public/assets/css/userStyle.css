@@ -62,10 +62,16 @@ button#createKitten {
 button.kittenButtons {
     margin-left: 5px;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 span#editThisKitten {
     cursor: pointer;
+}
+
+#keepInline {
+    display: inline-block;
+    margin-left: 6px;
 }
 
 .metricInfo {
