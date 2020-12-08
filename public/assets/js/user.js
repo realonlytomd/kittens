@@ -11,6 +11,7 @@ var myTimer;
 // get the id of the current user from login.js file for
 // currently logged in user.
 var currentUserId = localStorage.getItem("currentUserId");
+var currentUser = localStorage.getItem("currentUser");
 var currentUserLoggedIn;
 var currentKittenId = "";
 var kittenIds = [];
@@ -179,7 +180,7 @@ $(document).ready(function(){
       // empty out the div that shows the user's current kittens and metrics
     $("#currentKittens").empty();
     // get the current user document
-    $.getJSON("/getCurrentUser" + currentUserId, function(currentUser) {
+    $.getJSON("/getCurrentUser" + currentUserId, function(nowCurrentUser) {
       // console.log("currentUser[0]: ", currentUser[0]);
       // console.log("currentUser[0].name: ", currentUser[0].name);
       // console.log("currentUser[0].loggedIn: ", currentUser[0].loggedIn);
@@ -191,14 +192,19 @@ $(document).ready(function(){
       // add test here to see if user is logged in
       //
       if (currentUserLoggedIn === "true") {
-        $("span#currentUser").text(currentUser[0].name);
+        // The name of the currently logged in user is displayed here, as retrieved from 
+        // the database. I do save the name of the current user in local storage from the
+        // login.js page. This is a good check for errors.
+        console.log("!!!CHECKING: nowCurrentUser[0].name: " + nowCurrentUser[0].name +
+          "   localStorage currentUser: " + currentUser);
+        $("span#currentUser").text(nowCurrentUser[0].name);
         //console.log("currentUser[0].kitten: ", currentUser[0].kitten);
         // this .forEach goes through each kitten of the user
         // It gets the kitten document and name of kitten, then prints row of buttons
         // one for each kitten
         // currenUser[0].kitten is an array
         
-        currentUser[0].kitten.forEach(outerForEach);
+        nowCurrentUser[0].kitten.forEach(outerForEach);
         
           function outerForEach(item, index) {
             //console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );

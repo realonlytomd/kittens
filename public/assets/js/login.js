@@ -57,7 +57,10 @@ $(document).ready(function(){
           localStorage.setItem("currentUserId", currentUser_id);
           // also need to remember this user is loggedIn, so "true"
           localStorage.setItem("currentUserLoggedIn", currentUserLoggedIn);
+          // set the now logged in currentUser to localStorage to be used in topics.js as author
+          localStorage.setItem("currentUser", currentUser);
           // clear input fields
+          
           $("#userName-input").val("");
           $("#password-input").val("");
           // take correctly logged in user to /user.

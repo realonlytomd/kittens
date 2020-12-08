@@ -4,6 +4,9 @@ var startCount;
 var myTimer;
 var chosenQuestion;
 var currentUserLoggedIn;
+// get the name of the currently logged in user from local storage, for author needed
+var currentUser = localStorage.getItem("currentUser");
+console.log("topics.js: name of currentUser: " + currentUser);
 // do I need to add the name of the current user? or get it from db with currentUserId??
 // not sure: but I think in login.js, I can setStorage the currentUser name, and retrieve here,
 // but I'll need to overwrite it when I logout,...
@@ -44,7 +47,9 @@ $(document).ready(function(){
   $("#unanswerQ").empty();
   $("#topicsCurrent").empty();
   
-
+  //  PROBLEM: if a logged in user has a question without an answer,
+  // it fills in the answer's author as currentUser.
+  // I did not allow for a logged in User to jut ask a question.....
   // submitting a question for other users
   // add the author's name to the db. (and so the little x and edit)
   $(document).on("click", "#visitorQuestion", function(event) {
@@ -54,7 +59,9 @@ $(document).ready(function(){
           url: "/createTopic",
           data: {
               topic: $("#question").val(),
-              answer: ""
+              topicAuthor: currentUser,
+              answer: "",
+              answerAuthor: ""
           }
       })
       .then(function(dataCreateQuestion) {
@@ -72,7 +79,9 @@ $(document).ready(function(){
           url: "/createTopic",
           data: {
               topic: $("#topic").val(),
-              answer: $("#answer").val()
+              topicAuthor: currentUser,
+              answer: $("#answer").val(),
+              answerAuthor: currentUser
           }
       })
       .then(function(dataCreateTopic) {
@@ -132,6 +141,7 @@ $(document).ready(function(){
   });
 
   // submitting an answer to just a questions to the db
+  // need to figure out how to retrieve the original question's author
   $(document).on("click", "#submitNewAnswer", function(event) {
     event.preventDefault();
       $.ajax({
@@ -139,7 +149,9 @@ $(document).ready(function(){
           url: "/answerTopic/" + chosenQuestion,
           data: {
               topic: chosenQuestion,
-              answer: $("#newAnswer").val()
+                // maybe I don't have to get the author...??? since I'm not writing over it??
+              answer: $("#newAnswer").val(),
+              answerAuthor: currentUser
           }
       })
       .then(function(dataChosenQuestion) {
