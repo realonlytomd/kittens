@@ -4,7 +4,9 @@ var startCount;
 var myTimer;
 var chosenQuestion;
 var currentUserLoggedIn;
-
+// do I need to add the name of the current user? or get it from db with currentUserId??
+// not sure: but I think in login.js, I can setStorage the currentUser name, and retrieve here,
+// but I'll need to overwrite it when I logout,...
 $(document).ready(function(){
   console.log("hello from topic.js");
   console.log("in topic.js, have just set var startCount: " + startCount);
@@ -44,6 +46,7 @@ $(document).ready(function(){
   
 
   // submitting a question for other users
+  // add the author's name to the db. (and so the little x and edit)
   $(document).on("click", "#visitorQuestion", function(event) {
     event.preventDefault();
       $.ajax({
@@ -61,6 +64,7 @@ $(document).ready(function(){
   });
 
   // submitting a topic and answer to db
+  // add author's name
   $(document).on("click", "#submitTopic", function(event) {
     event.preventDefault();
       $.ajax({
@@ -90,16 +94,21 @@ $(document).ready(function(){
         // need an if to test if allTopics[i].answer is ""
         // if so, then add a way to click on the topic
         // if not, then print as before
+        //
+        // here, add a way to put the red x and red edit pencil on topics
+        // and answers created by the author, but not the other ones
+        // so need to add author to database of topic.
         if (allTopics[i].answer !== "") {
           $("#topicsCurrent").append(
           "<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
           allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
-          allTopics[i].answer + "</p>");
+          allTopics[i].answer + "</p>"); // it will be here: if allTopics[i].author is the same
+          // as current user, then add the delete and edit buttons, if not....etc.
         } else {
           $("#unanswerQ").append(
           "<h4 style='border-top: 2px solid black;'>Question: </h4>" +
           "<p class='answerMe'>" + 
-          allTopics[i].topic + "</p>");
+          allTopics[i].topic + "</p>"); // same for here, as these two places are inside the if loop.
         }
       }
     });
