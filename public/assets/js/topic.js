@@ -9,7 +9,7 @@ var currentUser = localStorage.getItem("currentUser");
 console.log("topics.js: name of currentUser: " + currentUser);
 // do I need to add the name of the current user? or get it from db with currentUserId??
 // not sure: but I think in login.js, I can setStorage the currentUser name, and retrieve here,
-// but I'll need to overwrite it when I logout,...
+// but I'll need to overwrite it when I logout,... done
 $(document).ready(function(){
   console.log("hello from topic.js");
   console.log("in topic.js, have just set var startCount: " + startCount);
@@ -47,9 +47,7 @@ $(document).ready(function(){
   $("#unanswerQ").empty();
   $("#topicsCurrent").empty();
   
-  //  PROBLEM: if a logged in user has a question without an answer,
-  // it fills in the answer's author as currentUser.
-  // I did not allow for a logged in User to jut ask a question.....
+  // This allows for a logged in User to jut ask a question.....
   // submitting a question for other users
   // add the author's name to the db. (and so the little x and edit)
   $(document).on("click", "#visitorQuestion", function(event) {
@@ -59,7 +57,7 @@ $(document).ready(function(){
           url: "/createTopic",
           data: {
               topic: $("#question").val(),
-              topicAuthor: currentUser,
+              topicAuthor: "guest",
               answer: "",
               answerAuthor: ""
           }
@@ -144,12 +142,12 @@ $(document).ready(function(){
   // need to figure out how to retrieve the original question's author
   $(document).on("click", "#submitNewAnswer", function(event) {
     event.preventDefault();
+    console.log("inside function for a logged in user to asnwer a question, currentUser: " + currentUser);
       $.ajax({
           method: "POST",
           url: "/answerTopic/" + chosenQuestion,
           data: {
               topic: chosenQuestion,
-                // maybe I don't have to get the author...??? since I'm not writing over it??
               answer: $("#newAnswer").val(),
               answerAuthor: currentUser
           }

@@ -26,9 +26,9 @@ $(document).ready(function(){
     // didn't work previously without the event.preventDefault - always use
     event.preventDefault();
     currentUser = $("#userName-input").val().trim();
-    console.log("before currentUser: " + currentUser);
+    console.log("before change to cap currentUser: " + currentUser);
     currentUser = currentUser.charAt(0).toUpperCase() + currentUser.slice(1).toLowerCase();
-    console.log("after currentUser: " + currentUser);
+    console.log("after cap change currentUser: " + currentUser);
     currentPassword = $("#password-input").val().trim();
     console.log("currentPassword: " + currentPassword);
     // I'm commenting out the following line, as some users would like different cases for password

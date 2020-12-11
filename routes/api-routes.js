@@ -92,10 +92,11 @@ module.exports = function(router) {
     router.post("/answerTopic/:topic", function(req, res) {
         console.log("req.body.topic: ", req.body.topic);
         console.log("req.body.answer: ", req.body.answer);
+        console.log("req.body.answerAuthor: ", req.body.answerAuthor);
         // Using the id passed in the id parameter, and make a query that finds the matching one in the db
         db.Topic.findOneAndUpdate(
             { topic: req.body.topic },
-            { answer: req.body.answer },
+            {$set: { answer: req.body.answer , answerAuthor: req.body.answerAuthor }},
             { new: true }
         )
             .then(function(dbTopic) {

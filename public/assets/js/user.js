@@ -74,6 +74,7 @@ $(document).ready(function(){
     // add a cancel timer button
     // need to set the variable startCount to zero in local storage
     localStorage.setItem("currentUserLoggedIn", "false");
+    localStorage.setItem("currentUser", "");
     // post to db to update loggedIn to "false"
     // this is needed because loggedIn is set to true for the first time a user signs up
     $.ajax({
@@ -90,6 +91,7 @@ $(document).ready(function(){
     window.location.replace("/");
     return;
   });
+
   // this function happens when the user clicks the button
   // to get the modal with the form to enter the name for a new kitten
   // It populates the specific user in the db with the kitten and metric schema
