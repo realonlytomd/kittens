@@ -496,7 +496,6 @@ $(document).ready(function(){
           // in wrapper
       if ($(event.target).hasClass("metricInfo")) {
         //console.log("user clicked in metricInfo");
-        //target = $(event.target)
       } else if ($(event.target).hasClass("metricGroup")) {
         //console.log("user clicked in metricGroup");
         // .parent method adds the buttons to the metric Info div, even though

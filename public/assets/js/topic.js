@@ -115,7 +115,7 @@ $(document).ready(function(){
           $("#unanswerQ").append(
           "<h4 style='border-top: 2px solid black;'>Question: </h4>" +
           "<p class='answerMe'>" + 
-          allTopics[i].topic + "</p>"); // same for here, as these two places are inside the if loop.
+          allTopics[i].topic + "</p>"); // same for here, as these two places are inside the for loop.
         }
       }
     });
