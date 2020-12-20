@@ -6,6 +6,7 @@ var chosenQuestion;
 var currentUserLoggedIn;
 // get the name of the currently logged in user from local storage, for author needed
 var currentUser = localStorage.getItem("currentUser");
+var thisDiv;
 console.log("topics.js: name of currentUser: " + currentUser);
 // do I need to add the name of the current user? or get it from db with currentUserId??
 // not sure: but I think in login.js, I can setStorage the currentUser name, and retrieve here,
@@ -99,27 +100,48 @@ $(document).ready(function(){
       console.log("all topics from db, allTopics: ", allTopics);
       for (i = 0; i < allTopics.length; i++) {
         // need an if to test if allTopics[i].answer is ""
-        // if so, then add a way to click on the topic
-        // if not, then print as before
-        //
         // here, add a way to put the red x and red edit pencil on topics
-        // and answers created by the author, but not the other ones
-        // so need to add author to database of topic.
+        // and answers created by the author
         if (allTopics[i].answer !== "") {
-          $("#topicsCurrent").append(
+          thisDiv = $("#topicsCurrent");
+          thisDiv.append(
           "<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
-          allTopics[i].topic + "</p><h4>Answer: </h4><p>" +
-          allTopics[i].answer + "</p>"); // it will be here: if allTopics[i].author is the same
-          // as current user, then add the delete and edit buttons, if not....etc.
+          allTopics[i].topic + "</p>");
+          // if statement to determine if the current user is the same as the topic's author
+          if (currentUser === allTopics[i].topicAuthor) {
+            addLittleButtons();
+          }
+          thisDiv.append(
+          "<h4>Answer: </h4><p>" +
+          allTopics[i].answer + "</p>");
+          if (currentUser === allTopics[i].answerAuthor) {
+            addLittleButtons();
+          }
         } else {
-          $("#unanswerQ").append(
+          thisDiv = $("#unanswerQ");
+          thisDiv.append(
           "<h4 style='border-top: 2px solid black;'>Question: </h4>" +
           "<p class='answerMe'>" + 
-          allTopics[i].topic + "</p>"); // same for here, as these two places are inside the for loop.
+          allTopics[i].topic + "</p>");
+          if (currentUser === allTopics[i].topicAuthor) {
+            addLittleButtons();
+          }
         }
       }
     });
   });
+
+  // This function adds the delete and edit buttons to topics and answers of the current user.
+  function addLittleButtons() {
+    console.log("INSIDE addLittleButtons");
+    // append the delete and edit buttons, with data of ?
+    thisDiv.append(
+      "<button type='button' class='btn btn-default btn-xs littleX'>" +
+      "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
+      thisDiv.append(
+        "<button type='button' class='btn btn-default btn-xs littleE'>" +
+      "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
+  }
 
   // if a user knows the answer to a question posed by another user
   $(document).on("click", ".answerMe", function(event) {
