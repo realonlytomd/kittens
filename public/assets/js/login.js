@@ -17,7 +17,7 @@ var qThreeDb;
 // don't think this is needed for security question asking becuase just need one user
 // var allUsers; // this variable is all the info with every user. need it to compare passwords and sec. quesetions
 // var i; // this is the index of the currently logged in user. used for same reason as above.
-$(document).ready(function(){
+$(document).ready(function() {
   console.log("hello from login.js");
   console.log("currentUserLoggedIn is: " + currentUserLoggedIn);
 
@@ -60,7 +60,6 @@ $(document).ready(function(){
           // set the now logged in currentUser to localStorage to be used in topics.js as author
           localStorage.setItem("currentUser", currentUser);
           // clear input fields
-          
           $("#userName-input").val("");
           $("#password-input").val("");
           // take correctly logged in user to /user.
@@ -223,8 +222,11 @@ $(document).ready(function(){
       //Once a name and password have been put in user db, now take user to the /user page
       // set localstorage to the newly created user id so they can input kitten data
       console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
+      console.log("from login.js, a new user, dataCreateUser.name: " + dataCreateUser.name);
       localStorage.setItem("currentUserId", dataCreateUser._id);
       localStorage.setItem("currentUserLoggedIn", dataCreateUser.loggedIn);
+      // set the now logged in currentUser to localStorage to be used in topics.js as author
+      localStorage.setItem("currentUser", dataCreateUser.name);
       console.log("This is currentUserLoggedIn after putting user in db: " + dataCreateUser.loggedIn);
       // but first, zero out input fields
       $("#newUserName-input").val("");
@@ -232,7 +234,4 @@ $(document).ready(function(){
       window.location.replace("/user");
     });
   }
-    
-  
-  
 });
