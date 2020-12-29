@@ -182,25 +182,30 @@ $(document).ready(function(){
       // empty out the div that shows the user's current kittens and metrics
     $("#currentKittens").empty();
     // get the current user document
+    // moved this out of the $.getJSON to get rid of warnings
+    // supplies current user name to page.
+    $("span#currentUser").text(currentUser);
+    currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+    console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
     $.getJSON("/getCurrentUser" + currentUserId, function(nowCurrentUser) {
-      // console.log("currentUser[0]: ", currentUser[0]);
+      console.log("nowCurrentUser: ", nowCurrentUser);
+      console.log("nowCurrentUser[0]: ", nowCurrentUser[0]);
+      console.log("nowCurrentUser[0].kitten: ", nowCurrentUser[0].kitten);
       // console.log("currentUser[0].name: ", currentUser[0].name);
       // console.log("currentUser[0].loggedIn: ", currentUser[0].loggedIn);
       // since loggedIn is always "false" in the db, it must be written over here
       // everytime the user's info is retrieved from the db
-      currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
-      console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
+      // currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
+      // console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
       // need a timer to logout Users after a period of time.
       // add test here to see if user is logged in
       //
       if (currentUserLoggedIn === "true") {
-        // The name of the currently logged in user is displayed here, as retrieved from 
-        // the database. I do save the name of the current user in local storage from the
+        // I do save the name of the current user in local storage from the
         // login.js page. This is a good check for errors.
         console.log("!!!CHECKING: nowCurrentUser[0].name: " + nowCurrentUser[0].name +
           "   localStorage currentUser: " + currentUser);
-        $("span#currentUser").text(nowCurrentUser[0].name);
-        //console.log("currentUser[0].kitten: ", currentUser[0].kitten);
+        //$("span#currentUser").text(nowCurrentUser[0].name);
         // this .forEach goes through each kitten of the user
         // It gets the kitten document and name of kitten, then prints row of buttons
         // one for each kitten
