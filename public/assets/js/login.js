@@ -37,7 +37,6 @@ $(document).ready(function() {
     // Then get all the current users who've ever logged in 
     $.getJSON("/getAllUsers", function(allUsers) {
       console.log("allUsers after getting them from db: ", allUsers);
-
       // And compare. Find the matching login user name, and check if the stored
       // email address matches the input from the user.
       for (i = 0; i < allUsers.length; i++) {
@@ -66,13 +65,11 @@ $(document).ready(function() {
           // if they don't have the correct login, then take them back to login page@!!!!!!
           window.location.replace("/user");
           return;
-        } else {
-          console.log(allUsers[i].name + " does not have correct inputs");
-        }
-        // run another if - if the person trying to log in is currently in the db, get their answers
-        // to the  security questions, set the loggedIn to false so we know they have a registration,
-        // then ask them to reset their password.
-        if (currentUser === allUsers[i].name) {
+          // run another if - if the person trying to log in is currently in the db, get their answers
+          // to the  security questions, set the loggedIn to false so we know they have a registration,
+          // then ask them to try again or reset their password.
+        } else if (currentUser === allUsers[i].name) {
+          console.log(allUsers[i].name + " does not have correct password input");
           console.log("currentUser: " + currentUser + " is the user currently logging in");
           // answers to security questions stored in db
           qOneDb = allUsers[i].questionOne;
@@ -81,20 +78,22 @@ $(document).ready(function() {
           console.log("Their current answers to the sec. q's from db: qOneDB, qTwoD, qThreeDb are: " + qOneDb + " " + qTwoDb + " " + qThreeDb);
           // since we know that a registered user is trying to log in, set their currentUserLoggedIn status
           currentUserLoggedIn = "false";  // instead of undefined, as it would be for a non-registered user
+          // for now, assuming that the user name is correct, but password is wrong
+          var questions = "The information you entered is incorrect." + 
+          "\nClick Cancel to try again, or click OK to reset your password."
+            // using an alert 
+          if (confirm(questions)) {
+            console.log("user wishes to change password");
+            // The id secQAnswer modal appears asking the user to re-answer their original 3 security questions
+            $("#secQAnswer").modal("show");
+            // when the user clicks the submit button in that modal, the function below:
+            // #submitSecQ is called.
+          }
+          return;
+        } else {
+          // may add an alert this effect
+          console.log("person trying to log in has not entered a username in db");
         }
-      }
-      console.log("this login doesn't match both user and password in db");
-      // for now, assuming that the user name is correct, but password is wrong
-      var questions = "The information you entered is incorrect." + 
-        "\nClick Cancel to try again, or click OK to reset your password."
-        // using an alert 
-      if (confirm(questions)) {
-        console.log("user wishes to change password");
-        // The id secQAnswer modal appears asking the user to re-answer their original 3 security questions
-        $("#secQAnswer").modal("show");
-        // when the user clicks the submit button in that modal, the function below:
-        // #submitSecQ is called.
-        //
       }
     });
     $("#userName-input").val("");

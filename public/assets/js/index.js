@@ -30,14 +30,16 @@ $(document).ready(function(){
         "derpland2.jpg", "djkittyland.jpg", "fattyland.jpg", 
         "fourwaterland2.jpg", "groupland.jpg", "littleladyland.png", "momland2.jpg", 
         "pairsland2.jpg", "regalwaterland2.jpg", "scrambleland2.jpg", "screamland2.png", 
-        "sleepy2land2.png", "threehugland.jpg", "threesland.jpg", "tubland2.jpg", "washland2.jpg"];
+        "sleepy2land2.png", "threehugland.jpg", "threesland.jpg", "tubland2.jpg", "washland2.jpg",
+        "cutegrayland.jpg", "gluegreenland.jpg"];
     var kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
         "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "closeupport.jpg",
         "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
         "faroffport.jpg", "fluffyport.png", "foursport.jpg", "furport.jpg", "grayport.jpg", "lisaderekport.jpg", "littlelady2port.png",
         "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
         "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
-        "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
+        "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg",
+        "gray2port.jpg", 
         "xmasballport.jpg", "yellowcloseport.jpg", "busterkittenport.png"];
     var kittenIndex;
     
@@ -91,20 +93,21 @@ $(document).ready(function(){
         }
         // if the last index has been removed, rebuild the array
         if ((kittenPortPics.length === 0) || (kittenLandPics.length === 0)) {
-            kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
-            "beautyland.jpg", "boxland.jpg", "browngrapland.jpg", "busterland.jpg",
-            "derpland.jpg", "djkittyland.jpg", "fattyland.jpg", 
-            "fourwaterland.jpg", "groupland.jpg", "littleladyland.png", "momland.jpg", 
-            "pairsland.jpg", "regalwaterland.jpg", "scrambleland.jpg", "screamland.png", 
-            "sleepy2land.png", "threehugland.jpg", "threesland.jpg", "tubland.jpg", "washland.jpg"];
-            
-            kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
+            var kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
+            "beautyland.jpg", "boxland2.jpg", "browngrapland.jpg", "busterland2.jpg",
+            "derpland2.jpg", "djkittyland.jpg", "fattyland.jpg", 
+            "fourwaterland2.jpg", "groupland.jpg", "littleladyland.png", "momland2.jpg", 
+            "pairsland2.jpg", "regalwaterland2.jpg", "scrambleland2.jpg", "screamland2.png", 
+            "sleepy2land2.png", "threehugland.jpg", "threesland.jpg", "tubland2.jpg", "washland2.jpg",
+            "cutegrayland.jpg", "gluegreenland.jpg"];
+            var kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
             "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "closeupport.jpg",
             "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
             "faroffport.jpg", "fluffyport.png", "foursport.jpg", "furport.jpg", "grayport.jpg", "lisaderekport.jpg", "littlelady2port.png",
             "pairsport.jpg", "purplethreeport.jpg", "sadport.jpg", "sleepyport.jpg", "strangleport.jpg",
             "stunningport.jpg", "tinyport.jpg", "tongueport.jpg", "toofport.jpg", "tubport.jpg", "tuxport.jpg",
-            "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg", 
+            "updownport.jpg", "whatport.jpg", "whiskersport.jpg", "whosport.jpg", "winnerport.jpg",
+            "gray2port.jpg", 
             "xmasballport.jpg", "yellowcloseport.jpg", "busterkittenport.png"];
         }
     }
