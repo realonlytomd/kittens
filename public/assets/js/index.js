@@ -93,14 +93,14 @@ $(document).ready(function(){
         }
         // if the last index has been removed, rebuild the array
         if ((kittenPortPics.length === 0) || (kittenLandPics.length === 0)) {
-            var kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
+            kittenLandPics = ["alonewaterland.jpg", "angryishland.jpg", "angryland.jpg", 
             "beautyland.jpg", "boxland2.jpg", "browngrapland.jpg", "busterland2.jpg",
             "derpland2.jpg", "djkittyland.jpg", "fattyland.jpg", 
             "fourwaterland2.jpg", "groupland.jpg", "littleladyland.png", "momland2.jpg", 
             "pairsland2.jpg", "regalwaterland2.jpg", "scrambleland2.jpg", "screamland2.png", 
             "sleepy2land2.png", "threehugland.jpg", "threesland.jpg", "tubland2.jpg", "washland2.jpg",
             "cutegrayland.jpg", "gluegreenland.jpg"];
-            var kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
+            kittenPortPics = ["alonewaterport.jpg", "awport.jpg", "beansport.jpg", "beautyport.jpg", 
             "browngrayport.jpg", "busterport.jpg", "carseatport.jpg", "closeupport.jpg",
             "couchport.jpg", "cribport.jpg", "curlyport.jpg", "eyelineport.jpg", "eyeport.jpg", "eyesport.jpg",
             "faroffport.jpg", "fluffyport.png", "foursport.jpg", "furport.jpg", "grayport.jpg", "lisaderekport.jpg", "littlelady2port.png",
