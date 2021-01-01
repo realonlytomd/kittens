@@ -551,7 +551,6 @@ $(document).ready(function(){
   }
 
   // Function to delete one set of metric info of a kitten, selected by user
-  // PROBLEM! THE DATA ID AND KITTEN ID ISN'T GOING TO THE RIGHT TARGET WHEN IT'S CLICKED
   $(document).on("click", ".littleX", function(event) {
     event.preventDefault();
     console.log("Inside DELETE set of metric info!");
@@ -575,7 +574,7 @@ $(document).ready(function(){
           data: {metricId: thisId}
         })
         .then (function(dbKitten) {
-          console.log("dbKitten after POST/kittens/overwrite/id: ", dbKitten);
+          console.log("dbKitten after POST/kittens/removeRef/id: ", dbKitten);
           // still need to reload the metrics div
           writeKittenDom();
         });

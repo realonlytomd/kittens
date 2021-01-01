@@ -387,6 +387,26 @@ module.exports = function(router) {
         });
     });
 
+    // This route deletes just one answer from a given topic
+    // But it should change to a POST as we're not deleting the entire topic
+    // just the answer. This is in process! Check the updatePassword route
+    router.delete("/answer/delete/:id", function(req, res) {
+        console.log("in answer/delete, req.params: ", req.params);
+        // delete the answer
+        db.Topic.deleteOne(
+            { _id: req.params.id }
+        )
+        .then(function(dbMetric) {
+            //  
+            console.log("delete a Metric group, dbMetric: ", dbMetric);
+            res.json(dbMetric);
+        })
+        .catch(function(err) {
+            // but if an error occurred, send it to the client
+            res.json(err);
+        });
+    });
+
     //Route to edit an individual set of metrics for a kitten
     router.post("/editMetrics/:metricID", function(req, res) {
         console.log("req.params.metricID: ", req.params.metricID);
