@@ -7,6 +7,9 @@ var currentUserLoggedIn;
 // get the name of the currently logged in user from local storage, for author needed
 var currentUser = localStorage.getItem("currentUser");
 var thisDiv;
+var thisTopicId;
+var thisTopicText;
+var thisTopicAnswer;
 console.log("topics.js: name of currentUser: " + currentUser);
 // do I need to add the name of the current user? or get it from db with currentUserId??
 // not sure: but I think in login.js, I can setStorage the currentUser name, and retrieve here,
@@ -98,7 +101,11 @@ $(document).ready(function(){
     $("#unanswerQ").empty();
     $.getJSON("/getAllTopics", function(allTopics) {
       console.log("all topics from db, allTopics: ", allTopics);
+      console.log("id of topic-allTopics._id (to attach to little x and e): ", allTopics._id);
       for (i = 0; i < allTopics.length; i++) {
+        thisTopicId = allTopics[i]._id;
+        thisTopicText = allTopics[i].topic;
+        thisTopicAnswer = allTopics[i].answer;
         // need an if to test if allTopics[i].answer is ""
         // here, add a way to put the red x and red edit pencil on topics
         // and answers created by the author
@@ -134,12 +141,16 @@ $(document).ready(function(){
   // This function adds the delete and edit buttons to topics and answers of the current user.
   function addLittleButtons() {
     console.log("INSIDE addLittleButtons");
-    // append the delete and edit buttons, with data of ?
+    // append the delete and edit buttons, with the id of the current topic as data
     thisDiv.append(
-      "<button type='button' class='btn btn-default btn-xs littleX'>" +
+      "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
+      thisTopicId + ">" +
       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
       thisDiv.append(
-        "<button type='button' class='btn btn-default btn-xs littleE'>" +
+      "<button type='button' class='btn btn-default btn-xs littleE' data_idtopic=" +
+      thisTopicId + "data_texttopic=" +
+      thisTopicText + "data_textanswer=" +
+      thisTopicAnswer + ">" +
       "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
   }
 
@@ -147,7 +158,6 @@ $(document).ready(function(){
   $(document).on("click", ".answerMe", function(event) {
     event.preventDefault();
     // first, make sure the user is registered and logged in
-    // should this be undefined???
     if (currentUserLoggedIn === "false" || currentUserLoggedIn === null) {
       $("#notLoggedIn").modal("show");
     } else {
@@ -161,7 +171,6 @@ $(document).ready(function(){
   });
 
   // submitting an answer to just a questions to the db
-  // need to figure out how to retrieve the original question's author
   $(document).on("click", "#submitNewAnswer", function(event) {
     event.preventDefault();
     console.log("inside function for a logged in user to asnwer a question, currentUser: " + currentUser);
@@ -180,5 +189,37 @@ $(document).ready(function(){
       $("#newAnswer").val("");
       $("#answerQuestion").modal("hide");
   });
+
+  // an author of a topic's answer clicks the red pen icon, and this function
+  // brings up the modal to make the edit.
+  $(document).on("click", ".littleE", function(event) {
+    event.preventDefault();
+    console.log("inside function to bring up modal to edit a topic's answer");
+    // need text of current answer to put in placeholder of form in modal
+    $("#chosenQ") = $(this).attr("data_texttopic");
+    $("#prevAnswer") = $(this).attr("data_textanswer");
+    thisTopicId = $(this).attr("data_idtopic");
+    console.log("after hitting little pen to edit, thisTopicId: " + thisTopicId);
+    $("#editAnswer").modal("show");
+  });
+
+  // Then, the user submits their new or edited answer and loads it into the db
+  $(document).on("click", "#submitEditedAnswer", function(event) {
+    event.preventDefault();
+    console.log("inside function for answer author to edit a their answer");
+      $.ajax({
+          method: "POST",
+          url: "/updateAnswer/" + thisTopicId,
+          data: {
+              answer: $("editedAnswer").val()
+          }
+      })
+      .then(function(dataChosenQuestion) {
+          console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+      });
+      $("#newAnswer").val("");
+      $("#answerQuestion").modal("hide");
+  });
+
 });
     
