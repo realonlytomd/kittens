@@ -146,17 +146,19 @@ $(document).ready(function(){
       "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
       thisTopicId + ">" +
       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-      var newEditButton = $("<button>");
+      var newEditButton = $("<span>");
       newEditButton.attr("type", "button");
       newEditButton.addClass("btn");
       newEditButton.addClass("btn-default");
       newEditButton.addClass("btn-xs");
       newEditButton.addClass("littleE");
+      newEditButton.addClass("glyphicon");
+      newEditButton.addClass("glyphicon-pencil");
+      newEditButton.attr("aria-hidden", "true");
       newEditButton.attr("data-idtopic", thisTopicId);
       newEditButton.attr("data-texttopic", thisTopicText);
       newEditButton.attr("data-textanswer", thisTopicAnswer);
       thisDiv.append(newEditButton);
-      thisDiv.append("<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>");
   }
 
   // if a user knows the answer to a question posed by another user
