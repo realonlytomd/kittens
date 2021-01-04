@@ -101,11 +101,11 @@ $(document).ready(function(){
     $("#unanswerQ").empty();
     $.getJSON("/getAllTopics", function(allTopics) {
       console.log("all topics from db, allTopics: ", allTopics);
-      console.log("id of topic-allTopics._id (to attach to little x and e): ", allTopics._id);
       for (i = 0; i < allTopics.length; i++) {
         thisTopicId = allTopics[i]._id;
         thisTopicText = allTopics[i].topic;
         thisTopicAnswer = allTopics[i].answer;
+        console.log("thisTopicID: " + thisTopicId + " thisTopicText: " + thisTopicText + " thisTopicAnswer: " + thisTopicAnswer);
         // need an if to test if allTopics[i].answer is ""
         // here, add a way to put the red x and red edit pencil on topics
         // and answers created by the author
@@ -138,7 +138,7 @@ $(document).ready(function(){
     });
   });
 
-  // This function adds the delete and edit buttons to topics and answers of the current user.
+  // This function adds the delete and edit buttons to topics and answers authored by the current user.
   function addLittleButtons() {
     console.log("INSIDE addLittleButtons");
     // append the delete and edit buttons, with the id of the current topic as data
@@ -146,12 +146,17 @@ $(document).ready(function(){
       "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
       thisTopicId + ">" +
       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-      thisDiv.append(
-      "<button type='button' class='btn btn-default btn-xs littleE' data_idtopic=" +
-      thisTopicId + "data_texttopic=" +
-      thisTopicText + "data_textanswer=" +
-      thisTopicAnswer + ">" +
-      "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button>");
+      var newEditButton = $("<button>");
+      newEditButton.attr("type", "button");
+      newEditButton.addClass("btn");
+      newEditButton.addClass("btn-default");
+      newEditButton.addClass("btn-xs");
+      newEditButton.addClass("littleE");
+      newEditButton.attr("data-idtopic", thisTopicId);
+      newEditButton.attr("data-texttopic", thisTopicText);
+      newEditButton.attr("data-textanswer", thisTopicAnswer);
+      thisDiv.append(newEditButton);
+      thisDiv.append("<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>");
   }
 
   // if a user knows the answer to a question posed by another user
@@ -196,8 +201,8 @@ $(document).ready(function(){
     event.preventDefault();
     console.log("inside function to bring up modal to edit a topic's answer");
     // need text of current answer to put in placeholder of form in modal
-    $("#chosenQ") = $(this).attr("data_texttopic");
-    $("#prevAnswer") = $(this).attr("data_textanswer");
+    $("#chosenQ").text($(this).attr("data_texttopic"));
+    $("#prevAnswer").text($(this).attr("data_textanswer"));
     thisTopicId = $(this).attr("data_idtopic");
     console.log("after hitting little pen to edit, thisTopicId: " + thisTopicId);
     $("#editAnswer").modal("show");
