@@ -92,9 +92,14 @@ $(document).ready(function(){
       $("#topic").val("");
       $("#answer").val("");
   });
-
+  // click event when user clicks load Topics button
   $(document).on("click", "#loadTopics", function(event) {
     event.preventDefault();
+    loadTheTopics();
+  });
+
+  // the function loadTheTopics
+  function loadTheTopics() {
     $("#unansweredTitle").show();
     $("#answeredTitle").show();
     $("#topicsCurrent").empty();
@@ -136,11 +141,12 @@ $(document).ready(function(){
         }
       }
     });
-  });
+  }
 
   // This function adds the delete and edit buttons to topics and answers authored by the current user.
   function addLittleButtons() {
-    console.log("INSIDE addLittleButtons");
+    console.log("INSIDE addLittleButtons, thisTopicID: " + thisTopicId);
+    console.log("also inside addLittlebuttons, thisTopicText: " + thisTopicText);
     // append the delete and edit buttons, with the id of the current topic as data
     thisDiv.append(
       "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
@@ -195,6 +201,7 @@ $(document).ready(function(){
       });
       $("#newAnswer").val("");
       $("#answerQuestion").modal("hide");
+      loadTheTopics();
   });
 
   // an author of a topic's answer clicks the red pen icon, and this function
@@ -203,9 +210,9 @@ $(document).ready(function(){
     event.preventDefault();
     console.log("inside function to bring up modal to edit a topic's answer");
     // need text of current answer to put in placeholder of form in modal
-    $("#chosenQ").text($(this).attr("data_texttopic"));
-    $("#prevAnswer").text($(this).attr("data_textanswer"));
-    thisTopicId = $(this).attr("data_idtopic");
+    $("h3#chosenQ").text($(this).attr("data-texttopic"));
+    $("#prevAnswer").text($(this).attr("data-textanswer"));
+    thisTopicId = $(this).attr("data-idtopic");
     console.log("after hitting little pen to edit, thisTopicId: " + thisTopicId);
     $("#editAnswer").modal("show");
   });
@@ -213,19 +220,21 @@ $(document).ready(function(){
   // Then, the user submits their new or edited answer and loads it into the db
   $(document).on("click", "#submitEditedAnswer", function(event) {
     event.preventDefault();
-    console.log("inside function for answer author to edit a their answer");
+    console.log("inside function for answer author to edit a their answer, thisTopicId: " + thisTopicId);
       $.ajax({
           method: "POST",
           url: "/updateAnswer/" + thisTopicId,
           data: {
-              answer: $("editedAnswer").val()
+            _id: thisTopicId,
+            answer: $("#editedAnswer").val()
           }
       })
       .then(function(dataChosenQuestion) {
           console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
       });
-      $("#newAnswer").val("");
-      $("#answerQuestion").modal("hide");
+      $("#editedAnswer").val("");
+      $("#editAnswer").modal("hide");
+      loadTheTopics();
   });
 
 });
