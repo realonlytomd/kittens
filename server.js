@@ -3,8 +3,8 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-var axios = require("axios");
-var cheerio = require("cheerio");
+//var axios = require("axios");
+//var cheerio = require("cheerio");
 // var cheerioAdv = require("cheerio-advanced-selectors");
 
 // // require array sort npms
@@ -15,7 +15,7 @@ var cheerio = require("cheerio");
 //   //function to requirejs so that node modules
 //   //are loaded relative to the top-level JS file.
 //   nodeRequire: require
-// });
+
 var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
 
@@ -27,7 +27,6 @@ var PORT = process.env.PORT || 3000;
 
 // Initialize Express
 var app = express();
-
 
 //  morgan logger for logging requests
 app.use(logger("dev"));

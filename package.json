@@ -20,10 +20,7 @@
   "dependencies": {
     "animate.css": "^3.7.2",
     "array-rearrange": "^2.2.2",
-    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
-    "cheerio": "^1.0.0-rc.3",
-    "cheerio-advanced-selectors": "^2.0.1",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.3",
     "moment": "^2.29.1",
