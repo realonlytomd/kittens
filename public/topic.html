@@ -116,6 +116,29 @@
           </div>
         </div>
       </div>
+      <!-- Modal for displaying form for the topic author to edit the topic or question -->
+      <div class="modal fade" id="editTopic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h2 class="modal-title text-center" id="myModalLabel">Edit Your Question</h2>
+              <h3>Current Question: </h3><h3 id="chosenQ"></h3>  <!-- the topic text-->
+              <h3>Current Answer: </h3><h3 id="prevAnswer"></h3>  <!-- the current answer text-->
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="editedTopic">Edited Question:</label>
+                <textarea class="form-control" rows="10" name="editedTopic" id="editedTopic" placeholder="Edit your Question"></textarea>
+              </div>
+              <button type="submit" id="submitEditedTopic">Submit</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Modal for displaying form to edit the answer to an answered question -->
       <div class="modal fade" id="editAnswer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -123,8 +146,8 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h2 class="modal-title text-center" id="myModalLabel">Edit Your Answer</h2>
-              <h3 id="chosenQ"></h3>  <!-- the topic text-->
-              <h3>Current Solution: </h3><h3 id="prevAnswer"></h3>  <!-- the current answer text-->
+              <h3>Current Question: </h3><h3 id="chosenQ"></h3>  <!-- the topic text-->
+              <h3>Current Answer: </h3><h3 id="prevAnswer"></h3>  <!-- the current answer text-->
             </div>
             <div class="modal-body">
               <div class="form-group">

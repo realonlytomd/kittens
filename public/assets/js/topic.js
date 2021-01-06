@@ -121,13 +121,13 @@ $(document).ready(function(){
           allTopics[i].topic + "</p>");
           // if statement to determine if the current user is the same as the topic's author
           if (currentUser === allTopics[i].topicAuthor) {
-            addLittleButtons();
+            addLittleButtonsTopic();
           }
           thisDiv.append(
           "<h4>Answer: </h4><p>" +
           allTopics[i].answer + "</p>");
           if (currentUser === allTopics[i].answerAuthor) {
-            addLittleButtons();
+            addLittleButtonsAnswer();
           }
         } else {
           thisDiv = $("#unanswerQ");
@@ -136,17 +136,18 @@ $(document).ready(function(){
           "<p class='answerMe'>" + 
           allTopics[i].topic + "</p>");
           if (currentUser === allTopics[i].topicAuthor) {
-            addLittleButtons();
+            addLittleButtonsTopic();
           }
         }
       }
     });
   }
 
-  // This function adds the delete and edit buttons to topics and answers authored by the current user.
-  function addLittleButtons() {
-    console.log("INSIDE addLittleButtons, thisTopicID: " + thisTopicId);
-    console.log("also inside addLittlebuttons, thisTopicText: " + thisTopicText);
+  // This function adds the delete and edit buttons to topics or questions authored by the current user.
+  function addLittleButtonsTopic() {
+    console.log("INSIDE addLittleButtonsTopic, thisTopicID: " + thisTopicId);
+    console.log("also inside addLittleButtonsTopic, thisTopicText: " + thisTopicText);
+    console.log("also inside addLittlebuttonsTopic, thisTopicAnswer: " + thisTopicAnswer);
     // append the delete and edit buttons, with the id of the current topic as data
     thisDiv.append(
       "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
@@ -157,7 +158,31 @@ $(document).ready(function(){
       newEditButton.addClass("btn");
       newEditButton.addClass("btn-default");
       newEditButton.addClass("btn-xs");
-      newEditButton.addClass("littleE");
+      newEditButton.addClass("littleETopic");
+      newEditButton.addClass("glyphicon");
+      newEditButton.addClass("glyphicon-pencil");
+      newEditButton.attr("aria-hidden", "true");
+      newEditButton.attr("data-idtopic", thisTopicId);
+      newEditButton.attr("data-texttopic", thisTopicText);
+      newEditButton.attr("data-textanswer", thisTopicAnswer);
+      thisDiv.append(newEditButton);
+  }
+  // This function adds the delete and edit buttons to answers authored by the current user.
+  function addLittleButtonsAnswer() {
+    console.log("INSIDE addLittleButtonsAnswer, thisTopicID: " + thisTopicId);
+    console.log("also inside addLittlebuttonsAnswer, thisTopicText: " + thisTopicText);
+    console.log("also inside addLittlebuttonsAnswer, thisTopicAnswer: " + thisTopicAnswer);
+    // append the delete and edit buttons, with the id of the current topic as data
+    thisDiv.append(
+      "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
+      thisTopicId + ">" +
+      "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
+      var newEditButton = $("<span>");
+      newEditButton.attr("type", "button");
+      newEditButton.addClass("btn");
+      newEditButton.addClass("btn-default");
+      newEditButton.addClass("btn-xs");
+      newEditButton.addClass("littleEAnswer");
       newEditButton.addClass("glyphicon");
       newEditButton.addClass("glyphicon-pencil");
       newEditButton.attr("aria-hidden", "true");
@@ -204,14 +229,47 @@ $(document).ready(function(){
       loadTheTopics();
   });
 
+  // an author of a topic's question or topic clicks the red pen icon, and this function
+  // brings up the modal to make the edit.
+  $(document).on("click", ".littleETopic", function(event) {
+    event.preventDefault();
+    console.log("inside function to bring up modal to edit a topic's question");
+    // need text of current answer to put in placeholder of form in modal
+    $("h3#chosenQ").text($(this).attr("data-texttopic"));
+    $("h3#prevAnswer").text($(this).attr("data-textanswer"));
+    thisTopicId = $(this).attr("data-idtopic");
+    console.log("after hitting little pen to edit, thisTopicId: " + thisTopicId);
+    $("#editTopic").modal("show");
+  });
+
+  // Then, the user submits their new or edited answer and loads it into the db
+  $(document).on("click", "#submitEditedTopic", function(event) {
+    event.preventDefault();
+    console.log("inside function for topic author to edit a their quetion, thisTopicId: " + thisTopicId);
+      $.ajax({
+          method: "POST",
+          url: "/updateTopic/" + thisTopicId,
+          data: {
+            _id: thisTopicId,
+            topic: $("#editedTopic").val()
+          }
+      })
+      .then(function(dataChosenQuestion) {
+          console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+      });
+      $("#editedTopic").val("");
+      $("#editTopic").modal("hide");
+      loadTheTopics();
+  });
+
   // an author of a topic's answer clicks the red pen icon, and this function
   // brings up the modal to make the edit.
-  $(document).on("click", ".littleE", function(event) {
+  $(document).on("click", ".littleEAnswer", function(event) {
     event.preventDefault();
     console.log("inside function to bring up modal to edit a topic's answer");
     // need text of current answer to put in placeholder of form in modal
     $("h3#chosenQ").text($(this).attr("data-texttopic"));
-    $("#prevAnswer").text($(this).attr("data-textanswer"));
+    $("h3#prevAnswer").text($(this).attr("data-textanswer"));
     thisTopicId = $(this).attr("data-idtopic");
     console.log("after hitting little pen to edit, thisTopicId: " + thisTopicId);
     $("#editAnswer").modal("show");

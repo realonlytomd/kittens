@@ -100,7 +100,7 @@ button#loadTopics {
     color: red;
 }
 
-.littleE {
+.littleE, .littleEAnswer, .littleETopic {
     margin-left: 40px;
     color: red;
 }

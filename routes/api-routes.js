@@ -387,12 +387,34 @@ module.exports = function(router) {
         });
     });
 
+    // A question's author uses this route to update a given topic or question
+    router.post("/updateTopic/:topicId", function(req, res) {
+        console.log("req.body: ", req.body);
+        console.log("req.body._id: ", req.body._id);
+        console.log("req.body.topic: ", req.body.topic);
+        // Using the id passed in the id parameter, make the required change in the db
+        db.Topic.findOneAndUpdate(
+            { _id: req.body._id },
+            { topic: req.body.topic },
+            { new: true }
+        )
+            .then(function(dbTopic) {
+                console.log("dbTopic: ", dbTopic);
+                // If successful, send the topic with the newly edited topic back to the client
+                res.json(dbTopic);
+            })
+            .catch(function(err) {
+            // but if an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
     // This route updates just one answer from a given topic
     router.post("/updateAnswer/:topicId", function(req, res) {
         console.log("req.body: ", req.body);
         console.log("req.body._id: ", req.body._id);
         console.log("req.body.answer: ", req.body.answer);
-        // Using the id passed in the id parameter, and make a query that finds the matching one in the db
+        // Using the id passed in the id parameter, make the required change in the db
         db.Topic.findOneAndUpdate(
             { _id: req.body._id },
             { answer: req.body.answer },
