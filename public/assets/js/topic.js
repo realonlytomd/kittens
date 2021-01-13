@@ -51,7 +51,7 @@ $(document).ready(function(){
   $("#unanswerQ").empty();
   $("#topicsCurrent").empty();
   
-  // This allows for a logged in User to jut ask a question.....
+  // This allows for a logged in User to just ask a question.....
   // submitting a question for other users
   // add the author's name to the db. (and so the little x and edit)
   $(document).on("click", "#visitorQuestion", function(event) {
@@ -92,6 +92,7 @@ $(document).ready(function(){
       $("#topic").val("");
       $("#answer").val("");
   });
+
   // click event when user clicks load Topics button
   $(document).on("click", "#loadTopics", function(event) {
     event.preventDefault();
@@ -153,21 +154,23 @@ $(document).ready(function(){
       "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
       thisTopicId + ">" +
       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-      var newEditButton = $("<span>");
-      newEditButton.attr("type", "button");
-      newEditButton.addClass("btn");
-      newEditButton.addClass("btn-default");
-      newEditButton.addClass("btn-xs");
-      newEditButton.addClass("littleETopic");
-      newEditButton.addClass("glyphicon");
-      newEditButton.addClass("glyphicon-pencil");
-      newEditButton.attr("aria-hidden", "true");
-      newEditButton.attr("data-idtopic", thisTopicId);
-      newEditButton.attr("data-texttopic", thisTopicText);
-      newEditButton.attr("data-textanswer", thisTopicAnswer);
-      thisDiv.append(newEditButton);
+    var newEditButton = $("<span>");
+    newEditButton.attr("type", "button");
+    newEditButton.addClass("btn");
+    newEditButton.addClass("btn-default");
+    newEditButton.addClass("btn-xs");
+    newEditButton.addClass("littleETopic");
+    newEditButton.addClass("glyphicon");
+    newEditButton.addClass("glyphicon-pencil");
+    newEditButton.attr("aria-hidden", "true");
+    newEditButton.attr("data-idtopic", thisTopicId);
+    newEditButton.attr("data-texttopic", thisTopicText);
+    newEditButton.attr("data-textanswer", thisTopicAnswer);
+    thisDiv.append(newEditButton);
   }
   // This function adds the delete and edit buttons to answers authored by the current user.
+  // I know: the only difference from addLittleButtonTopic is adding the class "littleEAnswer"
+  // might look at later combining, just need an if statement to choose between topic or answer
   function addLittleButtonsAnswer() {
     console.log("INSIDE addLittleButtonsAnswer, thisTopicID: " + thisTopicId);
     console.log("also inside addLittlebuttonsAnswer, thisTopicText: " + thisTopicText);
@@ -177,19 +180,19 @@ $(document).ready(function(){
       "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
       thisTopicId + ">" +
       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-      var newEditButton = $("<span>");
-      newEditButton.attr("type", "button");
-      newEditButton.addClass("btn");
-      newEditButton.addClass("btn-default");
-      newEditButton.addClass("btn-xs");
-      newEditButton.addClass("littleEAnswer");
-      newEditButton.addClass("glyphicon");
-      newEditButton.addClass("glyphicon-pencil");
-      newEditButton.attr("aria-hidden", "true");
-      newEditButton.attr("data-idtopic", thisTopicId);
-      newEditButton.attr("data-texttopic", thisTopicText);
-      newEditButton.attr("data-textanswer", thisTopicAnswer);
-      thisDiv.append(newEditButton);
+    var newEditButton = $("<span>");
+    newEditButton.attr("type", "button");
+    newEditButton.addClass("btn");
+    newEditButton.addClass("btn-default");
+    newEditButton.addClass("btn-xs");
+    newEditButton.addClass("littleEAnswer");
+    newEditButton.addClass("glyphicon");
+    newEditButton.addClass("glyphicon-pencil");
+    newEditButton.attr("aria-hidden", "true");
+    newEditButton.attr("data-idtopic", thisTopicId);
+    newEditButton.attr("data-texttopic", thisTopicText);
+    newEditButton.attr("data-textanswer", thisTopicAnswer);
+    thisDiv.append(newEditButton);
   }
 
   // if a user knows the answer to a question posed by another user
