@@ -96,7 +96,7 @@ button#loadTopics {
     margin-top: 20px;
 }
 
-.littleX {
+.littleX, .littleXAnswer {
     color: red;
 }
 

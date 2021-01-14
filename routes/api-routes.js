@@ -409,6 +409,30 @@ module.exports = function(router) {
             });
     });
 
+    // This route deletes just one answer and the answer's author from a given topic
+    router.post("/overwriteAnswer/:topicId", function(req, res) {
+        console.log("/overwriteAnswer/: req.body: ", req.body);
+        console.log("/overwriteAnswer/: req.body._id: ", req.body._id);
+        console.log("/overwriteAnswer/: req.body.answer: ", req.body.answer);
+        console.log("/overwriteAnswer/: req.body.answerAuthor: ", req.body.answerAuthor);
+        // Using the id passed in the id parameter, make the required change in the db
+        db.Topic.findOneAndUpdate(
+            { _id: req.body._id },
+            {$set: { answer: req.body.answer , answerAuthor: req.body.answerAuthor }},
+            { new: true }
+        )
+            .then(function(dbTopic) {
+                console.log("dbTopic: ", dbTopic);
+                // If successful, send the topic with the newly edited answer back to the client
+                res.json(dbTopic);
+            })
+            .catch(function(err) {
+            // but if an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
+
     // This route updates just one answer from a given topic
     router.post("/updateAnswer/:topicId", function(req, res) {
         console.log("req.body: ", req.body);

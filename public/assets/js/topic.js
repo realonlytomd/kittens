@@ -177,7 +177,7 @@ $(document).ready(function(){
     console.log("also inside addLittlebuttonsAnswer, thisTopicAnswer: " + thisTopicAnswer);
     // append the delete and edit buttons, with the id of the current topic as data
     thisDiv.append(
-      "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
+      "<button type='button' class='btn btn-default btn-xs littleXAnswer' data_idtopic=" +
       thisTopicId + ">" +
       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
     var newEditButton = $("<span>");
@@ -230,6 +230,30 @@ $(document).ready(function(){
       $("#newAnswer").val("");
       $("#answerQuestion").modal("hide");
       loadTheTopics();
+  });
+
+  // A user clicks the red X under an answer to a topic to delete their answer
+  // also need to delete the name of the author from that answer
+  $(document).on("click", ".littleXAnswer", function(event) {
+    event.preventDefault();
+    console.log("Inside DELETE the current user's answer");
+    // delete this answer from the db, using the topic's id number
+    thisTopicId = $(this).attr("data_idtopic");
+    console.log("AFTER clicking littleXAnswer, thisTopicId: "  + thisTopicId);
+    // DELETE these specific answer from the Topic collection
+    $.ajax({
+      method: "POST",
+      url: "/overwriteAnswer/" + thisTopicId,
+      data: {
+        _id: thisTopicId,
+        answer: "",
+        answerAuthor: ""
+      }
+      })
+      .then(function(dataTopicNoAnswer) {
+        console.log("data from removing answer to question (dataTopicNoAnswer) in db,topic.js: ", dataTopicNoAnswer);
+        loadTheTopics();
+      });
   });
 
   // an author of a topic's question or topic clicks the red pen icon, and this function

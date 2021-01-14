@@ -558,7 +558,7 @@ $(document).ready(function(){
     // delete this group of metric info from the db,
     // First, the id associated with these metrics, and the id of the kitten
     thisId = $(this).attr("data_id");
-    thisKittenId = $(this).attr("data_idKitten")
+    thisKittenId = $(this).attr("data_idKitten");
     console.log("AFTER clicking littleX, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
     // DELETE these specific metrics from the metrics collection
     $.ajax({
