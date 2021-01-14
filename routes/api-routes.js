@@ -432,6 +432,24 @@ module.exports = function(router) {
             });
     });
 
+    // This route deletes an entire Topic collection from the db,
+    router.delete("/topic/delete/:id", function(req, res) {
+        console.log("in /topic/delete/, req.params: ", req.params);
+        // delete the whole metric group
+        db.Topic.deleteOne(
+            { _id: req.params.id }
+        )
+        .then(function(dbTopic) {
+            //  
+            console.log("delete a Topic collection, dbTopic: ", dbTopic);
+            res.json(dbTopic);
+        })
+        .catch(function(err) {
+            // but if an error occurred, send it to the client
+            res.json(err);
+        });
+    });
+
 
     // This route updates just one answer from a given topic
     router.post("/updateAnswer/:topicId", function(req, res) {

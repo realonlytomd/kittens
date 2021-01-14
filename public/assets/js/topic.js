@@ -70,6 +70,7 @@ $(document).ready(function(){
           console.log("data from creation of question (dataCreateQuestion) in topic.js: ", dataCreateQuestion);
       });
       $("#question").val("");
+      loadTheTopics();
   });
 
   // submitting a topic and answer to db
@@ -91,6 +92,7 @@ $(document).ready(function(){
       });
       $("#topic").val("");
       $("#answer").val("");
+      loadTheTopics();
   });
 
   // click event when user clicks load Topics button
@@ -151,7 +153,7 @@ $(document).ready(function(){
     console.log("also inside addLittlebuttonsTopic, thisTopicAnswer: " + thisTopicAnswer);
     // append the delete and edit buttons, with the id of the current topic as data
     thisDiv.append(
-      "<button type='button' class='btn btn-default btn-xs littleX' data_idtopic=" +
+      "<button type='button' class='btn btn-default btn-xs littleXTopic' data_idtopic=" +
       thisTopicId + ">" +
       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
     var newEditButton = $("<span>");
@@ -232,12 +234,31 @@ $(document).ready(function(){
       loadTheTopics();
   });
 
+  // A user clicks the red X under a Topic or Question to delete the entire Topic
+  // this deletes the entire collection in the Topics db
+  $(document).on("click", ".littleXTopic", function(event) {
+    event.preventDefault();
+    console.log("Inside DELETE the current user's Topic");
+    // delete this entire topic from the db, using the topic's id number
+    thisTopicId = $(this).attr("data_idtopic");
+    console.log("AFTER clicking littleXTopic, thisTopicId: "  + thisTopicId);
+    // DELETE these specific answer from the Topic collection
+    $.ajax({
+      method: "DELETE",
+      url: "/topic/delete/" + thisTopicId
+    })
+      .then (function(dbTopic) {
+        console.log("data from deleting Topic (dbTopic) in db,topic.js: ", dbTopic);
+        loadTheTopics();
+      });
+  });
+
   // A user clicks the red X under an answer to a topic to delete their answer
   // also need to delete the name of the author from that answer
   $(document).on("click", ".littleXAnswer", function(event) {
     event.preventDefault();
     console.log("Inside DELETE the current user's answer");
-    // delete this answer from the db, using the topic's id number
+    // overwrites this answer from the db, using the topic's id number
     thisTopicId = $(this).attr("data_idtopic");
     console.log("AFTER clicking littleXAnswer, thisTopicId: "  + thisTopicId);
     // DELETE these specific answer from the Topic collection
