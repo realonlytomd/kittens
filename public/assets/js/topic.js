@@ -67,10 +67,10 @@ $(document).ready(function(){
           }
       })
       .then(function(dataCreateQuestion) {
-          console.log("data from creation of question (dataCreateQuestion) in topic.js: ", dataCreateQuestion);
+        console.log("data from creation of question (dataCreateQuestion) in topic.js: ", dataCreateQuestion);
+        loadTheTopics();
       });
       $("#question").val("");
-      loadTheTopics();
   });
 
   // submitting a topic and answer to db
@@ -88,11 +88,11 @@ $(document).ready(function(){
           }
       })
       .then(function(dataCreateTopic) {
-          console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
+        console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
+        loadTheTopics();
       });
       $("#topic").val("");
       $("#answer").val("");
-      loadTheTopics();
   });
 
   // click event when user clicks load Topics button
@@ -228,10 +228,10 @@ $(document).ready(function(){
       })
       .then(function(dataChosenQuestion) {
           console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+          loadTheTopics();
       });
       $("#newAnswer").val("");
       $("#answerQuestion").modal("hide");
-      loadTheTopics();
   });
 
   // A user clicks the red X under a Topic or Question to delete the entire Topic
@@ -303,11 +303,11 @@ $(document).ready(function(){
           }
       })
       .then(function(dataChosenQuestion) {
-          console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+        console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+        loadTheTopics();
       });
       $("#editedTopic").val("");
       $("#editTopic").modal("hide");
-      loadTheTopics();
   });
 
   // an author of a topic's answer clicks the red pen icon, and this function
@@ -336,12 +336,11 @@ $(document).ready(function(){
           }
       })
       .then(function(dataChosenQuestion) {
-          console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+        console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+        loadTheTopics();
       });
       $("#editedAnswer").val("");
       $("#editAnswer").modal("hide");
-      loadTheTopics();
   });
-
 });
     
