@@ -2,7 +2,7 @@
   // testing to see if this can be called from the user.js file
   // and eventually, can keep the clock running between page changes
   var displayStartCount;
-
+  jQuery.noConflict();
   function feedKittenTimer() {
     // function to bring up the countdown clock to feed the kitten
     $(document).on("click", "#feedKitten", function(event) {

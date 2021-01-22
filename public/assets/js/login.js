@@ -17,7 +17,8 @@ var qThreeDb;
 // don't think this is needed for security question asking becuase just need one user
 // var allUsers; // this variable is all the info with every user. need it to compare passwords and sec. quesetions
 // var i; // this is the index of the currently logged in user. used for same reason as above.
-$(document).ready(function() {
+jQuery.noConflict();
+jQuery(document).ready(function( $ ){
   console.log("hello from login.js");
   console.log("currentUserLoggedIn is: " + currentUserLoggedIn);
 

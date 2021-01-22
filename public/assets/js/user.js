@@ -48,9 +48,9 @@ var thisWeight;
 var thisSize;
 var dataPointsArraySize = [];
 var dataPointsArrayWeight = [];
-
-$(document).ready(function(){
-  $(document).ready(function(){ feedKittenTimer(); });
+jQuery.noConflict();
+jQuery(document).ready(function( $ ){
+  jQuery(document).ready(function( $ ){ feedKittenTimer(); });
   console.log("hello from user.js");
   console.log("from user.js, currentUserId is ", currentUserId);
   // This code is used if a user returns from the topics page,
@@ -244,6 +244,7 @@ $(document).ready(function(){
   function writeKittenDom() {
     console.log("currentKittenId inside writeKittendom: " + currentKittenId);
     $("#kittenMetrics").empty();
+    $("#chartContainer").empty();
       // gets the array of metrics associated with the current kitten
     $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
       console.log("WHAT'S IN HERE curkat[0]: ", curkat[0]);
@@ -635,22 +636,34 @@ $(document).ready(function(){
         writeKittenDom();
       });
   });
-
-  // This is the function for creating the line chart of the kitten metric data. Each chart will have 
+});
+ // This is the function for creating the line chart of the kitten metric data. Each chart will have 
   // the age of the kitten for the x-axis, and size and weight will be separate line charts
   // that the user can toggle between. 
   // Only the chosen kitten's data will be displayed on the chart below (above?) the kitten's
   // metric boxes.
   function displayChart() {
-    // below, dataPoints is an array of objects. I'm not really joining 2 arrays
-    // so , how do I build that here  {x:sortedAges, y:sortedSizes} and then pushed into an array
-    // sortedAges is one array, sorted Sizes is another
+    // below, dataPoints is an array of objects. I'm not joining 2 arrays
+    // so  {x:sortedAges, y:sortedSizes} and then pushed into an array
+    // sortedAges is one array, sortedSizes is another
+    // create and empty out arrays and objects just for this function - don't forget to empty 
+    // the div on the page.
+    // are these integers or floats?
+    var sortedAgesNumb = [];
+    var sortedSizesNumb = [];
+    var sortedWeightsNumb = [];
+    var resultObjectSize = {};
+    var resultObjectWeight = {};
+    // need to convert the arrays of strings to arrays of numbers
+    console.log("before convert, sortedAges: ", sortedAges);
+    var sortedAgesNumb = sortedAges.map(Number);
+    var sortedSizesNumb = sortedSizes.map(Number);
+    var sortedWeightsNumb = sortedWeights.map(Number);
+    console.log("after convert, sortedAges: ", sortedAgesNumb);
     
-    for (i=0; i<sortedAges.length; i++) {
-      var resultObjectSize = {};
-      var resultObjectWeight = {};
-      resultObjectSize={ x : sortedAges[i] , y : sortedSizes[i]};
-      resultObjectWeight={ x : sortedAges[i] , y : sortedWeights[i]};
+    for (i=0; i<sortedAgesNumb.length; i++) {
+      resultObjectSize={ x : sortedAgesNumb[i] , y : sortedSizesNumb[i]};
+      resultObjectWeight={ x : sortedAgesNumb[i] , y : sortedWeightsNumb[i]};
       console.log("resultObjectSize: ", resultObjectSize);
       console.log("resultObjectWeight: ", resultObjectWeight);
       dataPointsArraySize.push(resultObjectSize);
@@ -658,6 +671,7 @@ $(document).ready(function(){
     }
     console.log("HERE! the new dataPointsArraySize: ", dataPointsArraySize);
     console.log("HERE! the new dataPointsArrayWeight: ", dataPointsArrayWeight);
+    
     //
     var chartOptions = {
       animationEnabled: true,
@@ -667,11 +681,9 @@ $(document).ready(function(){
       },
       axisX:{
         title: "Age in Weeks"
-        //valueFormatString: "DD MMM"  // should be weeks
       },
       axisY: {
-        title: "Number of Sales",
-        suffix: "K",
+        title: "Kitten Size and Weight",
         minimum: 0
       },
       toolTip:{
@@ -689,9 +701,7 @@ $(document).ready(function(){
         showInLegend: true,
         name: "Kitten Size",
         markerType: "square",
-        //xValueFormatString: "DD MMM, YYYY",
         color: "#F08080",
-        //yValueFormatString: "#,##0K",
         dataPoints: dataPointsArraySize
       },
       {
@@ -714,4 +724,3 @@ $(document).ready(function(){
       e.chart.render();
     }
   }  // end of function displayChart()
-});

@@ -12,8 +12,8 @@
 // set up variable for continuing the feed kitten timer if it is running
 var startCount;
 var myTimer;
-
-$(document).ready(function(){
+jQuery.noConflict();
+jQuery(document).ready(function($){
     console.log("in index.js, have just set var startCount: " + startCount);
     startCount = parseInt(localStorage.getItem("startCount"));
     console.log("in index.js, just getItem startCount: " + startCount);
