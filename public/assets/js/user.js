@@ -654,6 +654,8 @@ jQuery(document).ready(function( $ ){
     var sortedWeightsNumb = [];
     var resultObjectSize = {};
     var resultObjectWeight = {};
+    dataPointsArraySize = [];
+    dataPointsArrayWeight = [];
     // need to convert the arrays of strings to arrays of numbers
     console.log("before convert, sortedAges: ", sortedAges);
     var sortedAgesNumb = sortedAges.map(Number);

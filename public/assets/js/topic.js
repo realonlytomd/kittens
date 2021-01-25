@@ -14,7 +14,8 @@ console.log("topics.js: name of currentUser: " + currentUser);
 // do I need to add the name of the current user? or get it from db with currentUserId??
 // not sure: but I think in login.js, I can setStorage the currentUser name, and retrieve here,
 // but I'll need to overwrite it when I logout,... done
-$(document).ready(function(){
+jQuery.noConflict();
+jQuery(document).ready(function( $ ){
   console.log("hello from topic.js");
   console.log("in topic.js, have just set var startCount: " + startCount);
   startCount = parseInt(localStorage.getItem("startCount"));
@@ -103,98 +104,104 @@ $(document).ready(function(){
 
   // the function loadTheTopics
   function loadTheTopics() {
-    $("#unansweredTitle").show();
-    $("#answeredTitle").show();
-    $("#topicsCurrent").empty();
-    $("#unanswerQ").empty();
-    $.getJSON("/getAllTopics", function(allTopics) {
-      console.log("all topics from db, allTopics: ", allTopics);
-      for (i = 0; i < allTopics.length; i++) {
-        thisTopicId = allTopics[i]._id;
-        thisTopicText = allTopics[i].topic;
-        thisTopicAnswer = allTopics[i].answer;
-        console.log("thisTopicID: " + thisTopicId + " thisTopicText: " + thisTopicText + " thisTopicAnswer: " + thisTopicAnswer);
-        // need an if to test if allTopics[i].answer is ""
-        // here, add a way to put the red x and red edit pencil on topics
-        // and answers created by the author
-        if (allTopics[i].answer !== "") {
-          thisDiv = $("#topicsCurrent");
-          thisDiv.append(
-          "<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
-          allTopics[i].topic + "</p>");
-          // if statement to determine if the current user is the same as the topic's author
-          if (currentUser === allTopics[i].topicAuthor) {
-            addLittleButtonsTopic();
-          }
-          thisDiv.append(
-          "<h4>Answer: </h4><p>" +
-          allTopics[i].answer + "</p>");
-          if (currentUser === allTopics[i].answerAuthor) {
-            addLittleButtonsAnswer();
-          }
-        } else {
-          thisDiv = $("#unanswerQ");
-          thisDiv.append(
-          "<h4 style='border-top: 2px solid black;'>Question: </h4>" +
-          "<p class='answerMe'>" + 
-          allTopics[i].topic + "</p>");
-          if (currentUser === allTopics[i].topicAuthor) {
-            addLittleButtonsTopic();
+    
+      $("#unansweredTitle").show();
+      $("#answeredTitle").show();
+      $("#topicsCurrent").empty();
+      $("#unanswerQ").empty();
+      $.getJSON("/getAllTopics", function(allTopics) {
+        console.log("all topics from db, allTopics: ", allTopics);
+        for (i = 0; i < allTopics.length; i++) {
+          thisTopicId = allTopics[i]._id;
+          thisTopicText = allTopics[i].topic;
+          thisTopicAnswer = allTopics[i].answer;
+          console.log("thisTopicID: " + thisTopicId + " thisTopicText: " + thisTopicText + " thisTopicAnswer: " + thisTopicAnswer);
+          // need an if to test if allTopics[i].answer is ""
+          // here, add a way to put the red x and red edit pencil on topics
+          // and answers created by the author
+          if (allTopics[i].answer !== "") {
+            thisDiv = $("#topicsCurrent");
+            thisDiv.append(
+            "<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
+            allTopics[i].topic + "</p>");
+            // if statement to determine if the current user is the same as the topic's author
+            if (currentUser === allTopics[i].topicAuthor) {
+              addLittleButtonsTopic();
+            }
+            thisDiv.append(
+            "<h4>Answer: </h4><p>" +
+            allTopics[i].answer + "</p>");
+            if (currentUser === allTopics[i].answerAuthor) {
+              addLittleButtonsAnswer();
+            }
+          } else {
+            thisDiv = $("#unanswerQ");
+            thisDiv.append(
+            "<h4 style='border-top: 2px solid black;'>Question: </h4>" +
+            "<p class='answerMe'>" + 
+            allTopics[i].topic + "</p>");
+            if (currentUser === allTopics[i].topicAuthor) {
+              addLittleButtonsTopic();
+            }
           }
         }
-      }
-    });
+      });
+    
   }
 
   // This function adds the delete and edit buttons to topics or questions authored by the current user.
   function addLittleButtonsTopic() {
-    console.log("INSIDE addLittleButtonsTopic, thisTopicID: " + thisTopicId);
-    console.log("also inside addLittleButtonsTopic, thisTopicText: " + thisTopicText);
-    console.log("also inside addLittlebuttonsTopic, thisTopicAnswer: " + thisTopicAnswer);
-    // append the delete and edit buttons, with the id of the current topic as data
-    thisDiv.append(
-      "<button type='button' class='btn btn-default btn-xs littleXTopic' data_idtopic=" +
-      thisTopicId + ">" +
-      "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-    var newEditButton = $("<span>");
-    newEditButton.attr("type", "button");
-    newEditButton.addClass("btn");
-    newEditButton.addClass("btn-default");
-    newEditButton.addClass("btn-xs");
-    newEditButton.addClass("littleETopic");
-    newEditButton.addClass("glyphicon");
-    newEditButton.addClass("glyphicon-pencil");
-    newEditButton.attr("aria-hidden", "true");
-    newEditButton.attr("data-idtopic", thisTopicId);
-    newEditButton.attr("data-texttopic", thisTopicText);
-    newEditButton.attr("data-textanswer", thisTopicAnswer);
-    thisDiv.append(newEditButton);
+    
+      console.log("INSIDE addLittleButtonsTopic, thisTopicID: " + thisTopicId);
+      console.log("also inside addLittleButtonsTopic, thisTopicText: " + thisTopicText);
+      console.log("also inside addLittlebuttonsTopic, thisTopicAnswer: " + thisTopicAnswer);
+      // append the delete and edit buttons, with the id of the current topic as data
+      thisDiv.append(
+        "<button type='button' class='btn btn-default btn-xs littleXTopic' data_idtopic=" +
+        thisTopicId + ">" +
+        "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
+      var newEditButton = $("<span>");
+      newEditButton.attr("type", "button");
+      newEditButton.addClass("btn");
+      newEditButton.addClass("btn-default");
+      newEditButton.addClass("btn-xs");
+      newEditButton.addClass("littleETopic");
+      newEditButton.addClass("glyphicon");
+      newEditButton.addClass("glyphicon-pencil");
+      newEditButton.attr("aria-hidden", "true");
+      newEditButton.attr("data-idtopic", thisTopicId);
+      newEditButton.attr("data-texttopic", thisTopicText);
+      newEditButton.attr("data-textanswer", thisTopicAnswer);
+      thisDiv.append(newEditButton);
+    
   }
   // This function adds the delete and edit buttons to answers authored by the current user.
   // I know: the only difference from addLittleButtonTopic is adding the class "littleEAnswer"
   // might look at later combining, just need an if statement to choose between topic or answer
   function addLittleButtonsAnswer() {
-    console.log("INSIDE addLittleButtonsAnswer, thisTopicID: " + thisTopicId);
-    console.log("also inside addLittlebuttonsAnswer, thisTopicText: " + thisTopicText);
-    console.log("also inside addLittlebuttonsAnswer, thisTopicAnswer: " + thisTopicAnswer);
-    // append the delete and edit buttons, with the id of the current topic as data
-    thisDiv.append(
-      "<button type='button' class='btn btn-default btn-xs littleXAnswer' data_idtopic=" +
-      thisTopicId + ">" +
-      "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
-    var newEditButton = $("<span>");
-    newEditButton.attr("type", "button");
-    newEditButton.addClass("btn");
-    newEditButton.addClass("btn-default");
-    newEditButton.addClass("btn-xs");
-    newEditButton.addClass("littleEAnswer");
-    newEditButton.addClass("glyphicon");
-    newEditButton.addClass("glyphicon-pencil");
-    newEditButton.attr("aria-hidden", "true");
-    newEditButton.attr("data-idtopic", thisTopicId);
-    newEditButton.attr("data-texttopic", thisTopicText);
-    newEditButton.attr("data-textanswer", thisTopicAnswer);
-    thisDiv.append(newEditButton);
+    
+      console.log("INSIDE addLittleButtonsAnswer, thisTopicID: " + thisTopicId);
+      console.log("also inside addLittlebuttonsAnswer, thisTopicText: " + thisTopicText);
+      console.log("also inside addLittlebuttonsAnswer, thisTopicAnswer: " + thisTopicAnswer);
+      // append the delete and edit buttons, with the id of the current topic as data
+      thisDiv.append(
+        "<button type='button' class='btn btn-default btn-xs littleXAnswer' data_idtopic=" +
+        thisTopicId + ">" +
+        "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>");
+      var newEditButton = $("<span>");
+      newEditButton.attr("type", "button");
+      newEditButton.addClass("btn");
+      newEditButton.addClass("btn-default");
+      newEditButton.addClass("btn-xs");
+      newEditButton.addClass("littleEAnswer");
+      newEditButton.addClass("glyphicon");
+      newEditButton.addClass("glyphicon-pencil");
+      newEditButton.attr("aria-hidden", "true");
+      newEditButton.attr("data-idtopic", thisTopicId);
+      newEditButton.attr("data-texttopic", thisTopicText);
+      newEditButton.attr("data-textanswer", thisTopicAnswer);
+      thisDiv.append(newEditButton);
+    
   }
 
   // if a user knows the answer to a question posed by another user

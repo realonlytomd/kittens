@@ -202,36 +202,39 @@ jQuery(document).ready(function( $ ){
   });
 
   function putUserInfoDb() {
-  // Need to add a check to see that both userNameInput and passwordInput actualy exist
-    //
-    // then put these values into the mongo db
-    $.ajax({
-      method: "GET",
-      url: "/createUser",
-      data: {
-          name: userNameInput,
-          password: passwordInput,
-          questionOne: qOneInput,
-          questionTwo: qTwoInput,
-          questionThree: qThreeInput,
-          loggedIn: "true"
-      }
-    })
-    .then(function(dataCreateUser) {
-      console.log("data from creation of new user (dataCreateUser) in login.js: ", dataCreateUser);
-      //Once a name and password have been put in user db, now take user to the /user page
-      // set localstorage to the newly created user id so they can input kitten data
-      console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
-      console.log("from login.js, a new user, dataCreateUser.name: " + dataCreateUser.name);
-      localStorage.setItem("currentUserId", dataCreateUser._id);
-      localStorage.setItem("currentUserLoggedIn", dataCreateUser.loggedIn);
-      // set the now logged in currentUser to localStorage to be used in topics.js as author
-      localStorage.setItem("currentUser", dataCreateUser.name);
-      console.log("This is currentUserLoggedIn after putting user in db: " + dataCreateUser.loggedIn);
-      // but first, zero out input fields
-      $("#newUserName-input").val("");
-      $("#newPassword-input").val("");
-      window.location.replace("/user");
+    jQuery.noConflict();
+    jQuery(document).ready(function( $ ){
+      // Need to add a check to see that both userNameInput and passwordInput actualy exist
+      //
+      // then put these values into the mongo db
+      $.ajax({
+        method: "GET",
+        url: "/createUser",
+        data: {
+            name: userNameInput,
+            password: passwordInput,
+            questionOne: qOneInput,
+            questionTwo: qTwoInput,
+            questionThree: qThreeInput,
+            loggedIn: "true"
+        }
+      })
+      .then(function(dataCreateUser) {
+        console.log("data from creation of new user (dataCreateUser) in login.js: ", dataCreateUser);
+        //Once a name and password have been put in user db, now take user to the /user page
+        // set localstorage to the newly created user id so they can input kitten data
+        console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
+        console.log("from login.js, a new user, dataCreateUser.name: " + dataCreateUser.name);
+        localStorage.setItem("currentUserId", dataCreateUser._id);
+        localStorage.setItem("currentUserLoggedIn", dataCreateUser.loggedIn);
+        // set the now logged in currentUser to localStorage to be used in topics.js as author
+        localStorage.setItem("currentUser", dataCreateUser.name);
+        console.log("This is currentUserLoggedIn after putting user in db: " + dataCreateUser.loggedIn);
+        // but first, zero out input fields
+        $("#newUserName-input").val("");
+        $("#newPassword-input").val("");
+        window.location.replace("/user");
+      });
     });
   }
 });
