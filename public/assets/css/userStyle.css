@@ -92,6 +92,10 @@ p {
     margin-left: 30px;
 }
 
+#chartContainer {
+    margin-top: 20px;
+}
+
 button#loadTopics {
     margin-top: 20px;
 }

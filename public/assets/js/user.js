@@ -656,6 +656,10 @@ jQuery(document).ready(function( $ ){
     var resultObjectWeight = {};
     dataPointsArraySize = [];
     dataPointsArrayWeight = [];
+    jQuery("#chartContainer").css({
+      "height" : "300px", 
+      "width" : "100%"
+    });
     // need to convert the arrays of strings to arrays of numbers
     console.log("before convert, sortedAges: ", sortedAges);
     var sortedAgesNumb = sortedAges.map(Number);
@@ -685,7 +689,7 @@ jQuery(document).ready(function( $ ){
         title: "Age in Weeks"
       },
       axisY: {
-        title: "Kitten Size and Weight",
+        title: "Kitten Size(in.) and Weight(oz.)",
         minimum: 0
       },
       toolTip:{
