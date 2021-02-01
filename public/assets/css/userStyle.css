@@ -92,7 +92,7 @@ p {
     margin-left: 30px;
 }
 
-#chartContainer {
+#chartContainerSize, #chartContainerWeight {
     margin-top: 20px;
 }
 

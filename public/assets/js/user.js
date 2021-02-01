@@ -656,7 +656,15 @@ jQuery(document).ready(function( $ ){
     var resultObjectWeight = {};
     dataPointsArraySize = [];
     dataPointsArrayWeight = [];
-    jQuery("#chartContainer").css({
+    jQuery("#chartContainerBoth").css({
+      "height" : "300px", 
+      "width" : "100%"
+    });
+    jQuery("#chartContainerSize").css({
+      "height" : "300px", 
+      "width" : "100%"
+    });
+    jQuery("#chartContainerWeight").css({
       "height" : "300px", 
       "width" : "100%"
     });
@@ -678,30 +686,75 @@ jQuery(document).ready(function( $ ){
     console.log("HERE! the new dataPointsArraySize: ", dataPointsArraySize);
     console.log("HERE! the new dataPointsArrayWeight: ", dataPointsArrayWeight);
     
-    //
-    var chartOptions = {
+    // Putting both charts together has been commented out for clarity
+    // var chartOptionsBoth = {
+    //   animationEnabled: true,
+    //   theme: "light2",
+    //   title:{
+    //     text: "Kitten Size and Weight"
+    //   },
+    //   axisX:{
+    //     title: "Age in Weeks"
+    //   },
+    //   axisY: {
+    //     title: "Kitten Size(in.) and Weight(oz.)",
+    //     minimum: 0
+    //   },
+    //   toolTip:{
+    //     shared:true
+    //   },  
+    //   legend:{
+    //     cursor:"pointer",
+    //     verticalAlign: "bottom",
+    //     horizontalAlign: "left",
+    //     dockInsidePlotArea: true,
+    //     itemclick: toogleDataSeries
+    //   },
+    //   data: [{
+    //     type: "line",
+    //     showInLegend: true,
+    //     name: "Kitten Size",
+    //     markerType: "square",
+    //     color: "#F08080",
+    //     dataPoints: dataPointsArraySize
+    //   },
+    //   {
+    //     type: "line",
+    //     showInLegend: true,
+    //     name: "Kitten Weight",
+    //     lineDashType: "dash",
+    //     //yValueFormatString: "#,##0K",
+    //     dataPoints: dataPointsArrayWeight
+    //   }]
+    // };
+    // $("#chartContainerBoth").CanvasJSChart(chartOptionsBoth);
+    
+    // function toogleDataSeries(e){
+    //   if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    //     e.dataSeries.visible = false;
+    //   } else{
+    //     e.dataSeries.visible = true;
+    //   }
+    //   e.chart.render();
+    // }
+
+    // Make a chart with just the kitten size
+    var chartOptionsSize = {
       animationEnabled: true,
       theme: "light2",
       title:{
-        text: "Kitten Size and Weight"
+        text: "Kitten Size"
       },
       axisX:{
         title: "Age in Weeks"
       },
       axisY: {
-        title: "Kitten Size(in.) and Weight(oz.)",
+        title: "Kitten Size(in.)",
         minimum: 0
       },
       toolTip:{
         shared:true
       },  
-      legend:{
-        cursor:"pointer",
-        verticalAlign: "bottom",
-        horizontalAlign: "left",
-        dockInsidePlotArea: true,
-        itemclick: toogleDataSeries
-      },
       data: [{
         type: "line",
         showInLegend: true,
@@ -709,24 +762,37 @@ jQuery(document).ready(function( $ ){
         markerType: "square",
         color: "#F08080",
         dataPoints: dataPointsArraySize
+      }]
+    };
+    $("#chartContainerSize").CanvasJSChart(chartOptionsSize);
+    //  End of code for just kitten size
+
+    // Make a chart with just the kitten weight
+    var chartOptionsWeight = {
+      animationEnabled: true,
+      theme: "light2",
+      title:{
+        text: "Kitten Weight"
       },
-      {
+      axisX:{
+        title: "Age in Weeks"
+      },
+      axisY: {
+        title: "Kitten Weight(oz.)",
+        minimum: 0
+      },
+      toolTip:{
+        shared:true
+      },  
+      data: [{
         type: "line",
         showInLegend: true,
         name: "Kitten Weight",
-        lineDashType: "dash",
-        //yValueFormatString: "#,##0K",
+        markerType: "square",
+        color: "#F08080",
         dataPoints: dataPointsArrayWeight
       }]
     };
-    $("#chartContainer").CanvasJSChart(chartOptions);
-    
-    function toogleDataSeries(e){
-      if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-        e.dataSeries.visible = false;
-      } else{
-        e.dataSeries.visible = true;
-      }
-      e.chart.render();
-    }
+    $("#chartContainerWeight").CanvasJSChart(chartOptionsWeight);
+    // End of code for just kitten weight
   }  // end of function displayChart()
