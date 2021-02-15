@@ -122,7 +122,7 @@ jQuery(document).ready(function( $ ){
           if (allTopics[i].answer !== "") {
             thisDiv = $("#topicsCurrent");
             thisDiv.append(
-            "<h4 style='border-top: 2px solid black;'>Topic: </h4><p>" +
+            "<h4 style='border-top: 2px solid black;'>Question: </h4><p>" +
             allTopics[i].topic + "</p>");
             // if statement to determine if the current user is the same as the topic's author
             if (currentUser === allTopics[i].topicAuthor) {

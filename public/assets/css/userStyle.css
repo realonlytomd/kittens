@@ -43,6 +43,12 @@ button#signAdvice {
     margin-bottom: 10px;
 }
 
+#topicsCurrent, #unanswerQ {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
 button#topicButton, button#signupButton, 
 button#logoutButton, button#homeButton, button#usersButton {
     font-size: 26px;
