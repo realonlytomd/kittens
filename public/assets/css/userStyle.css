@@ -43,10 +43,17 @@ button#signAdvice {
     margin-bottom: 10px;
 }
 
-#topicsCurrent, #unanswerQ {
+/*#topicsCurrent, #unanswerQ {
     border-left: 2px solid black;
     border-right: 2px solid black;
     border-bottom: 2px solid black;
+} */
+
+div.makeBox {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 5px;
+    border: 2px solid black;
 }
 
 button#topicButton, button#signupButton, 
