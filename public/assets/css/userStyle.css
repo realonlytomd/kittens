@@ -115,11 +115,15 @@ button#loadTopics {
 
 .littleX, .littleXAnswer, .littleXTopic {
     color: red;
+    margin-bottom: 5px;
+    margin-top: -5px;
 }
 
 .littleE, .littleEAnswer, .littleETopic {
     margin-left: 40px;
     color: red;
+    margin-bottom: 5px;
+    margin-top: -5px;
 }
 
 
