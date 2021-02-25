@@ -131,9 +131,18 @@ jQuery(document).ready(function( $ ){
             if (currentUser === allTopics[i].topicAuthor) {
               addLittleButtonsTopic();
             }
+            // add a check if it starts with http, add an href
+            var hrefCheck = allTopics[i].answer.slice(0,4);
+            if (hrefCheck === "http") {
+              thisBox.append(
+                "<h4>Answer: </h4><a href=" + //<a href="url">link text</a>
+                allTopics[i].answer + ">" +
+                allTopics[i].answer + "</a>");
+            } else {
             thisBox.append(
-            "<h4>Answer: </h4><p>" +
-            allTopics[i].answer + "</p>");
+              "<h4>Answer: </h4><p>" +
+              allTopics[i].answer + "</p>");
+            }
             if (currentUser === allTopics[i].answerAuthor) {
               addLittleButtonsAnswer();
             }

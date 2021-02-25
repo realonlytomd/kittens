@@ -43,17 +43,12 @@ button#signAdvice {
     margin-bottom: 10px;
 }
 
-/*#topicsCurrent, #unanswerQ {
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
-} */
-
 div.makeBox {
     padding-left: 5px;
     padding-right: 5px;
     margin-bottom: 5px;
     border: 2px solid black;
+    word-wrap: break-word;
 }
 
 button#topicButton, button#signupButton, 
@@ -103,6 +98,15 @@ span#editThisKitten {
 
 p {
     margin-left: 30px;
+    margin-right: 5px;
+}
+
+a {
+    display: block;
+    margin: 0px 5px 10px 30px;
+   /* margin-left: 30px;
+    margin-right: 5px;
+    margin-bottom: 10px; */
 }
 
 #chartContainerSize, #chartContainerWeight {
