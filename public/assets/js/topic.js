@@ -135,8 +135,8 @@ jQuery(document).ready(function( $ ){
             var hrefCheck = allTopics[i].answer.slice(0,4);
             if (hrefCheck === "http") {
               thisBox.append(
-                "<h4>Answer: </h4><a href=" + //<a href="url">link text</a>
-                allTopics[i].answer + ">" +
+                "<h4>Answer: </h4><a class='answerA' href=" + //<a href="https://www.w3schools.com" target="_blank">Visit W3Schools</a>
+                allTopics[i].answer + " target='_blank'>" +
                 allTopics[i].answer + "</a>");
             } else {
             thisBox.append(
