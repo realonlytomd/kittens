@@ -131,6 +131,13 @@ jQuery(document).ready(function( $ ){
             if (currentUser === allTopics[i].topicAuthor) {
               addLittleButtonsTopic();
             }
+            // try this tomorrow: use a regex(?) to check anywhere in the string for a url
+            var str = allTopics[i].answer;
+            var urlRE= new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+");
+            console.table("this is the result of the new match: ", str.match(urlRE));
+            // Above is pretty good, will need various indeces from the relusting array
+            // to build the correct output - but it's basically solved. yea.
+            // Use the above instead of below to check all through a string
             // add a check if it starts with http, add an href
             var hrefCheck = allTopics[i].answer.slice(0,4);
             if (hrefCheck === "http") {
