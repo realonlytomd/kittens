@@ -131,25 +131,35 @@ jQuery(document).ready(function( $ ){
             if (currentUser === allTopics[i].topicAuthor) {
               addLittleButtonsTopic();
             }
-            // try this tomorrow: use a regex(?) to check anywhere in the string for a url
+            // use a regex(?) to check anywhere in the string for a url
             var str = allTopics[i].answer;
             var urlRE= new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+");
-            console.table("this is the result of the new match: ", str.match(urlRE));
-            // Above is pretty good, will need various indeces from the relusting array
-            // to build the correct output - but it's basically solved. yea.
-            // Use the above instead of below to check all through a string
-            // add a check if it starts with http, add an href
-            var hrefCheck = allTopics[i].answer.slice(0,4);
-            if (hrefCheck === "http") {
+            var arr = str.match(urlRE);
+            console.table("this is the result of the new match: ", arr);
+            if (arr !== null) {
+              console.log("the CORRECGT and separate url: " + arr[0]);
               thisBox.append(
-                "<h4>Answer: </h4><a class='answerA' href=" +
-                allTopics[i].answer + " target='_blank'>" +
-                allTopics[i].answer + "</a>");
+                "<h4>Answer: </h4><p>" +
+              allTopics[i].answer + "</p><a class='answerA' href=" +
+                arr[0] + " target='_blank'>" +
+                "[CLICK HERE TO FOLLOW LINK]" + "</a>");
             } else {
-            thisBox.append(
-              "<h4>Answer: </h4><p>" +
-              allTopics[i].answer + "</p>");
+              thisBox.append(
+                "<h4>Answer: </h4><p>" +
+                allTopics[i].answer + "</p>");
             }
+            // Use the above instead of below to check all through a string
+            // var hrefCheck = allTopics[i].answer.slice(0,4);
+            // if (hrefCheck === "http") {
+            //   thisBox.append(
+            //     "<h4>Answer: </h4><a class='answerA' href=" +
+            //     allTopics[i].answer + " target='_blank'>" +
+            //     allTopics[i].answer + "</a>");
+            // } else {
+            // thisBox.append(
+            //   "<h4>Answer: </h4><p>" +
+            //   allTopics[i].answer + "</p>");
+            // }
             if (currentUser === allTopics[i].answerAuthor) {
               addLittleButtonsAnswer();
             }
