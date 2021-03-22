@@ -137,7 +137,7 @@ jQuery(document).ready(function( $ ){
             var arr = str.match(urlRE);
             console.table("this is the result of the new match: ", arr);
             if (arr !== null) {
-              console.log("the CORRECGT and separate url: " + arr[0]);
+              console.log("the CORRECT and separate url: " + arr[0]);
               thisBox.append(
                 "<h4>Answer: </h4><p>" +
               allTopics[i].answer + "</p><a class='answerA' href=" +
