@@ -59,6 +59,25 @@ button#logoutButton, button#homeButton, button#usersButton {
     z-index: 1;
 }
 
+.padded-multiline {
+    line-height: 1.4; 
+    padding: 2px 0;
+  }
+
+.padded-multiline span { 
+    background-color: #f3f2f3;
+    color: black; 
+    display: inline;
+    padding: 3px;
+    /* Needs prefixing */
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+#carouselBackground {
+    margin-top: 0px;
+}
+
 input#feedKitten {
     margin-top: 5px;
 }
