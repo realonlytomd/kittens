@@ -24,10 +24,6 @@ body {
     height: 50px;
 }
 
- #userText {
-     z-index: 100;
- }
-
 .no-gutters {
     margin-left: 0px;
     margin-right: 0px;
@@ -57,6 +53,15 @@ button#logoutButton, button#homeButton, button#usersButton {
     margin-top: 10px;
     margin-bottom: 10px;
     z-index: 1;
+}
+
+#subRow { /* NOT CENTERING TEXT */
+    position: absolute;
+    z-index: 1;
+}
+
+#picRow {
+    position: relative;
 }
 
 .padded-multiline {
