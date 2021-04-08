@@ -55,10 +55,12 @@ button#logoutButton, button#homeButton, button#usersButton {
     z-index: 1;
 }
 
-#subRow { /* NOT CENTERING TEXT */
+#subRow {
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
-}
+}  
 
 #picRow {
     position: relative;
