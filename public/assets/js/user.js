@@ -227,6 +227,7 @@ jQuery(document).ready(function( $ ){
           }
       } else {
         // go back to login
+        console.log("Go Back To Home!");
         window.location.replace("/");
         return;
       }
