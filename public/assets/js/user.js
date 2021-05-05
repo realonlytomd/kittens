@@ -53,6 +53,7 @@ jQuery(document).ready(function( $ ){
   jQuery(document).ready(function( $ ){ feedKittenTimer(); });
   console.log("hello from user.js");
   console.log("from user.js, currentUserId is ", currentUserId);
+  console.log("from user.js, currentUserLoggedIn is ", currentUserLoggedIn);
   // This code is used if a user returns from the topics page,
   // or another page, and there is a feed kitten timer currently going off.
   // it acts as the same code in topic.js.
@@ -190,7 +191,7 @@ jQuery(document).ready(function( $ ){
     // to test a 1st time user goes to site, this line removes currentUserLoggedIn 
     // from localStorage
     // localStorage.removeItem("currentUserLoggedIn");
-    // console.log("just removed currentUserLoggedIn, it is: " + currentUserLoggedIn);
+    // console.log("just removed currentUserLoggedIn, should be same as above: " + currentUserLoggedIn);
     currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
     console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
     $.getJSON("/getCurrentUser" + currentUserId, function(nowCurrentUser) {
@@ -210,9 +211,9 @@ jQuery(document).ready(function( $ ){
       // test if it's the first time a user goes to site,
       // then currentUserLoggedIn would be undefined, and that user should be
       // sent back to index page instead of being allowed to stay on user page
-      if (currentUserLoggedIn === undefined) {
+      if (currentUserLoggedIn === undefined || currentUserLoggedIn === null) {
         // go back to login
-        console.log("Go Back To Home! currentUserLoggedIn is undefined!");
+        console.log("Go Back To Home! currentUserLoggedIn is undefined or null!");
         window.location.replace("/");
         return;
       } else if (currentUserLoggedIn === "true") {
