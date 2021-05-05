@@ -202,6 +202,8 @@ jQuery(document).ready(function( $ ){
       // need a timer to logout Users after a period of time.
       // add test here to see if user is logged in
       //
+      //THIS DID NOT SEEM TO FIX IT. ASLO, WHY DID FREDDIE'S BROWER NOT KNO
+      // PORTRAIT OR LANDSCAPE
       // test if it's the first time a user goes to site,
       // then currentUserLoggedIn would be undefined, and that user should be
       // sent back to index page instead of being allowed to stay on user page
