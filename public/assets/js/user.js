@@ -187,6 +187,10 @@ jQuery(document).ready(function( $ ){
     // moved this out of the $.getJSON to get rid of warnings
     // supplies current user name to page.
     $("span#currentUser").text(currentUser);
+    // to test a 1st time user goes to site, this line removes currentUserLoggedIn 
+    // from localStorage
+    // localStorage.removeItem("currentUserLoggedIn");
+    // console.log("just removed currentUserLoggedIn, it is: " + currentUserLoggedIn);
     currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
     console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
     $.getJSON("/getCurrentUser" + currentUserId, function(nowCurrentUser) {
@@ -200,20 +204,18 @@ jQuery(document).ready(function( $ ){
       // currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
       // console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
       // need a timer to logout Users after a period of time.
-      // add test here to see if user is logged in
       //
-      //THIS DID NOT SEEM TO FIX IT. ASLO, WHY DID FREDDIE'S BROWER NOT KNO
+      //THIS DID NOT SEEM TO FIX IT. ASLO, WHY DID FREDDIE'S BROWER NOT KNOW
       // PORTRAIT OR LANDSCAPE
       // test if it's the first time a user goes to site,
       // then currentUserLoggedIn would be undefined, and that user should be
       // sent back to index page instead of being allowed to stay on user page
       if (currentUserLoggedIn === undefined) {
         // go back to login
-        console.log("Go Back To Home!");
+        console.log("Go Back To Home! currentUserLoggedIn is undefined!");
         window.location.replace("/");
         return;
-      }
-      if (currentUserLoggedIn === "true") {
+      } else if (currentUserLoggedIn === "true") {
         // I do save the name of the current user in local storage from the
         // login.js page. This is a good check for errors.
         console.log("!!!CHECKING: nowCurrentUser[0].name: " + nowCurrentUser[0].name +
