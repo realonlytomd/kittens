@@ -202,6 +202,15 @@ jQuery(document).ready(function( $ ){
       // need a timer to logout Users after a period of time.
       // add test here to see if user is logged in
       //
+      // test if it's the first time a user goes to site,
+      // then currentUserLoggedIn would be undefined, and that user should be
+      // sent back to index page instead of being allowed to stay on user page
+      if (currentUserLoggedIn === undefined) {
+        // go back to login
+        console.log("Go Back To Home!");
+        window.location.replace("/");
+        return;
+      }
       if (currentUserLoggedIn === "true") {
         // I do save the name of the current user in local storage from the
         // login.js page. This is a good check for errors.

@@ -35,7 +35,7 @@ jQuery(document).ready(function( $ ){
   }
 
   // make sure visitors (not logged in Users) can't see the form to answer topics 
-  if (currentUserLoggedIn === "false" || currentUserLoggedIn === null) {
+  if (currentUserLoggedIn === "false" || currentUserLoggedIn === undefined) {
     $("#loggedInTopicForm").hide();
     $("#visitorTopicForm").show();
     $("#unansweredTitle").hide();
@@ -239,7 +239,7 @@ jQuery(document).ready(function( $ ){
   $(document).on("click", ".answerMe", function(event) {
     event.preventDefault();
     // first, make sure the user is registered and logged in
-    if (currentUserLoggedIn === "false" || currentUserLoggedIn === null) {
+    if (currentUserLoggedIn === "false" || currentUserLoggedIn === undefined) {
       $("#notLoggedIn").modal("show");
     } else {
       // the code .modal("show") brings up the modal from a click event, not .show() as used above
