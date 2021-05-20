@@ -22,9 +22,9 @@
     "array-rearrange": "^2.2.2",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "express-handlebars": "^4.0.3",
+    "express-handlebars": "^4.0.6",
     "moment": "^2.29.1",
-    "mongoose": "^5.11.10",
+    "mongoose": "^5.12.10",
     "morgan": "^1.10.0",
     "request": "^2.88.2",
     "sort-ids": "^2.1.0"
