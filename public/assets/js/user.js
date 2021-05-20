@@ -206,11 +206,13 @@ jQuery(document).ready(function( $ ){
       // console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
       // need a timer to logout Users after a period of time.
       //
-      //THIS DID NOT SEEM TO FIX IT. ASLO, WHY DID FREDDIE'S BROWER NOT KNOW
+      //THIS DID NOT SEEM TO FIX IT. ASLO, WHY DID FREDDIE'S BROWER (Safari) NOT KNOW
       // PORTRAIT OR LANDSCAPE
       // test if it's the first time a user goes to site,
       // then currentUserLoggedIn would be undefined, and that user should be
       // sent back to index page instead of being allowed to stay on user page
+      // Checking for null should account for 1st time user, as well as if
+      // the variable just exists
       if (currentUserLoggedIn === undefined || currentUserLoggedIn === null) {
         // go back to login
         console.log("Go Back To Home! currentUserLoggedIn is undefined or null!");
