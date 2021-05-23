@@ -3,23 +3,16 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-//var axios = require("axios");
-//var cheerio = require("cheerio");
-// var cheerioAdv = require("cheerio-advanced-selectors");
+// these two are from showing images in mongodb process:
+var fs = require('fs');
+var path = require('path');
 
-// // require array sort npms
-// // requirejs added so require can be used client side
-// var requirejs = require('requirejs');
-// requirejs.config({
-//   //Pass the top-level main.js/index.js require
-//   //function to requirejs so that node modules
-//   //are loaded relative to the top-level JS file.
-//   nodeRequire: require
 
 var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
 
 // Require all models
+// MIGHT not need this here - leftover from news scraper app that had everything in server file
 var db = require("./models");
 
 // make port ready for deployment on heroku as well as local
@@ -30,10 +23,26 @@ var app = express();
 
 //  morgan logger for logging requests
 app.use(logger("dev"));
+
 //  body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: false }));
 //  express.static to serve the public folder as a static directory
 app.use(express.static("public"));
+
+//following is more from images upload to mongodb process - step 5
+//set up multer for storing uploaded files  -- MIGHT BELONG ELSEWHERE
+var multer = require('multer');
+ 
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+ 
+var upload = multer({ storage: storage });
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB

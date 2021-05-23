@@ -124,7 +124,8 @@ jQuery(document).ready(function( $ ){
             breed: $("#kittenBreedInput").val().trim(),
             furlength: $("#kittenFurlengthInput").val().trim(),
             furcolor: $("#kittenFurcolorInput").val().trim(),
-            sex: $("#kittenSexInput").val().trim()
+            sex: $("#kittenSexInput").val().trim(),
+            img: $("kittenImageInput").val().trim()
           }
       })
       .then(function(dataKittenUser) {
