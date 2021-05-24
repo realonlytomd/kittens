@@ -29,21 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //  express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
-//following is more from images upload to mongodb process - step 5
-//set up multer for storing uploaded files  -- MIGHT BELONG ELSEWHERE
-var multer = require('multer');
- 
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads')
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
-});
- 
-var upload = multer({ storage: storage });
-
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
 //may not need this since I added the function(err) callback below

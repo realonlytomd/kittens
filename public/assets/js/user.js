@@ -130,7 +130,7 @@ jQuery(document).ready(function( $ ){
       })
       .then(function(dataKittenUser) {
           console.log("User after creation of new kitten (dataKittenUser) in user.js: ", dataKittenUser);
-          // save id of current (last created kitten)
+          // save id of current (last created) kitten
           currentKittenId = dataKittenUser.kitten[dataKittenUser.kitten.length - 1];
           console.log("currentKittenId: " + currentKittenId);
           // empty out the input fields
@@ -139,11 +139,18 @@ jQuery(document).ready(function( $ ){
           $("#kittenFurlengthInput").val("");
           $("#kittenFurcolorInput").val("");
           $("#kittenSexInput").val("");
+          $("#kittenImageInput").val("");
           // Hide the current modal, then bring up 2nd modal that allows user to enter kitten metrics.
           $("#newKittenModal").modal("hide");
           $("#newKittenMetricModal").modal("show");
         });
   });
+
+  // // just a test - when user selects the button with the id=kittenImageInput, make that modal go away
+  // $(document).on("click", "#kittenImageInput", function(event){
+  //   $("#newKittenModal").modal("hide");
+  // });
+  // //this did NOT reveal the modal to choose a file - ugh
 
   // then, the user enters the metrics for a kitten in the modal, and submits it.
   // that reference id is stored in the kitten document

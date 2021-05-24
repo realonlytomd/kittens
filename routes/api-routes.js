@@ -11,6 +11,20 @@ var db = require("../models");
 var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
 
+//following is more from images upload to mongodb process - step 5
+//set up multer for storing uploaded files  -- MIGHT BELONG ELSEWHERE
+var multer = require("multer");
+ 
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+var upload = multer({ storage: storage });
+
 // initialize sorted arrays
 var sortedIds = [];
 var sortedAges = [];
@@ -216,7 +230,7 @@ module.exports = function(router) {
             db.Kitten.create(req.body)
             .then(function(dbKitten) {
                 console.log("AFTER .CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
-                // pushing the new kitten name into the document kitten array
+                // pushing the new kitten id into the user's document kitten array
             return db.User.findOneAndUpdate(
                 { _id: req.params.id },
                 { $push: { kitten: dbKitten._id } }, 
