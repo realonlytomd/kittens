@@ -295,6 +295,12 @@ jQuery(document).ready(function( $ ){
       curkat[0].furlength + "<br>Fur Color: " +
       curkat[0].furcolor + "<br>Sex: " +
       curkat[0].sex +  "</h4>");
+      // add a way here to add a file of a picture of the kitten
+      //
+      $("#kittenMetrics").append("<div class='form-group'>" +
+      "<label for='kittenImageInput'>Upload Pic of Kitten:</label>" +
+      "<input type='file' class='form-control' id='kittenImageInput' name='image'></div>");
+      //
       // print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
         curkat[0]._id + ">Add Metrics</button><br><br><h5>Click in a Metric Box to Delete or Edit</h5>");
