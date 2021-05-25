@@ -298,8 +298,8 @@ jQuery(document).ready(function( $ ){
       // add a way here to add a file of a picture of the kitten
       //
       $("#kittenMetrics").append("<div class='form-group'>" +
-      "<label for='kittenImageInput'>Upload Pic of Kitten:</label>" +
-      "<input type='file' class='form-control' id='kittenImageInput' name='image' value=''></div>");
+      "<label for='kittenImageInput'>Upload Picture of Kitten:</label>" +
+      "<input type='file' class='form-control' id='kittenImageInput' name='image' value=' ' required></div>");
       //
       // print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
@@ -518,9 +518,13 @@ jQuery(document).ready(function( $ ){
  
  //  user clicks anywhere on document inside of nav and footer
   $(document).on("click", ".wrapper", function(event) {
-    event.preventDefault();
-    //console.log("user has clicked on the wrapper!");
-    //console.log("littleButton is: " + littleButton);
+    // this event.preventDefault() is commented out because I have an input field, 
+    // type=file that wasn't bringing up the choose file browser window.
+    // Dont know if this is a problem. Maybe check if there are other click events while using
+    // this portion of code.
+    //event.preventDefault();  
+    console.log("user has clicked on the wrapper!");
+    console.log("littleButton is: " + littleButton);
     if (littleButton === true) { // the edit and delete buttons should be removed if clicked
       // anywhere but themselves
       //console.log("Check to see if littleButton is true: " + littleButton);
@@ -553,7 +557,7 @@ jQuery(document).ready(function( $ ){
         console.log("AFTER clicked .metricGroup, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
         addButtons();
       } else { // user has clicked elsewhere than the metric info div
-        //console.log("the current target (click) is NOT the .metricGroup");
+        console.log("the current target (click) is NOT the .metricGroup");
         // user has clicked somewhere on page but not on .metricInfo
         // don't do anything. (maybe here add if other classes are clicked??)
       }
