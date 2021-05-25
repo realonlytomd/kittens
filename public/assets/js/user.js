@@ -299,7 +299,7 @@ jQuery(document).ready(function( $ ){
       //
       $("#kittenMetrics").append("<div class='form-group'>" +
       "<label for='kittenImageInput'>Upload Pic of Kitten:</label>" +
-      "<input type='file' class='form-control' id='kittenImageInput' name='image'></div>");
+      "<input type='file' class='form-control' id='kittenImageInput' name='image' value=''></div>");
       //
       // print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
