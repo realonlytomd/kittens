@@ -96,7 +96,7 @@ jQuery(document).ready(function( $ ){
   });
 
   // this function happens when the user clicks the button
-  // to get the modal with the form to enter the name for a new kitten
+  // to get the modal with the form to enter the name, etc. for a new kitten
   // It populates the specific user in the db with the kitten and metric schema
   $(document).on("click", "#createKitten", function(event) {
     event.preventDefault();

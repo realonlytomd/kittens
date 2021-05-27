@@ -14,6 +14,7 @@ var reorder = require("array-rearrange");
 //following is more from images upload to mongodb process - step 5
 //set up multer for storing uploaded files  -- MIGHT BELONG ELSEWHERE
 var multer = require("multer");
+
  
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -24,6 +25,8 @@ var storage = multer.diskStorage({
     }
 });
 var upload = multer({ storage: storage });
+//and from Step 1 of uploading images to mongodb:
+var fs = require('fs');
 
 // initialize sorted arrays
 var sortedIds = [];
@@ -223,11 +226,13 @@ module.exports = function(router) {
                 });
         });
 
-    // need to find the correct user, then fill in the data (name) with the new kitten array
+    // need to find the correct user, then fill in the data (name, etc.) with the new kitten array
     router.post("/createKitten/:id", function(req, res) {
+        console.log("BEFORE CREATE KITTEN - req: ", req);
         console.log("BEFORE CREATE KITTEN - req.body: ", req.body);
+        console.log("BEFORE CREATE KITTEN - req.file: ", req.file);
         //insert creation of the kitten's metrics
-            db.Kitten.create(req.body)
+            db.Kitten.create(req.body) // this does everything above the img
             .then(function(dbKitten) {
                 console.log("AFTER .CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
                 // pushing the new kitten id into the user's document kitten array
@@ -239,13 +244,36 @@ module.exports = function(router) {
             })
             .then(function(dbUser) {
                 // send back the correct user with new data in the kitten arrays
-                res.json(dbUser);
                 console.log("AFTER CORRECT USER UPDATED - dbUser: ", dbUser);
+                res.json(dbUser);
             })
             .catch(function(err) {
             // If an error occurred, send it to the client
             res.json(err);
             });
+    });
+
+    // This is Step 8 from notes on uploading the images chosen by the user
+    //  I think it goes directly above, as the img is part of the description 
+    // of the kitten
+    router.post('/', upload.single('image'), (req, res, next) => {
+        console.log("from api-routes step 8, req.file: ", req.file);
+        var obj = {
+            img: {
+                data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+                contentType: 'image/png'
+            }
+        }
+        imgModel.create(obj, (err, item) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                // item.save();
+                console.log("from api-routes step 8, res: ", res);
+                res.redirect('/');
+            }
+        });
     });
 
 
