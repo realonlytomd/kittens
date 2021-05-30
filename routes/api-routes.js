@@ -15,7 +15,6 @@ var reorder = require("array-rearrange");
 //set up multer for storing uploaded files  -- MIGHT BELONG ELSEWHERE
 var multer = require("multer");
 
- 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads')
@@ -228,13 +227,11 @@ module.exports = function(router) {
 
     // need to find the correct user, then fill in the data (name, etc.) with the new kitten array
     router.post("/createKitten/:id", function(req, res) {
-        console.log("BEFORE CREATE KITTEN - req: ", req);
         console.log("BEFORE CREATE KITTEN - req.body: ", req.body);
-        console.log("BEFORE CREATE KITTEN - req.file: ", req.file);
         //insert creation of the kitten's metrics
             db.Kitten.create(req.body) // this does everything above the img
             .then(function(dbKitten) {
-                console.log("AFTER .CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
+                console.log("AFTER CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
                 // pushing the new kitten id into the user's document kitten array
             return db.User.findOneAndUpdate(
                 { _id: req.params.id },
@@ -264,12 +261,12 @@ module.exports = function(router) {
                 contentType: 'image/png'
             }
         }
-        imgModel.create(obj, (err, item) => {
+        db.Kitten.create(obj, (err, item) => {
             if (err) {
                 console.log(err);
             }
             else {
-                // item.save();
+                item.save();  // they commented out this line???
                 console.log("from api-routes step 8, res: ", res);
                 res.redirect('/');
             }
@@ -323,8 +320,8 @@ module.exports = function(router) {
     //This route gets one kitten document from kitten collection
     router.get("/getAKitten:id", function(req, res) {
         console.log("inside api-routes: req.params: ", req.params);
-        // need to find the correct user, THEN all their kittens, 
-        db.Kitten.find({ _id: req.params.id})
+        // need to find the correct kitten, and retrieve it's data, 
+        db.Kitten.find({ _id: req.params.id })
             .then(function(dbAKitten) {
                 res.json(dbAKitten);
                 console.log("from  route /getAkitten:id, dbAKitten: ", dbAKitten);
@@ -334,6 +331,19 @@ module.exports = function(router) {
             // However, if an error occurred, send it to the client
             res.json(err);
             });
+    });
+
+    // this route gets the image on a chosen kitten
+    router.get('/', (req, res) => {
+        db.Kitten.find({ _id: req.params.id }, (err, items) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send('An error occurred', err);
+            }
+            else {
+                res.render('imagesPage', { items: items });
+            }
+        });
     });
 
     //This route gets metric document from kitten collection

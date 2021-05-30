@@ -124,8 +124,7 @@ jQuery(document).ready(function( $ ){
             breed: $("#kittenBreedInput").val().trim(),
             furlength: $("#kittenFurlengthInput").val().trim(),
             furcolor: $("#kittenFurcolorInput").val().trim(),
-            sex: $("#kittenSexInput").val().trim(),
-            img: $("kittenImageInput").val().trim()
+            sex: $("#kittenSexInput").val().trim()
           }
       })
       .then(function(dataKittenUser) {
@@ -139,18 +138,13 @@ jQuery(document).ready(function( $ ){
           $("#kittenFurlengthInput").val("");
           $("#kittenFurcolorInput").val("");
           $("#kittenSexInput").val("");
-          $("#kittenImageInput").val("");
           // Hide the current modal, then bring up 2nd modal that allows user to enter kitten metrics.
           $("#newKittenModal").modal("hide");
           $("#newKittenMetricModal").modal("show");
         });
   });
 
-  // // just a test - when user selects the button with the id=kittenImageInput, make that modal go away
-  // $(document).on("click", "#kittenImageInput", function(event){
-  //   $("#newKittenModal").modal("hide");
-  // });
-  // //this did NOT reveal the modal to choose a file - ugh
+
 
   // then, the user enters the metrics for a kitten in the modal, and submits it.
   // that reference id is stored in the kitten document
@@ -295,17 +289,20 @@ jQuery(document).ready(function( $ ){
       curkat[0].furlength + "<br>Fur Color: " +
       curkat[0].furcolor + "<br>Sex: " +
       curkat[0].sex +  "</h4>");
-      // add a way here to add a file of a picture of the kitten
+      // add the current picture of the kitten, retrieved from the database
+      // This is from step 10 of adding a picture to mongodvb
+      // I've already retrieved data from the chosen kitten (curkat)
+      $("#kittenMetrics").append("<h1>Uploaded Images</h1>" +
+        "<div><% items.forEach(function(image) { %><div>" +
+        "<div><img src='data:image/<%=image.img.contentType%>;base64," +
+        "<%=image.img.data.toString('base64')%>'><div>" +
+        "</div></div></div><% }) %></div>");
       //
-      $("#kittenMetrics").append("<div class='form-group'>" +
-      "<label for='kittenImageInput'>Upload Picture of Kitten:</label>" +
-      "<input type='file' class='form-control' id='kittenImageInput' name='image' value=' ' required></div>");
-      //
-      // print to DOM: button with id of kitten to add metrics to kitten
+      // Add Metriccs Button - print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
         curkat[0]._id + ">Add Metrics</button><br><br><h5>Click in a Metric Box to Delete or Edit</h5>");
-      console.log("curkat[0].metric: ", curkat[0].metric);
-      console.log("curkat[0].metric.length: " + curkat[0].metric.length);
+        console.log("curkat[0].metric: ", curkat[0].metric);
+        console.log("curkat[0].metric.length: " + curkat[0].metric.length);
 
       // this .forEach goes through each metric id to obtain associated metrics from db
       curkat[0].metric.forEach(innerForEach);
