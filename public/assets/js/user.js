@@ -144,30 +144,6 @@ jQuery(document).ready(function( $ ){
         });
   });
 
-  // then, the user enters the file, for a new Image for the kitten in the modal, and submits it.
-    // that data for a new image is stored in the already populated user document
-    $(document).on("click", "#submitNewImageKitten", function(event) {
-      event.preventDefault();
-        $.ajax({
-            method: "POST",
-            url: "/createImageKitten/" + currentUserId,
-            data: {
-              img: $("#kittenImageInput").val().trim() // but I think this should be someting else
-            }
-        })
-        .then(function(dataImageKittenUser) {
-            console.log("User after creation of new kitten Image(dataImageKittenUser) in user.js: ", dataImageKittenUser);
-            // save id of current (last created) kitten
-            currentKittenId = dataKittenUser.kitten[dataKittenUser.kitten.length - 1];
-            console.log("currentKittenId: " + currentKittenId);
-            // empty out the input fields
-            $("#kittenImageInput").val("");
-            // Hide the current modal, then bring up 2nd modal that allows user to enter kitten metrics.
-            $("#newKittenImageModal").modal("hide");
-          });
-    });
-
-
 
   // then, the user enters the metrics for a kitten in the modal, and submits it.
   // that reference id is stored in the kitten document
@@ -315,6 +291,8 @@ jQuery(document).ready(function( $ ){
       // add the current picture of the kitten, retrieved from the database
       // This is from step 10 of adding a picture to mongodvb
       // I've already retrieved data from the chosen kitten (curkat)
+      // NEED to add if statement, if no picture (after retrieving curkat), 
+      //then don't print this.
       $("#kittenMetrics").append("<h1>Uploaded Images</h1>" +
         "<div><% items.forEach(function(image) { %><div>" +
         "<div><img src='data:image/<%=image.img.contentType%>;base64," +

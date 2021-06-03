@@ -251,9 +251,8 @@ module.exports = function(router) {
     });
 
     // This is Step 8 from notes on uploading the images chosen by the user
-    //  I think it goes directly above, as the img is part of the description 
-    // of the kitten
-    router.post('/', upload.single('image'), (req, res, next) => {
+    // It's not being called from user.js, but directly from html form
+    router.post("/createImageKitten/:id", upload.single('image'), (req, res, next) => {
         console.log("from api-routes step 8, req.file: ", req.file);
         var obj = {
             img: {
