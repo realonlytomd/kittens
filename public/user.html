@@ -123,12 +123,15 @@
             </div>
             <div class="modal-body">
               <!-- entry form for entering the image for the new kitten-->
-              <div class="form-group">
-                <label for="kittenImageInput">Upload Picture of Kitten:</label>
-                <input type="file" class="form-control" id="kittenImageInput" name="kittenImageInput" value="" required>
-              </div>
-              <button type="submit" id="submitNewImageKitten">Submit</button>
+              <form action="/createImageKitten" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="kittenImageInput">Upload Picture of Kitten:</label>
+                  <input type="file" class="form-control" id="kittenImageInput" name="kittenImageInput" value="" required>
+                </div>
+                <button type="submit" id="submitNewImageKitten">Submit</button>
+              </form>
             </div>
+              
             <div class="modal-footer">
               <button type="button" data-dismiss="modal">Close</button>
             </div>
