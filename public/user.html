@@ -123,12 +123,12 @@
             </div>
             <div class="modal-body">
               <!-- entry form for entering the image for the new kitten-->
-              <form action="/createImageKitten" method="POST" enctype="multipart/form-data">
+              <form id="kittenImageInputForm" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="kittenImageInput">Upload Picture of Kitten:</label>
                   <input type="file" class="form-control" id="kittenImageInput" name="kittenImageInput" value="">
                 </div>
-                <button type="submit" id="submitNewImageKitten">Submit</button>
+                <button type="submit" id="submitNewKittenImage">Submit</button>
               </form>
             </div>
               
@@ -139,6 +139,7 @@
         </div>
       </div>
       <!-- End of Bootstrap modal code -->
+
       <!-- Modal for asking user if they're sure they want to delete an existing kitten -->
       <div class="modal fade" id="deleteForSure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

@@ -451,6 +451,37 @@ jQuery(document).ready(function( $ ){
         });
     });
 
+    // This function processis the image of the kitten chosen by the user
+    // From tutorial on taking a form in html, and ajax call here with multiform
+    $(document).on("click", "#submitNewKittenImage", function(event) {
+      event.preventDefault();
+      console.log("inside submitNewKittenImage!");
+      //get form from html
+      var imageform = $("#kittenImageInputForm")[0];
+      // Create an FormData object called imageData
+      var imageData = new FormData(imageform);
+      // testing extra field for the FormData
+      //imageData.append("CustomField", "This is some extra data, testing");
+      // disable the form's submit button
+      $("#submitNewKittenImage").prop("disabled", true);
+      $.ajax({
+        type: "POST",
+        enctype: "multipart/form-data",
+        url: "/createImageKitten/" + currentKittenId,
+        data: imageData,
+        processData: false,
+        contentType: false
+      })
+      .then(function(imagedb) {
+          console.log("after .then for submitting an image, imagedb: ", imagedb);
+          // what do I do with imagedb? 
+          // then hide this modal
+          $("#newKittenImageModal").modal("hide");
+          //reload the kitten div showing the changes
+          //writeKittenDom();
+        });
+    });
+
     // pull up the modal to ask user if they're sure they want to delete the kitten
   $(document).on("click", "#deleteKitten", function(event) {
     event.preventDefault();

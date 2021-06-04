@@ -229,7 +229,7 @@ module.exports = function(router) {
     router.post("/createKitten/:id", function(req, res) {
         console.log("BEFORE CREATE KITTEN - req.body: ", req.body);
         //insert creation of the kitten's metrics
-            db.Kitten.create(req.body) // this does everything above the img
+            db.Kitten.create(req.body) // this does everything above the image
             .then(function(dbKitten) {
                 console.log("AFTER CREATE KITTEN - api-routes.js, dbKitten: ", dbKitten);
                 // pushing the new kitten id into the user's document kitten array
@@ -265,9 +265,10 @@ module.exports = function(router) {
                 console.log(err);
             }
             else {
+                console.log(" after the else in creatImageKitten/:id, item: ", item);
                 item.save();  // they commented out this line???
-                console.log("from api-routes step 8, res: ", res);
-                res.redirect('/');
+                console.log("after the else in creatImageKitten/:id, res: ", res);
+                res.redirect(item);  // don't know if this should be item or anything else
             }
         });
     });
