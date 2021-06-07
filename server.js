@@ -13,7 +13,7 @@ var reorder = require("array-rearrange");
 
 // Require all models
 // MIGHT not need this here - leftover from news scraper app that had everything in server file
-var db = require("./models");
+var imgModel = require('./model');
 
 // make port ready for deployment on heroku as well as local
 var PORT = process.env.PORT || 3000;
@@ -28,6 +28,57 @@ app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 //  express.static to serve the public folder as a static directory
 app.use(express.static("public"));
+
+//Step 5
+var multer = require('multer');
+ 
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+ 
+var upload = multer({ storage: storage });
+
+// Step 7 - the GET request handler that provides the HTML UI
+ 
+app.get('/', (req, res) => {
+  imgModel.find({}, (err, items) => {
+      if (err) {
+          console.log(err);
+          res.status(500).send('An error occurred', err);
+      }
+      else {
+          res.render('user', { items: items });
+      }
+  });
+});
+
+// Step 8 - the POST handler for processing the uploaded file
+ 
+app.post('/', upload.single('image'), (req, res, next) => {
+ 
+  var obj = {
+      name: req.body.name,
+      desc: req.body.desc,
+      img: {
+          data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+          contentType: 'image/png'
+      }
+  }
+  imgModel.create(obj, (err, item) => {
+      if (err) {
+          console.log(err);
+      }
+      else {
+          item.save();
+          res.redirect('/');
+      }
+  });
+});
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB

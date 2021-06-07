@@ -351,10 +351,10 @@ jQuery(document).ready(function( $ ){
               sortedAges = sortedMetrics.ages;
               sortedWeights = sortedMetrics.weights;
               sortedSizes = sortedMetrics.sizes;
-              console.log("CHECK THIS!!!! sortedMetricIds: " + sortedMetricIds);
-              console.log("sortedAges: " + sortedAges);
-              console.log("sortedWights: " + sortedWeights);
-              console.log("sortedSizes: " + sortedSizes);
+              // console.log("CHECK THIS!!!! sortedMetricIds: " + sortedMetricIds);
+              // console.log("sortedAges: " + sortedAges);
+              // console.log("sortedWights: " + sortedWeights);
+              // console.log("sortedSizes: " + sortedSizes);
               // call the function to print arrays to the DOM
               showDom();
             });
@@ -393,7 +393,7 @@ jQuery(document).ready(function( $ ){
           sortedAges = [];
           sortedWeights = [];
           sortedSizes = [];
-          console.log("CHECK THIS TOO!!!! sortedMetricIds: " + sortedMetricIds);
+          //console.log("CHECK THIS TOO!!!! sortedMetricIds: " + sortedMetricIds);
       }
     });
   }
@@ -451,8 +451,10 @@ jQuery(document).ready(function( $ ){
         });
     });
 
-    // This function processis the image of the kitten chosen by the user
+    // This function processes the image of the kitten chosen by the user
     // From tutorial on taking a form in html, and ajax call here with multiform
+    // will temporarily not use this...but not commenting it out
+    // as I'll not use this particular id for submitting
     $(document).on("click", "#submitNewKittenImage", function(event) {
       event.preventDefault();
       console.log("inside submitNewKittenImage!");
@@ -552,8 +554,8 @@ jQuery(document).ready(function( $ ){
     // Dont know if this is a problem. Maybe check if there are other click events while using
     // this portion of code.
     //event.preventDefault();  
-    console.log("user has clicked on the wrapper!");
-    console.log("littleButton is: " + littleButton);
+    // console.log("user has clicked on the wrapper!");
+    // console.log("littleButton is: " + littleButton);
     if (littleButton === true) { // the edit and delete buttons should be removed if clicked
       // anywhere but themselves
       //console.log("Check to see if littleButton is true: " + littleButton);
@@ -583,10 +585,10 @@ jQuery(document).ready(function( $ ){
         thisAge = $(event.target).attr("data_age");
         thisWeight = $(event.target).attr("data_weight");
         thisSize = $(event.target).attr("data_size");
-        console.log("AFTER clicked .metricGroup, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
+        //console.log("AFTER clicked .metricGroup, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
         addButtons();
       } else { // user has clicked elsewhere than the metric info div
-        console.log("the current target (click) is NOT the .metricGroup");
+        //console.log("the current target (click) is NOT the .metricGroup");
         // user has clicked somewhere on page but not on .metricInfo
         // don't do anything. (maybe here add if other classes are clicked??)
       }
@@ -599,7 +601,7 @@ jQuery(document).ready(function( $ ){
     target.css({
       'border-width': '5px'
     });
-    console.log("INSIDE addButtons, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
+    //console.log("INSIDE addButtons, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
     // append the delete and edit buttons, with data of metric document id, and kitten document id
     target.append("<button type='button' class='btn btn-default btn-xs littleX' data_idKitten=" + 
     thisKittenId + " data_id=" + 
@@ -624,13 +626,13 @@ jQuery(document).ready(function( $ ){
   // Function to delete one set of metric info of a kitten, selected by user
   $(document).on("click", ".littleX", function(event) {
     event.preventDefault();
-    console.log("Inside DELETE set of metric info!");
+    //console.log("Inside DELETE set of metric info!");
     removeButtons();
     // delete this group of metric info from the db,
     // First, the id associated with these metrics, and the id of the kitten
     thisId = $(this).attr("data_id");
     thisKittenId = $(this).attr("data_idKitten");
-    console.log("AFTER clicking littleX, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
+    //console.log("AFTER clicking littleX, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
     // DELETE these specific metrics from the metrics collection
     $.ajax({
       method: "DELETE",
@@ -655,7 +657,7 @@ jQuery(document).ready(function( $ ){
   // Function to edit one set of metric info of a kitten, selected by user
   $(document).on("click", ".littleE", function(event) {
     event.preventDefault();
-    console.log("Inside EDIT set of metric info!");
+    //console.log("Inside EDIT set of metric info!");
     $(".metricInfo").css({
       'border-width': '1px'
     });
@@ -733,22 +735,22 @@ jQuery(document).ready(function( $ ){
       "width" : "100%"
     });
     // need to convert the arrays of strings to arrays of numbers
-    console.log("before convert, sortedAges: ", sortedAges);
+    // console.log("before convert, sortedAges: ", sortedAges);
     var sortedAgesNumb = sortedAges.map(Number);
     var sortedSizesNumb = sortedSizes.map(Number);
     var sortedWeightsNumb = sortedWeights.map(Number);
-    console.log("after convert, sortedAges: ", sortedAgesNumb);
+    // console.log("after convert, sortedAges: ", sortedAgesNumb);
     
     for (i=0; i<sortedAgesNumb.length; i++) {
       resultObjectSize={ x : sortedAgesNumb[i] , y : sortedSizesNumb[i]};
       resultObjectWeight={ x : sortedAgesNumb[i] , y : sortedWeightsNumb[i]};
-      console.log("resultObjectSize: ", resultObjectSize);
-      console.log("resultObjectWeight: ", resultObjectWeight);
+      // console.log("resultObjectSize: ", resultObjectSize);
+      // console.log("resultObjectWeight: ", resultObjectWeight);
       dataPointsArraySize.push(resultObjectSize);
       dataPointsArrayWeight.push(resultObjectWeight);
     }
-    console.log("HERE! the new dataPointsArraySize: ", dataPointsArraySize);
-    console.log("HERE! the new dataPointsArrayWeight: ", dataPointsArrayWeight);
+    // console.log("HERE! the new dataPointsArraySize: ", dataPointsArraySize);
+    // console.log("HERE! the new dataPointsArrayWeight: ", dataPointsArrayWeight);
     
     // Putting both charts together has been commented out for clarity
     // var chartOptionsBoth = {

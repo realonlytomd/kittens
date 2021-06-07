@@ -40,17 +40,17 @@ module.exports = function(router) {
     // and perform sort fuctions (using require("sort-ids")) that isn't available client side,
     // and then feed it back to the client to be displayed on DOM
     router.get("/sortArrays/", function(req, res) {
-        console.log("from /sortArrays, req.query: ", req.query);
-        console.log("from /sortArrays, req.query.ids: ", req.query.ids);
-        console.log("from /sortArrays, req.query.ages: ", req.query.ages);
-        console.log("from /sortArrays, req.query.weights: ", req.query.weights);
-        console.log("from /sortArrays, req.query.sizes: ", req.query.sizes);
+        // console.log("from /sortArrays, req.query: ", req.query);
+        // console.log("from /sortArrays, req.query.ids: ", req.query.ids);
+        // console.log("from /sortArrays, req.query.ages: ", req.query.ages);
+        // console.log("from /sortArrays, req.query.weights: ", req.query.weights);
+        // console.log("from /sortArrays, req.query.sizes: ", req.query.sizes);
         // need to convert the numbers in ages array from strings to number
         var kittenAges = req.query.ages;
         numberKittenAges = kittenAges.map(Number);
-        console.log("numberKittenAges: ", numberKittenAges);
+        // console.log("numberKittenAges: ", numberKittenAges);
         var newIndex = sortAges(numberKittenAges);
-        console.log("newIndex: ", newIndex);
+        // console.log("newIndex: ", newIndex);
         // reorder method below seems to be breaking, so do a for loop to reorder arrays
         for (var i=0; i<numberKittenAges.length; i++) {
             sortedIds[i]=req.query.ids[newIndex[i]];
@@ -58,17 +58,17 @@ module.exports = function(router) {
             sortedWeights[i]=req.query.weights[newIndex[i]];
             sortedSizes[i]=req.query.sizes[newIndex[i]];
         }
-        console.log("sortedIds: " + sortedIds);
-        console.log("sortedAges: " + sortedAges);
-        console.log("sortedWights: " + sortedWeights);
-        console.log("sortedSizes: " + sortedSizes);
+        // console.log("sortedIds: " + sortedIds);
+        // console.log("sortedAges: " + sortedAges);
+        // console.log("sortedWights: " + sortedWeights);
+        // console.log("sortedSizes: " + sortedSizes);
         var sortedMetrics = {
             ids: sortedIds,
             ages: sortedAges,
             weights: sortedWeights,
             sizes: sortedSizes
         };
-        console.log("sortedMetrics: ", sortedMetrics);
+        // console.log("sortedMetrics: ", sortedMetrics);
         res.json(sortedMetrics);
         sortedIds = [];
         sortedAges = [];
@@ -252,26 +252,26 @@ module.exports = function(router) {
 
     // This is Step 8 from notes on uploading the images chosen by the user
     // It's not being called from user.js, but directly from html form
-    router.post("/createImageKitten/:id", upload.single('image'), (req, res, next) => {
-        console.log("from api-routes step 8, req.file: ", req.file);
-        var obj = {
-            img: {
-                data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-                contentType: 'image/png'
-            }
-        }
-        db.Kitten.create(obj, (err, item) => {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log(" after the else in creatImageKitten/:id, item: ", item);
-                item.save();  // they commented out this line???
-                console.log("after the else in creatImageKitten/:id, res: ", res);
-                res.redirect(item);  // don't know if this should be item or anything else
-            }
-        });
-    });
+    // router.post("/createImageKitten/:id", upload.single('image'), (req, res, next) => {
+    //     console.log("from api-routes step 8, req.file: ", req.file);
+    //     var obj = {
+    //         img: {
+    //             data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+    //             contentType: 'image/png'
+    //         }
+    //     }
+    //     db.Kitten.create(obj, (err, item) => {
+    //         if (err) {
+    //             console.log(err);
+    //         }
+    //         else {
+    //             console.log(" after the else in creatImageKitten/:id, item: ", item);
+    //             item.save();  // they commented out this line???
+    //             console.log("after the else in creatImageKitten/:id, res: ", res);
+    //             res.redirect(item);  // don't know if this should be item or anything else
+    //         }
+    //     });
+    // });
 
 
 
@@ -441,7 +441,7 @@ module.exports = function(router) {
 
     // A question's author uses this route to update a given topic or question
     router.post("/updateTopic/:topicId", function(req, res) {
-        console.log("req.body: ", req.body);
+        // console.log("req.body: ", req.body);
         console.log("req.body._id: ", req.body._id);
         console.log("req.body.topic: ", req.body.topic);
         // Using the id passed in the id parameter, make the required change in the db
@@ -463,7 +463,7 @@ module.exports = function(router) {
 
     // This route deletes just one answer and the answer's author from a given topic
     router.post("/overwriteAnswer/:topicId", function(req, res) {
-        console.log("/overwriteAnswer/: req.body: ", req.body);
+        // console.log("/overwriteAnswer/: req.body: ", req.body);
         console.log("/overwriteAnswer/: req.body._id: ", req.body._id);
         console.log("/overwriteAnswer/: req.body.answer: ", req.body.answer);
         console.log("/overwriteAnswer/: req.body.answerAuthor: ", req.body.answerAuthor);
@@ -505,7 +505,7 @@ module.exports = function(router) {
 
     // This route updates just one answer from a given topic
     router.post("/updateAnswer/:topicId", function(req, res) {
-        console.log("req.body: ", req.body);
+        // console.log("req.body: ", req.body);
         console.log("req.body._id: ", req.body._id);
         console.log("req.body.answer: ", req.body.answer);
         // Using the id passed in the id parameter, make the required change in the db
@@ -528,7 +528,7 @@ module.exports = function(router) {
     //Route to edit an individual set of metrics for a kitten
     router.post("/editMetrics/:metricID", function(req, res) {
         console.log("req.params.metricID: ", req.params.metricID);
-        console.log("req.body: ", req.body);
+        // console.log("req.body: ", req.body);
         console.log("req.body.age: ", req.body.age);
         console.log("req.body.weight: ", req.body.weight);
         console.log("req.body.size: ", req.body.size);
