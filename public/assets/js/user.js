@@ -293,11 +293,11 @@ jQuery(document).ready(function( $ ){
       // I've already retrieved data from the chosen kitten (curkat)
       // NEED to add if statement, if no picture (after retrieving curkat), 
       //then don't print this.
-      $("#kittenMetrics").append("<h1>Uploaded Images</h1>" +
-        "<div><% items.forEach(function(image) { %><div>" +
-        "<div><img src='data:image/<%=image.img.contentType%>;base64," +
-        "<%=image.img.data.toString('base64')%>'><div>" +
-        "</div></div></div><% }) %></div>");
+      // $("#kittenMetrics").append("<h1>Uploaded Images</h1>" +
+      //   "<div><% items.forEach(function(image) { %><div>" +
+      //   "<div><img src='data:image/<%=image.img.contentType%>;base64," +
+      //   "<%=image.img.data.toString('base64')%>'><div>" +
+      //   "</div></div></div><% }) %></div>");
       //
       // Add Metriccs Button - print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
