@@ -7,12 +7,14 @@
 var express = require("express");
 var router = express.Router();
 var db = require("../models");
+// just the image Schema
+var imgModel = require("../model"); // need new path
 // require method to sort ages array by number
 var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
 
 //following is more from images upload to mongodb process - step 5
-//set up multer for storing uploaded files  -- MIGHT BELONG ELSEWHERE
+//set up multer for storing uploaded files  -- not being used currently, code in server.js
 var multer = require("multer");
 
 var storage = multer.diskStorage({
@@ -74,6 +76,25 @@ module.exports = function(router) {
         sortedAges = [];
         sortedWeights = [];
         sortedSizes = [];
+    });
+
+    // the GET route (temp) for getting all the images from the db
+    router.get("/getImages", (req, res) => {
+    
+        imgModel.find({}).exec((error, records) => { // imgModel is the database schema model. 
+    
+            var img1 = Buffer.from(records[0].img.data, "base64"); // First image coming from MongoDB.
+            var img2 = Buffer.from(records[1].img.data, "base64"); // Second image coming from MongoDB.
+            var images = [img1, img2];
+    
+            const formatedImages = images.map(buffer => {
+                return `<img src="data:image/png;base64,${buffer.toString("base64")}"/>`
+            }).join("")
+            
+            res.send(formatedImages)  //this should be going back to user.js
+    
+        })
+        
     });
 
     // the CREATE route for storing a new topic and answer provided by a user
@@ -318,13 +339,13 @@ module.exports = function(router) {
     });
 
     //This route gets one kitten document from kitten collection
-    router.get("/getAKitten:id", function(req, res) {
+    router.get("/getAKitten/:id", function(req, res) {
         console.log("inside api-routes: req.params: ", req.params);
         // need to find the correct kitten, and retrieve it's data, 
         db.Kitten.find({ _id: req.params.id })
             .then(function(dbAKitten) {
                 res.json(dbAKitten);
-                console.log("from  route /getAkitten:id, dbAKitten: ", dbAKitten);
+                // console.log("from route /getAkitten:id, dbAKitten: ", dbAKitten);
                 //console.log("dbCurrentUser.kitten.length", dbAKitten[0].kitten.length);
             })
             .catch(function(err) {
@@ -333,18 +354,18 @@ module.exports = function(router) {
             });
     });
 
-    // this route gets the image on a chosen kitten
-    router.get('/', (req, res) => {
-        db.Kitten.find({ _id: req.params.id }, (err, items) => {
-            if (err) {
-                console.log(err);
-                res.status(500).send('An error occurred', err);
-            }
-            else {
-                res.render('imagesPage', { items: items });
-            }
-        });
-    });
+    // // this route gets the image on a chosen kitten
+    // router.get('/', (req, res) => {
+    //     db.Kitten.find({ _id: req.params.id }, (err, items) => {
+    //         if (err) {
+    //             console.log(err);
+    //             res.status(500).send('An error occurred', err);
+    //         }
+    //         else {
+    //             res.render('imagesPage', { items: items });
+    //         }
+    //     });
+    // });
 
     //This route gets metric document from kitten collection
     router.get("/getAMetric:id", function(req, res) {

@@ -67,6 +67,24 @@ jQuery(document).ready(function( $ ){
   } else {
     console.log("startCount is NOT greater than 0");
   }
+  // inserting a function to show the kitten images
+  // will change later to show them after the user clicks on a certain kitten
+  $(document).on("click", "#showImages", function(event) {
+    event.preventDefault();
+    // make an ajax call for the user to add a kitten name
+    $.ajax({
+      method: "GET",
+      url: "/getImages"
+    })
+      .then(function(dataGetImages) { // dataGetImages should be formattedImages from api-routes.js
+        // this is the current user with his fields populated to receive kitten name and metric data
+        console.log("in user.js, dataGetImages: ", dataGetImages);
+        // then dataGetImages should be something I can setnd to user.html through jQuery
+        $("#imageDiv").append(dataGetImages);
+      });
+  });
+
+
   // insert a logout function
   $(document).on("click", "#logoutButton", function(event) {
     event.preventDefault();
@@ -234,7 +252,7 @@ jQuery(document).ready(function( $ ){
         
           function outerForEach(item, index) {
             //console.log("THE INDEX OF currentUser[0].kitten and value: " + index + " - " + item );
-            $.getJSON("/getAKitten" + item, function(curkat) {
+            $.getJSON("/getAKitten/" + item, function(curkat) {
               // this prints the names to the DOM 
               // as a button, with that kitten's id as data-id
               $("#currentKittens").append("<button class='kittenButtons' type='submit' id='listMetrics' data-id=" +
@@ -264,7 +282,7 @@ jQuery(document).ready(function( $ ){
     $("#kittenMetrics").empty();
     $("#chartContainer").empty();
       // gets the array of metrics associated with the current kitten
-    $.getJSON("/getAKitten" + currentKittenId, function(curkat) {
+    $.getJSON("/getAKitten/" + currentKittenId, function(curkat) {
       console.log("WHAT'S IN HERE curkat[0]: ", curkat[0]);
       console.log("more specific, curkat[0].furcolor is: ", curkat[0].furcolor);
       // strings with multiple words are not being assigned.

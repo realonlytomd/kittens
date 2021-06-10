@@ -292,7 +292,7 @@
               </div>
               <div>
                   <label for="desc">Image Description</label>
-                  <textarea id="desc" name="pesc" value="" rows="2"
+                  <textarea id="desc" name="desc" value="" rows="2"
                             placeholder="Description" required>
                   </textarea>
               </div>
@@ -310,7 +310,12 @@
       <hr>
   
       <h1>Uploaded Images</h1>
-      <div>
+        <button id="showImages">Show Images</button>
+        <div id="imageDiv"></div>
+      <!-- Another try, more standard -->
+
+      <!-- this way was from the EJS method
+        <div>
           <% items.forEach(function(image) { %>
           <div>
               <div>
@@ -323,7 +328,7 @@
               </div>
           </div>
           <% }) %>
-      </div>
+      </div> -->
       <div class="push"></div>
     </div>
       <!--footer with copyright-->

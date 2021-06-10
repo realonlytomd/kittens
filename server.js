@@ -45,17 +45,17 @@ var upload = multer({ storage: storage });
 
 // Step 7 - the GET request handler that provides the HTML UI
  
-app.get('/', (req, res) => {
-  imgModel.find({}, (err, items) => {
-      if (err) {
-          console.log(err);
-          res.status(500).send('An error occurred', err);
-      }
-      else {
-          res.render('user', { items: items });
-      }
-  });
-});
+// app.get('/', (req, res) => {
+//   imgModel.find({}, (err, items) => {
+//       if (err) {
+//           console.log(err);
+//           res.status(500).send('An error occurred', err);
+//       }
+//       else {
+//           res.render('/user', { items: items });  //I just added the / in front of user (no idea)
+//       }
+//   });
+// });
 
 // Step 8 - the POST handler for processing the uploaded file
  
@@ -71,11 +71,11 @@ app.post('/', upload.single('image'), (req, res, next) => {
   }
   imgModel.create(obj, (err, item) => {
       if (err) {
-          console.log(err);
+          console.log("getting an error!!: ", err);
       }
       else {
-          item.save();
-          //res.redirect("/user");
+          item.save();  // save() is a mongoose function
+          res.redirect("/user");
       }
   });
 });
