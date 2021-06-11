@@ -35,6 +35,11 @@ body {
     width: 100%;
 }
 
+.theImages {
+    height: 100px;
+    margin-right: 5px;
+}
+
 button#signAdvice {
     margin-bottom: 10px;
 }

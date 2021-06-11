@@ -100,8 +100,8 @@ module.exports = function(router) {
             // var images = [img1, img2];
     
             const formatedImages = images.map(buffer => {
-                return `<img src="data:image/png;base64,${buffer.toString("base64")}"/>`
-            }).join("")
+                return `<img class="theImages" src="data:image/png;base64,${buffer.toString("base64")}"/>`
+            }).join("");
             
             res.send(formatedImages)  //this should be going back to user.js
             //empty out arrays
