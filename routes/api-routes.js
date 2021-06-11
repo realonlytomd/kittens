@@ -8,10 +8,11 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models");
 // just the image Schema
-var imgModel = require("../model"); // need new path
+var imgModel = require("../model"); // path?
 // require method to sort ages array by number
 var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
+var path = require('path');
 
 //following is more from images upload to mongodb process - step 5
 //set up multer for storing uploaded files  -- not being used currently, code in server.js
@@ -19,13 +20,14 @@ var multer = require("multer");
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads')
+        cb(null, "uploads")
     },
     filename: (req, file, cb) => {
         cb(null, file.fieldname + '-' + Date.now())
     }
 });
 var upload = multer({ storage: storage });
+console.log("what is upload from multer?: ", upload);
 //and from Step 1 of uploading images to mongodb:
 var fs = require('fs');
 
@@ -271,28 +273,31 @@ module.exports = function(router) {
             });
     });
 
-    // This is Step 8 from notes on uploading the images chosen by the user
-    // It's not being called from user.js, but directly from html form
-    // router.post("/createImageKitten/:id", upload.single('image'), (req, res, next) => {
-    //     console.log("from api-routes step 8, req.file: ", req.file);
-    //     var obj = {
-    //         img: {
-    //             data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-    //             contentType: 'image/png'
-    //         }
-    //     }
-    //     db.Kitten.create(obj, (err, item) => {
-    //         if (err) {
-    //             console.log(err);
-    //         }
-    //         else {
-    //             console.log(" after the else in creatImageKitten/:id, item: ", item);
-    //             item.save();  // they commented out this line???
-    //             console.log("after the else in creatImageKitten/:id, res: ", res);
-    //             res.redirect(item);  // don't know if this should be item or anything else
-    //         }
-    //     });
-    // });
+    //This is Step 8 from notes on uploading the images chosen by the user
+    //It's now being called from user.js, not directly from html form
+    // 
+    router.post("/createImageKitten/", upload.single("kittenImageInput"), (req, res, next) => {
+        console.log("from api-routes step 8, req.file: ", req.file);
+        var obj = {
+            name: req.body.name,
+            desc: req.body.desc,
+            img: {
+                data: fs.readFileSync(path.join(__dirname + "/../uploads/" + req.file.filename)),
+                contentType: "image/png"
+            }
+        }
+        imgModel.create(obj, (err, item) => {
+            if (err) {
+                console.log("this is an error:", err);
+            }
+            else {
+                console.log(" after the else in creatImageKitten/:id, what is item?: ", item);
+                item.save();  // they commented out this line???
+                console.log("after the else in creatImageKitten/:id, res: ", res);
+                res.redirect("/user");  // don't know if this should be item or anything else
+            }
+        });
+    });
 
 
 

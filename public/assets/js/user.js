@@ -68,7 +68,7 @@ jQuery(document).ready(function( $ ){
     console.log("startCount is NOT greater than 0");
   }
   // inserting a function to show the kitten images
-  // will change later to show them after the user clicks on a certain kitten
+  // will change later to show them when the user clicks on a certain kitten
   $(document).on("click", "#showImages", function(event) {
     event.preventDefault();
     // make an ajax call for the user to add a kitten name
@@ -80,6 +80,8 @@ jQuery(document).ready(function( $ ){
         // this is the current user with his fields populated to receive kitten name and metric data
         console.log("in user.js, dataGetImages: ", dataGetImages);
         // then dataGetImages should be something I can setnd to user.html through jQuery
+        // empty out image div
+        $("#imageDiv").empty();
         $("#imageDiv").append(dataGetImages);
       });
   });
@@ -214,9 +216,9 @@ jQuery(document).ready(function( $ ){
     currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
     console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
     $.getJSON("/getCurrentUser" + currentUserId, function(nowCurrentUser) {
-      console.log("nowCurrentUser: ", nowCurrentUser);
-      console.log("nowCurrentUser[0]: ", nowCurrentUser[0]);
-      console.log("nowCurrentUser[0].kitten: ", nowCurrentUser[0].kitten);
+      // console.log("nowCurrentUser: ", nowCurrentUser);
+      // console.log("nowCurrentUser[0]: ", nowCurrentUser[0]);
+      // console.log("nowCurrentUser[0].kitten: ", nowCurrentUser[0].kitten);
       // console.log("currentUser[0].name: ", currentUser[0].name);
       // console.log("currentUser[0].loggedIn: ", currentUser[0].loggedIn);
       // since loggedIn is always "false" in the db, it must be written over here
@@ -225,7 +227,7 @@ jQuery(document).ready(function( $ ){
       // console.log("from localStorage, currentUserLoggedIn: " + currentUserLoggedIn);
       // need a timer to logout Users after a period of time.
       //
-      //THIS DID NOT SEEM TO FIX IT. ASLO, WHY DID FREDDIE'S BROWER (Safari) NOT KNOW
+      //THIS DID NOT SEEM TO FIX IT. ASLO, WHY DID FREDDIE'S BROWSER (Safari) NOT KNOW
       // PORTRAIT OR LANDSCAPE
       // test if it's the first time a user goes to site,
       // then currentUserLoggedIn would be undefined, and that user should be
@@ -306,18 +308,8 @@ jQuery(document).ready(function( $ ){
       curkat[0].furlength + "<br>Fur Color: " +
       curkat[0].furcolor + "<br>Sex: " +
       curkat[0].sex +  "</h4>");
-      // add the current picture of the kitten, retrieved from the database
-      // This is from step 10 of adding a picture to mongodvb
-      // I've already retrieved data from the chosen kitten (curkat)
-      // NEED to add if statement, if no picture (after retrieving curkat), 
-      //then don't print this.
-      // $("#kittenMetrics").append("<h1>Uploaded Images</h1>" +
-      //   "<div><% items.forEach(function(image) { %><div>" +
-      //   "<div><img src='data:image/<%=image.img.contentType%>;base64," +
-      //   "<%=image.img.data.toString('base64')%>'><div>" +
-      //   "</div></div></div><% }) %></div>");
       //
-      // Add Metriccs Button - print to DOM: button with id of kitten to add metrics to kitten
+      // Add Metrics Button - print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
         curkat[0]._id + ">Add Metrics</button><br><br><h5>Click in a Metric Box to Delete or Edit</h5>");
         console.log("curkat[0].metric: ", curkat[0].metric);
@@ -478,8 +470,10 @@ jQuery(document).ready(function( $ ){
       console.log("inside submitNewKittenImage!");
       //get form from html
       var imageform = $("#kittenImageInputForm")[0];
+      console.log("what is imageform?: ", imageform);
       // Create an FormData object called imageData
       var imageData = new FormData(imageform);
+      console.log("what is imageData?: ", imageData);
       // testing extra field for the FormData
       //imageData.append("CustomField", "This is some extra data, testing");
       // disable the form's submit button
@@ -487,7 +481,7 @@ jQuery(document).ready(function( $ ){
       $.ajax({
         type: "POST",
         enctype: "multipart/form-data",
-        url: "/createImageKitten/" + currentKittenId,
+        url: "/createImageKitten/",
         data: imageData,
         processData: false,
         contentType: false

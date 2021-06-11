@@ -30,18 +30,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
 //Step 5
-var multer = require('multer');
+// var multer = require('multer');
  
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads')
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
-});
- 
-var upload = multer({ storage: storage });
+// var storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads')
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, file.fieldname + '-' + Date.now())
+//     }
+// });
+//var upload = multer({ storage: storage });
 
 // Step 7 - the GET request handler that provides the HTML UI
  
@@ -59,26 +58,26 @@ var upload = multer({ storage: storage });
 
 // Step 8 - the POST handler for processing the uploaded file
  
-app.post('/', upload.single('image'), (req, res, next) => {
+// app.post('/', upload.single('image'), (req, res, next) => {
  
-  var obj = {
-      name: req.body.name,
-      desc: req.body.desc,
-      img: {
-          data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-          contentType: 'image/png'
-      }
-  }
-  imgModel.create(obj, (err, item) => {
-      if (err) {
-          console.log("getting an error!!: ", err);
-      }
-      else {
-          item.save();  // save() is a mongoose function
-          res.redirect("/user");
-      }
-  });
-});
+//   var obj = {
+//       name: req.body.name,
+//       desc: req.body.desc,
+//       img: {
+//           data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+//           contentType: 'image/png'
+//       }
+//   }
+//   imgModel.create(obj, (err, item) => {
+//       if (err) {
+//           console.log("getting an error!!: ", err);
+//       }
+//       else {
+//           item.save();  // save() is a mongoose function
+//           res.redirect("/user");
+//       }
+//   });
+// });
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB

@@ -125,6 +125,17 @@
               <!-- entry form for entering the image for the new kitten-->
               <form id="kittenImageInputForm" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
+                  <label for="name">Image Title</label>
+                  <input type="text" id="name" placeholder="Name"
+                        value="" name="name">
+                </div>
+                <div class="form-group">
+                  <label for="desc">Image Description</label>
+                  <textarea id="desc" name="desc" value="" rows="2"
+                            placeholder="Description">
+                  </textarea>
+                </div>
+                <div class="form-group">
                   <label for="kittenImageInput">Upload Picture of Kitten:</label>
                   <input type="file" class="form-control" id="kittenImageInput" name="kittenImageInput" value="">
                 </div>
@@ -139,7 +150,6 @@
         </div>
       </div>
       <!-- End of Bootstrap modal code -->
-
       <!-- Modal for asking user if they're sure they want to delete an existing kitten -->
       <div class="modal fade" id="deleteForSure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -281,7 +291,7 @@
         </div>
       </div>
       <!-- Below is the temp stuff for adding images-->
-      <h1>To Upload Image on mongoDB</h1>
+      <!--<h1>To Upload Image on mongoDB</h1>
       <hr>
       <div>
           <form action="/" method="POST" enctype="multipart/form-data">
@@ -305,13 +315,13 @@
                   <button type="submit">Submit</button>
               </div>
           </form>
-      </div>
+      </div> -->
  
       <hr>
   
       <h1>Uploaded Images</h1>
-        <button id="showImages">Show Images</button>
-        <div id="imageDiv"></div>
+      <button id="showImages">Show Images</button>
+      <div id="imageDiv"></div>
       <!-- Another try, more standard -->
 
       <!-- this way was from the EJS method
