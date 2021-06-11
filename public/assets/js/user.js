@@ -474,8 +474,6 @@ jQuery(document).ready(function( $ ){
       // Create an FormData object called imageData
       var imageData = new FormData(imageform);
       console.log("what is imageData?: ", imageData);
-      // testing extra field for the FormData
-      //imageData.append("CustomField", "This is some extra data, testing");
       // disable the form's submit button
       $("#submitNewKittenImage").prop("disabled", true);
       $.ajax({

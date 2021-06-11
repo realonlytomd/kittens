@@ -37,6 +37,10 @@ var sortedAges = [];
 var sortedWeights = [];
 var sortedSizes = [];
 
+// initialize image variables
+var img = [];
+var images = [];
+
 // Routes
 module.exports = function(router) {
 
@@ -84,16 +88,25 @@ module.exports = function(router) {
     router.get("/getImages", (req, res) => {
     
         imgModel.find({}).exec((error, records) => { // imgModel is the database schema model. 
-    
-            var img1 = Buffer.from(records[0].img.data, "base64"); // First image coming from MongoDB.
-            var img2 = Buffer.from(records[1].img.data, "base64"); // Second image coming from MongoDB.
-            var images = [img1, img2];
+            console.log("this is records from api route /getImages: ", records);
+            //for loop to create array of kitten images from records from db
+            for (i=0; i<records.length; i++) {
+                img[i] = Buffer.from(records[i].img.data, "base64");
+                images.push(img[i]);
+            }
+            
+            // var img1 = Buffer.from(records[0].img.data, "base64"); // First image coming from MongoDB.
+            // var img2 = Buffer.from(records[1].img.data, "base64"); // Second image coming from MongoDB.
+            // var images = [img1, img2];
     
             const formatedImages = images.map(buffer => {
                 return `<img src="data:image/png;base64,${buffer.toString("base64")}"/>`
             }).join("")
             
             res.send(formatedImages)  //this should be going back to user.js
+            //empty out arrays
+            img = [];
+            images = [];
     
         })
         
