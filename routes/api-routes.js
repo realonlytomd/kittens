@@ -100,7 +100,7 @@ module.exports = function(router) {
             // var images = [img1, img2];
     
             const formatedImages = images.map(buffer => {
-                return `<img class="theImages" src="data:image/png;base64,${buffer.toString("base64")}"/>`
+                return `<img class="theImages" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
             }).join("");
             
             res.send(formatedImages)  //this should be going back to user.js
@@ -296,7 +296,7 @@ module.exports = function(router) {
             desc: req.body.desc,
             img: {
                 data: fs.readFileSync(path.join(__dirname + "/../uploads/" + req.file.filename)),
-                contentType: "image/png"
+                contentType: "image/jpeg"
             }
         }
         imgModel.create(obj, (err, item) => {

@@ -35,6 +35,10 @@ body {
     width: 100%;
 }
 
+#showImages {
+    margin-bottom: 5px;
+}
+
 .theImages {
     height: 100px;
     margin-right: 5px;
