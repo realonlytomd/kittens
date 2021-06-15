@@ -71,22 +71,22 @@ jQuery(document).ready(function( $ ){
   // will change later to show them when the user clicks on a certain kitten
   // ok.... need to put this function in the #listMetrics code so user gets 
   // images as well as metrics...
-  $(document).on("click", "#showImages", function(event) {
-    event.preventDefault();
-    // make an ajax call for the user to add a kitten name
-    $.ajax({
-      method: "GET",
-      url: "/getImages"
-    })
-      .then(function(dataGetImages) { // dataGetImages should be formattedImages from api-routes.js
-        // this is the current user with his fields populated to receive kitten name and metric data
-        console.log("in user.js, dataGetImages: ", dataGetImages);
-        // then dataGetImages should be something I can setnd to user.html through jQuery
-        // empty out image div
-        $("#imageDiv").empty();
-        $("#imageDiv").append(dataGetImages);
-      });
-  });
+  // $(document).on("click", "#showImages", function(event) {
+  //   event.preventDefault();
+  //   // make an ajax call for the user to add a kitten name
+  //   $.ajax({
+  //     method: "GET",
+  //     url: "/getImages"
+  //   })
+  //     .then(function(dataGetImages) { // dataGetImages should be formattedImages from api-routes.js
+  //       // this is the current user with his fields populated to receive kitten name and metric data
+  //       console.log("in user.js, dataGetImages: ", dataGetImages);
+  //       // then dataGetImages should be something I can setnd to user.html through jQuery
+  //       // empty out image div
+  //       $("#imageDiv").empty();
+  //       $("#imageDiv").append(dataGetImages);
+  //     });
+  // });
 
 
   // insert a logout function
@@ -327,7 +327,10 @@ jQuery(document).ready(function( $ ){
           $("#imageDiv").empty();
           $("#imageDiv").append(dataGetImages);
         });
-
+      // Add new images Button - will include id of kitten to add a picture of the kitten
+      $("#kittenMetrics").append("<button type='button' data-toggle='modal' " +
+      "data-target='#newKittenImageModal' id='createImageKitten' data-id=" + 
+      curkat[0]._id + ">Image for Kitten</button>");
       // Add Metrics Button - print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
         curkat[0]._id + ">Add Metrics</button><br><br><h5>Click in a Metric Box to Delete or Edit</h5>");
@@ -496,7 +499,7 @@ jQuery(document).ready(function( $ ){
       $.ajax({
         type: "POST",
         enctype: "multipart/form-data",
-        url: "/createImageKitten/",
+        url: "/createImageKitten/" + currentKittenId,  //is this already defined?
         data: imageData,
         processData: false,
         contentType: false

@@ -28,5 +28,5 @@ var MetricSchema = new Schema({
 // This creates our model from the above schema, using mongoose's model method
 var Metric = mongoose.model("Metric", MetricSchema);
 
-// Export the Article model
+// Export the Metric model
 module.exports = Metric;

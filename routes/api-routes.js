@@ -8,11 +8,11 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models");
 // just the image Schema
-var imgModel = require("../model"); // this is now being removed from code below.
+//var imgModel = require("../model"); // this is now being removed from code below.
 // require method to sort ages array by number
 var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
-var path = require('path');
+var path = require("path");
 
 //following is more from images upload to mongodb process - step 5
 //set up multer for storing uploaded files  -- not being used currently, code in server.js
@@ -38,8 +38,8 @@ var sortedWeights = [];
 var sortedSizes = [];
 
 // initialize image variables
-var img = [];
-var images = [];
+var imgHold = [];
+var imagesHold = [];
 
 // Routes
 module.exports = function(router) {
@@ -85,28 +85,30 @@ module.exports = function(router) {
     });
 
     // the GET route (temp) for getting all the images from the db
+    // do I have a problem here: is id the correct id?
     router.get("/getImages/:id" , (req, res) => {
+        console.log("in /getImages/, req.params.id: ", req.params.id );
         db.Image.find({ _id: req.params.id})
         .exec((error, records) => { // db is the database schema model. 
             console.log("this is records from api route /getImages: ", records);
             //for loop to create array of kitten images from records from db
             for (i=0; i<records.length; i++) {
-                img[i] = Buffer.from(records[i].img.data, "base64");
-                images.push(img[i]);
+                imgHold[i] = Buffer.from(records[i].img.data, "base64");
+                imagesHold.push(imgHold[i]);
             }
             
             // var img1 = Buffer.from(records[0].img.data, "base64"); // First image coming from MongoDB.
             // var img2 = Buffer.from(records[1].img.data, "base64"); // Second image coming from MongoDB.
             // var images = [img1, img2];
     
-            const formatedImages = images.map(buffer => {
+            const formatedImages = imagesHold.map(buffer => {
                 return `<img class="theImages" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
             }).join("");
             
             res.send(formatedImages)  //this should be going back to user.js
             //empty out arrays
-            img = [];
-            images = [];
+            imgHold = [];
+            imagesHold = [];
     
         })
         
@@ -289,8 +291,8 @@ module.exports = function(router) {
     //This is Step 8 from notes on uploading the images chosen by the user
     //It's now being called from user.js, not directly from html form
     // 
-    router.post("/createImageKitten/", upload.single("kittenImageInput"), (req, res, next) => {
-        console.log("from api-routes step 8, req.file: ", req.file);
+    router.post("/createImageKitten/:id", upload.single("kittenImageInput"), (req, res, next) => {
+        console.log("from api-routes step 8, req.file.filename: ", req.file.filename);
         var obj = {
             name: req.body.name,
             desc: req.body.desc,
@@ -299,21 +301,35 @@ module.exports = function(router) {
                 contentType: "image/jpeg"
             }
         }
-        imgModel.create(obj, (err, item) => {
-            if (err) {
-                console.log("this is an error:", err);
-            }
-            else {
-                console.log(" after the else in creatImageKitten/:id, what is item?: ", item);
-                item.save();  // they commented out this line???
-                console.log("after the else in creatImageKitten/:id, res: ", res);
-                res.redirect("/user");  // don't know if this should be item or anything else
-            }
-        });
+        db.Image.create(obj)
+            // if (err) {
+            //     console.log("this is an error:", err);
+            // }
+            // else {
+            //     console.log(" after the else in creatImageKitten/:id, what is item?: ", item);
+            //     item.save();  // they commented out this line???
+            //     //console.log("after the else in creatImageKitten/:id, res: ", res);
+            //     //res.redirect("/user");  // don't know if this should be item or anything else
+            // }
+            .then(function(dbImage) {
+                console.log("after .create Image - dbImage: ", dbImage);
+                //pushing the new kitten image into the document kitten array
+                return db.Kitten.findOneAndUpdate(
+                    { _id: req.params.id },
+                    { $push: { image: dbImage._id } },
+                    { new: true }
+                );
+            })
+            .then(function(dbKitten) {
+                //send back the correct kitten with the new data in the image array
+                res.json(dbKitten);
+
+            })
+            .catch(function(err) {
+                //If an error occurred, send back
+                res.json(err);
+            });
     });
-
-
-
     // need to find the correct kitten, then fill in the metrics with the selected metric array
     router.post("/kittenMetrics/:id", function(req, res) {
         console.log("BEFORE KITTEN HAS METRICS - req.body: ", req.body);
@@ -326,7 +342,7 @@ module.exports = function(router) {
                     { _id: req.params.id },
                     { $push: { metric: dbMetric._id } }, 
                     { new: true }
-                    );
+                );
             })
             .then(function(dbKitten) {
                 // send back the correct kitten with new data in the metric arrays
@@ -388,7 +404,7 @@ module.exports = function(router) {
     //This route gets metric document from kitten collection
     router.get("/getAMetric/:id", function(req, res) {
         console.log("inside api-routes: req.params: ", req.params);
-        // need to find the correct user, THEN all their kittens, 
+        // need to find the correct kitten, THEN all the metrics, 
         db.Metric.find({ _id: req.params.id})
             .then(function(dbAMetric) {
                 res.json(dbAMetric);
