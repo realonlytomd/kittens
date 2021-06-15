@@ -34,17 +34,17 @@ var KittenSchema = new Schema({
     type: String,
     required: true
   },
-  // this img is for adding a picture to the particular kitten
-  img: {
-        data: Buffer,
-        contentType: String
-    },
   // `metric` is an array that that will reference the metrics of the kittens.
   // The ref property links the ObjectId to the Metric model
   // So it's possible to populate a Kitten with multiple metrics, use an array of ObjectIds
   metric: [{
     type: Schema.Types.ObjectId,
     ref: "Metric"
+  }],
+  // image is an array of images the user uploads for their kitten.
+  image: [{
+    type: Schema.Types.ObjectId,
+    ref: "Image"
   }]
 }, {
   // adding timestamps: created at and updated at

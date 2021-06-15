@@ -69,6 +69,8 @@ jQuery(document).ready(function( $ ){
   }
   // inserting a function to show the kitten images
   // will change later to show them when the user clicks on a certain kitten
+  // ok.... need to put this function in the #listMetrics code so user gets 
+  // images as well as metrics...
   $(document).on("click", "#showImages", function(event) {
     event.preventDefault();
     // make an ajax call for the user to add a kitten name
@@ -270,8 +272,10 @@ jQuery(document).ready(function( $ ){
       }
     });
   }
-   // this function lists an individual kitten's current metrics
+   // this function lists an individual kitten's current metrics and soon, images
+   // 
    // based on the id of the kitten as attached to individual buttons
+   // need to add div to display images that the user has uploaded for individual kitten
   $(document).on("click", "#listMetrics", function(event) {
     event.preventDefault();
     currentKittenId = $(this).attr("data-id");
@@ -309,6 +313,21 @@ jQuery(document).ready(function( $ ){
       curkat[0].furcolor + "<br>Sex: " +
       curkat[0].sex +  "</h4>");
       //
+      // So HERE is where the div of the current kitten's images will go.
+      $("#kittenMetrics").append("<div id='imageDiv'></div>");
+      $.ajax({
+        method: "GET",
+        url: "/getImages/" + currentKittenId
+      })
+        .then(function(dataGetImages) { // dataGetImages should be formattedImages from api-routes.js
+          // this is the current user with his fields populated to receive kitten name and metric data
+          console.log("in user.js, dataGetImages: ", dataGetImages);
+          // then dataGetImages should be something I can setnd to user.html through jQuery
+          // empty out image div
+          $("#imageDiv").empty();
+          $("#imageDiv").append(dataGetImages);
+        });
+
       // Add Metrics Button - print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
         curkat[0]._id + ">Add Metrics</button><br><br><h5>Click in a Metric Box to Delete or Edit</h5>");
@@ -320,7 +339,7 @@ jQuery(document).ready(function( $ ){
 
       function innerForEach(innerItem, innerIndex) {
         console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
-        $.getJSON("/getAMetric" + innerItem, function(curmet) {
+        $.getJSON("/getAMetric/" + innerItem, function(curmet) {
           console.log("this innerItem or _id: " + curmet[0]._id);
           console.log("curmet[0].age: ", curmet[0].age);
           console.log("curmet[0].weight: ", curmet[0].weight);

@@ -8,7 +8,7 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models");
 // just the image Schema
-var imgModel = require("../model"); // path?
+var imgModel = require("../model"); // this is now being removed from code below.
 // require method to sort ages array by number
 var sortAges = require("sort-ids");
 var reorder = require("array-rearrange");
@@ -85,9 +85,9 @@ module.exports = function(router) {
     });
 
     // the GET route (temp) for getting all the images from the db
-    router.get("/getImages", (req, res) => {
-    
-        imgModel.find({}).exec((error, records) => { // imgModel is the database schema model. 
+    router.get("/getImages/:id" , (req, res) => {
+        db.Image.find({ _id: req.params.id})
+        .exec((error, records) => { // db is the database schema model. 
             console.log("this is records from api route /getImages: ", records);
             //for loop to create array of kitten images from records from db
             for (i=0; i<records.length; i++) {
@@ -386,13 +386,13 @@ module.exports = function(router) {
     // });
 
     //This route gets metric document from kitten collection
-    router.get("/getAMetric:id", function(req, res) {
+    router.get("/getAMetric/:id", function(req, res) {
         console.log("inside api-routes: req.params: ", req.params);
         // need to find the correct user, THEN all their kittens, 
         db.Metric.find({ _id: req.params.id})
             .then(function(dbAMetric) {
                 res.json(dbAMetric);
-                console.log("from  route /getAMetric:id, dbAMetric: ", dbAMetric);
+                console.log("from  route /getAMetric/:id, dbAMetric: ", dbAMetric);
             })
             .catch(function(err) {
             // However, if an error occurred, send it to the client

@@ -13,7 +13,8 @@ var reorder = require("array-rearrange");
 
 // Require all models
 // MIGHT not need this here - leftover from news scraper app that had everything in server file
-var imgModel = require('./model');
+var imgModel = require('./model'); // imgModel will not be used in future as images
+// is now a part of the kitten model.
 
 // make port ready for deployment on heroku as well as local
 var PORT = process.env.PORT || 3000;
