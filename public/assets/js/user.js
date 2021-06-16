@@ -285,7 +285,7 @@ jQuery(document).ready(function( $ ){
   // function called after a particular kitten button is clicked - gets and displays kitten data
   function writeKittenDom() {
     console.log("currentKittenId inside writeKittendom: " + currentKittenId);
-    $("#kittenMetrics").empty();
+    $("#kittenMetrics").empty(); // empties out the div containing image and metric data of chosen kitten
     $("#chartContainer").empty();
       // gets the array of metrics associated with the current kitten
     $.getJSON("/getAKitten/" + currentKittenId, function(curkat) {
@@ -313,24 +313,28 @@ jQuery(document).ready(function( $ ){
       curkat[0].furcolor + "<br>Sex: " +
       curkat[0].sex +  "</h4>");
       //
+      // Add new images Button - to add a picture of the kitten
+      $("#kittenMetrics").append("<button type='button' data-toggle='modal' " +
+      "data-target='#newKittenImageModal' id='createImageKitten'" + 
+      ">Add Image for Kitten</button>");
       // So HERE is where the div of the current kitten's images will go.
       $("#kittenMetrics").append("<div id='imageDiv'></div>");
-      $.ajax({
-        method: "GET",
-        url: "/getImages/" + currentKittenId
-      })
-        .then(function(dataGetImages) { // dataGetImages should be formattedImages from api-routes.js
-          // this is the current user with his fields populated to receive kitten name and metric data
-          console.log("in user.js, dataGetImages: ", dataGetImages);
-          // then dataGetImages should be something I can setnd to user.html through jQuery
-          // empty out image div
-          $("#imageDiv").empty();
-          $("#imageDiv").append(dataGetImages);
-        });
-      // Add new images Button - will include id of kitten to add a picture of the kitten
-      $("#kittenMetrics").append("<button type='button' data-toggle='modal' " +
-      "data-target='#newKittenImageModal' id='createImageKitten' data-id=" + 
-      curkat[0]._id + ">Image for Kitten</button>");
+      //go through the array of images for this kitten
+      curkat[0].image.forEach(innerImageForEach);
+
+      function innerImageForEach(innerItem, innerIndex) { //innerItem here is metric id of images
+        console.log("THIS INNER image, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
+        $.ajax({
+          method: "GET",
+          url: "/getImages/" + innerItem
+        })
+          .then(function(dataGetImages) { // dataGetImages should be formattedImages from api-routes.js
+            // this is the current image data
+            console.log("in user.js, after each get images dataGetImages: ", dataGetImages);
+            // then dataGetImages should be something I can setnd to user.html through jQuery
+            $("#imageDiv").append(dataGetImages);
+          });
+      }
       // Add Metrics Button - print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
         curkat[0]._id + ">Add Metrics</button><br><br><h5>Click in a Metric Box to Delete or Edit</h5>");
@@ -338,9 +342,9 @@ jQuery(document).ready(function( $ ){
         console.log("curkat[0].metric.length: " + curkat[0].metric.length);
 
       // this .forEach goes through each metric id to obtain associated metrics from db
-      curkat[0].metric.forEach(innerForEach);
+      curkat[0].metric.forEach(innerMetricForEach);
 
-      function innerForEach(innerItem, innerIndex) {
+      function innerMetricForEach(innerItem, innerIndex) {
         console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
         $.getJSON("/getAMetric/" + innerItem, function(curmet) {
           console.log("this innerItem or _id: " + curmet[0]._id);
@@ -485,8 +489,6 @@ jQuery(document).ready(function( $ ){
 
     // This function processes the image of the kitten chosen by the user
     // From tutorial on taking a form in html, and ajax call here with multiform
-    // will temporarily not use this...but not commenting it out
-    // as I'll not use this particular id for submitting
     $(document).on("click", "#submitNewKittenImage", function(event) {
       event.preventDefault();
       console.log("inside submitNewKittenImage!");
@@ -499,18 +501,19 @@ jQuery(document).ready(function( $ ){
       $.ajax({
         type: "POST",
         enctype: "multipart/form-data",
-        url: "/createImageKitten/" + currentKittenId,  //is this already defined?
+        url: "/createImageKitten/" + currentKittenId,
         data: imageData,
         processData: false,
         contentType: false
       })
-      .then(function(imagedb) {
-          console.log("after .then for submitting an image, imagedb: ", imagedb);
-          // what do I do with imagedb? 
+      .then(function(kittendb) {
+          console.log("after .then for submitting an image, imagedb: ", kittendb);
+          // kittendb here is the kitten document with the new image data
           // then hide this modal
           $("#newKittenImageModal").modal("hide");
           //reload the kitten div showing the changes
-          //writeKittenDom();
+          $("#imageDiv").empty();
+          writeKittenDom();
         });
     });
 

@@ -27,7 +27,6 @@ var storage = multer.diskStorage({
     }
 });
 var upload = multer({ storage: storage });
-console.log("what is upload from multer?: ", upload);
 //and from Step 1 of uploading images to mongodb:
 var fs = require('fs');
 
@@ -90,17 +89,16 @@ module.exports = function(router) {
         console.log("in /getImages/, req.params.id: ", req.params.id );
         db.Image.find({ _id: req.params.id})
         .exec((error, records) => { // db is the database schema model. 
-            console.log("this is records from api route /getImages: ", records);
+            console.log("this is records from api route /getImages/: ", records);
             //for loop to create array of kitten images from records from db
+            //study: I'm only getting one record, instead of all of them,
+            // so this loop doesn't really need to be here,
+            // it's only going through once, and client side has the .forEach
+            // to go through the full array. Leaving it for now...
             for (i=0; i<records.length; i++) {
                 imgHold[i] = Buffer.from(records[i].img.data, "base64");
                 imagesHold.push(imgHold[i]);
             }
-            
-            // var img1 = Buffer.from(records[0].img.data, "base64"); // First image coming from MongoDB.
-            // var img2 = Buffer.from(records[1].img.data, "base64"); // Second image coming from MongoDB.
-            // var images = [img1, img2];
-    
             const formatedImages = imagesHold.map(buffer => {
                 return `<img class="theImages" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
             }).join("");
@@ -109,9 +107,7 @@ module.exports = function(router) {
             //empty out arrays
             imgHold = [];
             imagesHold = [];
-    
         })
-        
     });
 
     // the CREATE route for storing a new topic and answer provided by a user
@@ -302,15 +298,6 @@ module.exports = function(router) {
             }
         }
         db.Image.create(obj)
-            // if (err) {
-            //     console.log("this is an error:", err);
-            // }
-            // else {
-            //     console.log(" after the else in creatImageKitten/:id, what is item?: ", item);
-            //     item.save();  // they commented out this line???
-            //     //console.log("after the else in creatImageKitten/:id, res: ", res);
-            //     //res.redirect("/user");  // don't know if this should be item or anything else
-            // }
             .then(function(dbImage) {
                 console.log("after .create Image - dbImage: ", dbImage);
                 //pushing the new kitten image into the document kitten array
@@ -387,19 +374,6 @@ module.exports = function(router) {
             res.json(err);
             });
     });
-
-    // // this route gets the image on a chosen kitten
-    // router.get('/', (req, res) => {
-    //     db.Kitten.find({ _id: req.params.id }, (err, items) => {
-    //         if (err) {
-    //             console.log(err);
-    //             res.status(500).send('An error occurred', err);
-    //         }
-    //         else {
-    //             res.render('imagesPage', { items: items });
-    //         }
-    //     });
-    // });
 
     //This route gets metric document from kitten collection
     router.get("/getAMetric/:id", function(req, res) {
