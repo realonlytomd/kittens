@@ -46,6 +46,10 @@ body {
     margin-bottom: 5px;
 }
 
+.bigImageinModal {
+    max-width: 100%;
+}
+
 button#signAdvice {
     margin-bottom: 10px;
 }

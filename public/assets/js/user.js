@@ -272,10 +272,9 @@ jQuery(document).ready(function( $ ){
       }
     });
   }
-   // this function lists an individual kitten's current metrics and soon, images
-   // 
+
+   // this function lists an individual kitten's current metrics and images
    // based on the id of the kitten as attached to individual buttons
-   // need to add div to display images that the user has uploaded for individual kitten
   $(document).on("click", "#listMetrics", function(event) {
     event.preventDefault();
     currentKittenId = $(this).attr("data-id");
@@ -434,6 +433,25 @@ jQuery(document).ready(function( $ ){
     });
   }
 
+  // This click function pulls up a large modal of the clicked image
+  //  It takes its data from the src of the image without getting the data again from
+  // the db.
+  $(document).on("click", ".theImages", function(event) {
+    event.preventDefault();
+    //delete previous contents of image div.
+    $("#bigImageDiv").empty();
+    console.log("Inside click event of the image");
+    var imgSrc = $(this).attr("src");
+    var bigImage = $("<img>");
+    // need to add a class so that the image can be sized to different screens
+    bigImage.addClass("bigImageinModal");
+    bigImage.attr("src", imgSrc);
+    //show modal with image, name, and desc.?
+    $("#bigImageDiv").append(bigImage);
+    $("#bigImageModal").modal("show");
+  });
+
+
   // This function brings up a modal to edit currently stored kitten information, not the metrics
   // and add a delete button 
   $(document).on("click", "#editThisKitten", function(event) {
@@ -510,6 +528,9 @@ jQuery(document).ready(function( $ ){
           console.log("after .then for submitting an image, imagedb: ", kittendb);
           // kittendb here is the kitten document with the new image data
           // then hide this modal
+          $("#title").val("");
+          $("#desc").val("");
+          $("#kittenImageInput").val("");
           $("#newKittenImageModal").modal("hide");
           //reload the kitten div showing the changes
           $("#imageDiv").empty();
