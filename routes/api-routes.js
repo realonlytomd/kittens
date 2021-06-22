@@ -290,7 +290,7 @@ module.exports = function(router) {
     router.post("/createImageKitten/:id", upload.single("kittenImageInput"), (req, res, next) => {
         console.log("from api-routes step 8, req.file.filename: ", req.file.filename);
         var obj = {
-            name: req.body.name,
+            title: req.body.title,
             desc: req.body.desc,
             img: {
                 data: fs.readFileSync(path.join(__dirname + "/../uploads/" + req.file.filename)),
