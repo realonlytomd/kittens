@@ -67,26 +67,6 @@ jQuery(document).ready(function( $ ){
   } else {
     console.log("startCount is NOT greater than 0");
   }
-  // inserting a function to show the kitten images
-  // will change later to show them when the user clicks on a certain kitten
-  // ok.... need to put this function in the #listMetrics code so user gets 
-  // images as well as metrics...
-  // $(document).on("click", "#showImages", function(event) {
-  //   event.preventDefault();
-  //   // make an ajax call for the user to add a kitten name
-  //   $.ajax({
-  //     method: "GET",
-  //     url: "/getImages"
-  //   })
-  //     .then(function(dataGetImages) { // dataGetImages should be formattedImages from api-routes.js
-  //       // this is the current user with his fields populated to receive kitten name and metric data
-  //       console.log("in user.js, dataGetImages: ", dataGetImages);
-  //       // then dataGetImages should be something I can setnd to user.html through jQuery
-  //       // empty out image div
-  //       $("#imageDiv").empty();
-  //       $("#imageDiv").append(dataGetImages);
-  //     });
-  // });
 
 
   // insert a logout function
@@ -448,6 +428,8 @@ jQuery(document).ready(function( $ ){
     bigImage.attr("src", imgSrc);
     //show modal with image, name, and desc.?
     $("#bigImageDiv").append(bigImage);
+    // retrieve Title and Desc of this image.
+
     $("#bigImageModal").modal("show");
   });
 
