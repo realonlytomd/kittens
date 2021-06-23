@@ -99,6 +99,9 @@ module.exports = function(router) {
                 imgHold[i] = Buffer.from(records[i].img.data, "base64");
                 imagesHold.push(imgHold[i]);
             }
+            // const formatedImages = imagesHold.map(buffer => {
+            //     return `<img class="theImages" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
+            // }).join("");
             const formatedImages = imagesHold.map(buffer => {
                 return `<img class="theImages" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
             }).join("");
