@@ -316,7 +316,7 @@ jQuery(document).ready(function( $ ){
       }
       // Add Metrics Button - print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
-        curkat[0]._id + ">Add Metrics</button><br><br><h5>Click in a Metric Box to Delete or Edit</h5>");
+        curkat[0]._id + ">Add Metrics</button><h5>Click in a Metric Box to Delete or Edit</h5>");
         console.log("curkat[0].metric: ", curkat[0].metric);
         console.log("curkat[0].metric.length: " + curkat[0].metric.length);
 
@@ -420,15 +420,14 @@ jQuery(document).ready(function( $ ){
     event.preventDefault();
     //delete previous contents of image div.
     $("#bigImageDiv").empty();
+    $("#kittenImageTitle").text("");
+    $("#kittenImageDesc").text("");
     console.log("Inside click event of the image");
     var imgSrc = $(this).attr("src");
     var bigImage = $("<img>");
     // need to add a class so that the image can be sized to different screens
     bigImage.addClass("bigImageinModal");
     bigImage.attr("src", imgSrc);
-    //show modal with image, name, and desc.?
-    $("#bigImageDiv").append(bigImage);
-    $("#bigImageModal").modal("show");
     // retrieve Title and Desc of this image.
     var thisId = $(this).attr("data-id");
     console.log("thisId from get image title: " + thisId);
@@ -436,8 +435,11 @@ jQuery(document).ready(function( $ ){
       console.log("currentImage: ", currentImage);
       console.log("currentImage[0].title: ", currentImage[0].title);
       console.log("currentImage[0].desc: ", currentImage[0].desc);
+      $("#bigImageDiv").append(bigImage);
       $("#kittenImageTitle").text(currentImage[0].title);
       $("#kittenImageDesc").text(currentImage[0].desc);
+      //show modal with image, name, and desc.
+      $("#bigImageModal").modal("show");
     });
   });
 

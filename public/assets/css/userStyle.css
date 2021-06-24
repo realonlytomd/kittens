@@ -47,7 +47,7 @@ body {
 }
 
 .bigImageinModal {
-    max-width: 100%;
+    width: 100%;
 }
 
 button#signAdvice {
@@ -121,6 +121,10 @@ span#editThisKitten {
 #keepInline {
     display: inline-block;
     margin-left: 6px;
+}
+
+#submitNewKittenMetrics {
+    margin-top: 20px;
 }
 
 .metricInfo {
