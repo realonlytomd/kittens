@@ -99,15 +99,31 @@ module.exports = function(router) {
                 imgHold[i] = Buffer.from(records[i].img.data, "base64");
                 imagesHold.push(imgHold[i]);
             }
-            const formatedImages = imagesHold.map(buffer => {
-                return `<img class="theImages" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
+
+            const formattedImages = imagesHold.map(buffer => {
+                return `<img data-id=` + records[0]._id + ` class="theImages" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
             }).join("");
             
-            res.send(formatedImages)  //this should be going back to user.js
+            res.send(formattedImages)  //this should be going back to user.js
             //empty out arrays
             imgHold = [];
             imagesHold = [];
         })
+    });
+
+    //This route gets image Title and Desc document from an image collection
+    router.get("/getImageTitleDesc/:id", function(req, res) {
+        console.log("inside /getImageTitleDesc/, req.params.id: ", req.params.id);
+        // need to find the correct image, and get the Title and Desc, 
+        db.Image.find({ _id: req.params.id})
+            .then(function(dbImage) {
+                res.json(dbImage);
+                console.log("from  route /getImageTitleDesc/:id, dbImage: ", dbImage);
+            })
+            .catch(function(err) {
+            // However, if an error occurred, send it to the client
+            res.json(err);
+            });
     });
 
     // the CREATE route for storing a new topic and answer provided by a user

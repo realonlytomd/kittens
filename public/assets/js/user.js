@@ -428,9 +428,17 @@ jQuery(document).ready(function( $ ){
     bigImage.attr("src", imgSrc);
     //show modal with image, name, and desc.?
     $("#bigImageDiv").append(bigImage);
-    // retrieve Title and Desc of this image.
-
     $("#bigImageModal").modal("show");
+    // retrieve Title and Desc of this image.
+    var thisId = $(this).attr("data-id");
+    console.log("thisId from get image title: " + thisId);
+    $.getJSON("/getImageTitleDesc/" + thisId, function(currentImage) {
+      console.log("currentImage: ", currentImage);
+      console.log("currentImage[0].title: ", currentImage[0].title);
+      console.log("currentImage[0].desc: ", currentImage[0].desc);
+      $("#kittenImageTitle").text(currentImage[0].title);
+      $("#kittenImageDesc").text(currentImage[0].desc);
+    });
   });
 
 
@@ -547,7 +555,7 @@ jQuery(document).ready(function( $ ){
       method: "DELETE",
       url: "/kitten/delete/" + currentKittenId
     })
-      .then (function(dbKitten) { 
+      .then (function(dbKitten) {
         console.log("dbKitten after delete: ", dbKitten); // shows a successful delete of 1 document
         // and then delete (or "pull") the reference to that just deleted document from the user document
         $.ajax({
