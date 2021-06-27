@@ -626,6 +626,30 @@ module.exports = function(router) {
             });
     });
 
+     //Route to edit the title of a kitten's image
+     router.post("/editImageTitle/:imageId", function(req, res) {
+        console.log("req.params.imageId: ", req.params.imageId);
+        //console.log("req.body: ", req.body);
+        console.log("req.body.title: ", req.body.title);
+        // find the intended image properties, and change the values accordingly
+        db.Image.findOneAndUpdate (
+            { _id: req.params.imageId },
+            {$set: { 
+                title: req.body.title, 
+            }},
+            { new: true } //send new one back
+        )
+            .then(function(dbImage) {
+                console.log("dbImage: ", dbImage);
+                // If successful, send the newly edited data back to the client
+                res.json(dbImage);
+            })
+            .catch(function(err) {
+            // but if an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
     // **********older code, using for reference*******888
     // the GET route for scraping The Verge's website
     router.get("/scrape", function(req, res) {

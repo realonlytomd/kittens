@@ -118,6 +118,10 @@ span#editThisKitten {
     cursor: pointer;
 }
 
+#kittenImageTitle, #kittenImageDesc {
+    cursor: pointer;
+}
+
 #keepInline {
     display: inline-block;
     margin-left: 6px;

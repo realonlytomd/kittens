@@ -48,6 +48,7 @@ var thisWeight;
 var thisSize;
 var dataPointsArraySize = [];
 var dataPointsArrayWeight = [];
+var thisTitleId;
 jQuery.noConflict();
 jQuery(document).ready(function( $ ){
   jQuery(document).ready(function( $ ){ feedKittenTimer(); });
@@ -423,6 +424,7 @@ jQuery(document).ready(function( $ ){
     $("#kittenImageTitle").text("");
     $("#kittenImageDesc").text("");
     console.log("Inside click event of the image");
+    // create a variable that contains the info to build the image for display
     var imgSrc = $(this).attr("src");
     var bigImage = $("<img>");
     // need to add a class so that the image can be sized to different screens
@@ -435,12 +437,62 @@ jQuery(document).ready(function( $ ){
       console.log("currentImage: ", currentImage);
       console.log("currentImage[0].title: ", currentImage[0].title);
       console.log("currentImage[0].desc: ", currentImage[0].desc);
+      //create variables to contains the info to build the title and description for display
+      var imgTitle = $("<h2>");
+      imgTitle.addClass("editKittenImageTitle");
+      imgTitle.attr("data-id", currentImage[0]._id);
+      imgTitle.text(currentImage[0].title);
+      var imgDesc = $("<h5>");
+      imgDesc.attr("data-id", currentImage[0]._id);
+      imgDesc.text(currentImage[0].desc);
+      // append the newly created variables to the correct divs in HTML MOD
       $("#bigImageDiv").append(bigImage);
-      $("#kittenImageTitle").text(currentImage[0].title);
-      $("#kittenImageDesc").text(currentImage[0].desc);
+      $("#kittenImageTitle").append(imgTitle);
+      $("#kittenImageDesc").append(imgDesc);
       //show modal with image, name, and desc.
       $("#bigImageModal").modal("show");
     });
+  });
+
+  // This function shows the modal for a user to edit the Title
+  // for a kitten's large image displayed in the modal.
+  $(document).on("click", ".editKittenImageTitle", function(event) {
+    event.preventDefault();
+    var thisTitle = $(this).text();
+    thisTitleId = $(this).attr("data-id");
+    $("#editTitle").val(thisTitle); // or is it .text?
+    // show the modal to edit the current title
+    $("#bigImageEditTitleModal").modal("show");
+  });
+
+  // This function shows the modal for a user to edit the Description
+  // for a kitten's large image displayed in the modal.
+  $(document).on("click", "#kittenImageDesc", function(event) {
+    event.preventDefault();
+    // show the modal to edit the current title
+    $("#bigImageEditDescModal").modal("show");
+  });
+
+  //After user clicks Submit, this function changes the title 
+  // kitten's large image in the db
+  $(document).on("click", "#submitEditedImageTitle", function(event) {
+    event.preventDefault();
+    $.ajax({
+      method: "POST",
+      url: "/editImageTitle/" + thisTitleId,
+      data: {
+        title: $("#editTitle").val().trim()
+      }
+    })
+    .then(function(editedImagedb) {
+        console.log("Imagedb after title edit (editedImagedb) in user.js: ", editedImagedb);
+        // empty out the input fields
+        $("#editTitle").val("");
+        
+        // then hide this modal
+        $("#bigImageEditTitleModal").modal("hide");
+        $("#bigImageModal").modal("hide");
+      });
   });
 
 
