@@ -443,6 +443,7 @@ jQuery(document).ready(function( $ ){
       imgTitle.attr("data-id", currentImage[0]._id);
       imgTitle.text(currentImage[0].title);
       var imgDesc = $("<h5>");
+      imgDesc.addClass("editKittenImageDesc");
       imgDesc.attr("data-id", currentImage[0]._id);
       imgDesc.text(currentImage[0].desc);
       // append the newly created variables to the correct divs in HTML MOD
@@ -454,7 +455,7 @@ jQuery(document).ready(function( $ ){
     });
   });
 
-  // This function shows the modal for a user to edit the Title
+  // This function shows the form for a user to edit the Title
   // for a kitten's large image displayed in the modal.
   $(document).on("click", ".editKittenImageTitle", function(event) {
     event.preventDefault();
@@ -468,14 +469,6 @@ jQuery(document).ready(function( $ ){
       "</div>" +
       "<button type='submit' id='submitEditedImageTitle'>Submit</button><br>");
       $("#editTitle").val(thisTitle);
-  });
-
-  // This function shows the modal for a user to edit the Description
-  // for a kitten's large image displayed in the modal.
-  $(document).on("click", "#kittenImageDesc", function(event) {
-    event.preventDefault();
-    // show the modal to edit the current title
-    $("#bigImageEditDescModal").modal("show");
   });
 
   //After user clicks Submit, this function changes the title 
@@ -499,6 +492,42 @@ jQuery(document).ready(function( $ ){
       });
   });
 
+  // This function shows the form for a user to edit the Description
+  // for a kitten's large image displayed in the modal.
+  $(document).on("click", ".editKittenImageDesc", function(event) {
+    event.preventDefault();
+    var thisDesc = $(this).text();
+    console.log("thisDesc: " + thisDesc);
+    thisDescId = $(this).attr("data-id");
+    // show the div to edit the current title
+    $("#bigImageEditDesc").append("<div class='form-group'>" +
+      "<label for='editDesc'>New Description of Image</label>" +
+      "<input type='text' id='editDesc' name='editDesc'>" +
+      "</div>" +
+      "<button type='submit' id='submitEditedImageDesc'>Submit</button><br>");
+      $("#editDesc").val(thisDesc);
+  });
+
+  //After user clicks Submit, this function changes the title 
+  // kitten's large image in the db
+  $(document).on("click", "#submitEditedImageDesc", function(event) {
+    event.preventDefault();
+    $.ajax({
+      method: "POST",
+      url: "/editImageDesc/" + thisDescId,
+      data: {
+        desc: $("#editDesc").val().trim()
+      }
+    })
+    .then(function(editedImagedb) {
+        console.log("Imagedb after desc edit (editedImagedb) in user.js: ", editedImagedb);
+        // empty out the input fields
+        $("#editDesc").val("");
+        // then hide the div to edit and this modal
+        $("#bigImageEditDesc").empty();
+        $("#bigImageModal").modal("hide");
+      });
+  });
 
   // This function brings up a modal to edit currently stored kitten information, not the metrics
   // and add a delete button 
