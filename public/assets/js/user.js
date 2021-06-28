@@ -459,10 +459,15 @@ jQuery(document).ready(function( $ ){
   $(document).on("click", ".editKittenImageTitle", function(event) {
     event.preventDefault();
     var thisTitle = $(this).text();
+    console.log("thisTitle: " + thisTitle);
     thisTitleId = $(this).attr("data-id");
-    $("#editTitle").val(thisTitle); // or is it .text?
-    // show the modal to edit the current title
-    $("#bigImageEditTitleModal").modal("show");
+    // show the div to edit the current title
+    $("#bigImageEditTitle").append("<div class='form-group'>" +
+      "<label for='editTitle'>New Title of Image</label>" +
+      "<input type='text' id='editTitle' name='editTitle'>" +
+      "</div>" +
+      "<button type='submit' id='submitEditedImageTitle'>Submit</button><br>");
+      $("#editTitle").val(thisTitle);
   });
 
   // This function shows the modal for a user to edit the Description
@@ -488,9 +493,8 @@ jQuery(document).ready(function( $ ){
         console.log("Imagedb after title edit (editedImagedb) in user.js: ", editedImagedb);
         // empty out the input fields
         $("#editTitle").val("");
-        
-        // then hide this modal
-        $("#bigImageEditTitleModal").modal("hide");
+        // then hide the div to edit and this modal
+        $("#bigImageEditTitle").empty();
         $("#bigImageModal").modal("hide");
       });
   });
