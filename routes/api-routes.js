@@ -466,6 +466,26 @@ module.exports = function(router) {
             });
     });
 
+    // This route deletes the reference to an image document in the associated kitten document
+    router.post("/kittens/removeImageRef/:id", function(req, res) {
+        console.log("remove a kitten's image reference: kitten id: ", req.params.id);
+        console.log("how was data transferred, req.body: ", req.body);
+    // delete the id of the metric and pass the req.body to the entry
+    db.Kitten.findOneAndUpdate(
+        { _id: req.params.id },
+        { $pull: { image: req.body.imageId }}, // this dbMetric._id should be the metric id to be removed
+        { new: true }
+    )
+            .then(function(dbKitten) {
+                console.log("after .then db.Kitten.findOneAndUpdate $pull, dbKitten: ", dbKitten);
+                res.json(dbKitten);
+            })
+            .catch(function(err) {
+            // If an error occurred, send it to the client
+                res.json(err);
+            });
+    });
+
     // This route deletes just one set of kitten metrics
     router.delete("/metrics/delete/:id", function(req, res) {
         console.log("in kittens/another, req.params: ", req.params);
@@ -477,6 +497,24 @@ module.exports = function(router) {
             //  
             console.log("delete a Metric group, dbMetric: ", dbMetric);
             res.json(dbMetric);
+        })
+        .catch(function(err) {
+            // but if an error occurred, send it to the client
+            res.json(err);
+        });
+    });
+
+    // This route deletes one image of a kitten
+    router.delete("/image/delete/:id", function(req, res) {
+        console.log("in /image/delete/, req.params.id: ", req.params.id);
+        // delete the whole metric group
+        db.Image.deleteOne(
+            { _id: req.params.id }
+        )
+        .then(function(dbImage) {
+            //  
+            console.log("delete a Image group, dbImage: ", dbImage);
+            res.json(dbImage);
         })
         .catch(function(err) {
             // but if an error occurred, send it to the client

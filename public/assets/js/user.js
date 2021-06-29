@@ -14,6 +14,7 @@ var currentUserId = localStorage.getItem("currentUserId");
 var currentUser = localStorage.getItem("currentUser");
 var currentUserLoggedIn;
 var currentKittenId = "";
+var currentImageId = "";
 var kittenIds = [];
 var kittenNames = [];
 var kittenBreeds = [];
@@ -313,6 +314,8 @@ jQuery(document).ready(function( $ ){
             console.log("in user.js, after each get images dataGetImages: ", dataGetImages);
             // then dataGetImages should be something I can setnd to user.html through jQuery
             $("#imageDiv").append(dataGetImages);
+            // does user still have currentKittenId?
+            console.log("currentKittenId: " + currentKittenId);
           });
       }
       // Add Metrics Button - print to DOM: button with id of kitten to add metrics to kitten
@@ -432,6 +435,12 @@ jQuery(document).ready(function( $ ){
     bigImage.attr("src", imgSrc);
     // retrieve Title and Desc of this image.
     var thisId = $(this).attr("data-id");
+    // store the id of the image for delete function to work
+    currentImageId = thisId;
+    // user should have the id of the current kitten
+    // need this to delete this particular image from inside modal
+    // and delete the reference to the image in the kitten document in the db
+    console.log("currentKittenId: " + currentKittenId);
     console.log("thisId from get image title: " + thisId);
     $.getJSON("/getImageTitleDesc/" + thisId, function(currentImage) {
       console.log("currentImage: ", currentImage);
@@ -614,6 +623,35 @@ jQuery(document).ready(function( $ ){
           writeKittenDom();
         });
     });
+
+      // Function to delete one image of a kitten, selected by user
+  $(document).on("click", "#deleteImage", function(event) {
+    event.preventDefault();
+    // delete this image from the db,
+    // The id associated with this image, and the id of the kitten, are both known
+    console.log("currentImageId: "  + currentImageId + " and currentKittenId: " + currentKittenId);
+    // DELETE these specific metrics from the metrics collection
+    $.ajax({
+      method: "DELETE",
+      url: "/image/delete/" + currentImageId
+    })
+      .then (function(dbImage) { 
+        console.log("dbImage after delete: ", dbImage); // shows a successful delete of 1 document
+        // and then delete (or "pull") the reference to that just deleted document from the kitten document
+        $.ajax({
+          method: "POST",
+          url: "/kittens/removeImageRef/" + currentKittenId,
+          data: {imageId: currentImageId}
+        })
+        .then (function(dbKitten) {
+          console.log("dbKitten after POST/kittens/removeImageRef/id: ", dbKitten);
+          // remove modal of deleted image
+          $("#bigImageModal").modal("hide");
+          // still need to reload the metrics div
+          writeKittenDom();
+        });
+      });
+  });
 
     // pull up the modal to ask user if they're sure they want to delete the kitten
   $(document).on("click", "#deleteKitten", function(event) {
