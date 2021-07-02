@@ -458,7 +458,9 @@ jQuery(document).ready(function( $ ){
       // append the newly created variables to the correct divs in HTML MOD
       $("#bigImageDiv").append(bigImage);
       $("#kittenImageTitle").append(imgTitle);
+      $("#kittenImageTitle").append("<p class='directions'>Click text to edit</p>");
       $("#kittenImageDesc").append(imgDesc);
+      $("#kittenImageDesc").append("<p class='directions'>Click text to edit</p>");
       //show modal with image, name, and desc.
       $("#bigImageModal").modal("show");
     });

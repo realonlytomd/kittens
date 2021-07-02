@@ -118,8 +118,16 @@ span#editThisKitten {
     cursor: pointer;
 }
 
-#kittenImageTitle, #kittenImageDesc {
+.editKittenImageTitle, .editKittenImageDesc {
     cursor: pointer;
+}
+
+#submitEditedImageTitle {
+    margin-bottom: 10px;
+}
+
+p.directions {
+    margin-top: -5px;
 }
 
 #keepInline {
@@ -145,10 +153,10 @@ span#editThisKitten {
     color: white;
 }
 
-p {
+/*p#keepInline {
     margin-left: 30px;
     margin-right: 5px;
-}
+}*/
 
 a.answerA{
     display: block;
