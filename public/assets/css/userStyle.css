@@ -8,15 +8,15 @@ body {
     margin: 0;
     box-sizing: border-box;
     /*background-color: aliceblue;*/
-    background-color: #21D4FD;
-    background-image: linear-gradient(56deg, #21D4FD 16%, #B721FF 95%);
+    background-color: #F7CE68;
+    background-image: linear-gradient(0deg, #F7CE68 0%, #FBAB7E 50%, #f7ce68 100%);
 }
 
 #navColor {
     /*background-color: aliceblue;*/
-    background-color: #21D4FD;
-    background-image: linear-gradient(56deg, #21D4FD 16%, #B721FF 95%);
     margin-bottom: 0px;
+    background-color: #F7CE68;
+    background-image: linear-gradient(0deg, #F7CE68 0%, #FBAB7E 50%, #f7ce68 100%);
 }
 
 .wrapper {
