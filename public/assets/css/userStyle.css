@@ -46,9 +46,10 @@ body {
 .theImages {
     height: 100px;
     margin-top: 5px;
-    margin-right: 5px;
+    margin-right: 10px;
     margin-bottom: 5px;
     cursor: pointer;
+    box-shadow: 4px 4px;
 }
 
 .bigImageinModal {
