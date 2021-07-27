@@ -11,27 +11,27 @@ var thisBox;
 var thisTopicId;
 var thisTopicText;
 var thisTopicAnswer;
-console.log("topics.js: name of currentUser: " + currentUser);
+//console.log(topics.js: name of currentUser: " + currentUser);
 // do I need to add the name of the current user? or get it from db with currentUserId??
 // not sure: but I think in login.js, I can setStorage the currentUser name, and retrieve here,
 // but I'll need to overwrite it when I logout,... done
 jQuery.noConflict();
 jQuery(document).ready(function( $ ){
-  console.log("hello from topic.js");
-  console.log("in topic.js, have just set var startCount: " + startCount);
+  //console.log(hello from topic.js");
+  //console.log(in topic.js, have just set var startCount: " + startCount);
   startCount = parseInt(localStorage.getItem("startCount"));
-  console.log("in topic.js, just getItem startCount: " + startCount);
+  //console.log(in topic.js, just getItem startCount: " + startCount);
   //console.log("what is type of startCount?: " + typeof startCount);
   myTimer = parseInt(localStorage.getItem("myTimer"));
   // what is myTimer?  it's a number
   currentUserLoggedIn = localStorage.getItem("currentUserLoggedIn");
-  console.log("in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
+  //console.log(in topics.js, currentUserLoggedIn: " + currentUserLoggedIn);
   // If a timer is running, bypass the click event to start timer function
   if (startCount > 0) {
-    console.log("in topic.js, testing if startCount > 0, startCount: " + startCount);
+    //console.log(in topic.js, testing if startCount > 0, startCount: " + startCount);
     clickFunction();
   } else {
-    console.log("startCount is NOT greater than 0");
+    //console.log(startCount is NOT greater than 0");
   }
 
   // make sure visitors (not logged in Users) can't see the form to answer topics 
@@ -69,7 +69,7 @@ jQuery(document).ready(function( $ ){
           }
       })
       .then(function(dataCreateQuestion) {
-        console.log("data from creation of question (dataCreateQuestion) in topic.js: ", dataCreateQuestion);
+        //console.log(data from creation of question (dataCreateQuestion) in topic.js: ", dataCreateQuestion);
         loadTheTopics();
       });
       $("#question").val("");
@@ -90,7 +90,7 @@ jQuery(document).ready(function( $ ){
           }
       })
       .then(function(dataCreateTopic) {
-        console.log("data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
+        //console.log(data from creation of topic (dbTopic) in topic.js: ", dataCreateTopic);
         loadTheTopics();
       });
       $("#topic").val("");
@@ -111,12 +111,12 @@ jQuery(document).ready(function( $ ){
       $("#topicsCurrent").empty();
       $("#unanswerQ").empty();
       $.getJSON("/getAllTopics", function(allTopics) {
-        console.log("all topics from db, allTopics: ", allTopics);
+        //console.log(all topics from db, allTopics: ", allTopics);
         for (i = 0; i < allTopics.length; i++) {
           thisTopicId = allTopics[i]._id;
           thisTopicText = allTopics[i].topic;
           thisTopicAnswer = allTopics[i].answer;
-          console.log("thisTopicID: " + thisTopicId + " thisTopicText: " + thisTopicText + " thisTopicAnswer: " + thisTopicAnswer);
+          //console.log(thisTopicID: " + thisTopicId + " thisTopicText: " + thisTopicText + " thisTopicAnswer: " + thisTopicAnswer);
           // need an if to test if allTopics[i].answer is ""
           // here, add a way to put the red x and red edit pencil on topics
           // and answers created by the author
@@ -137,7 +137,7 @@ jQuery(document).ready(function( $ ){
             var arr = str.match(urlRE);
             console.table("this is the result of the new match: ", arr);
             if (arr !== null) {
-              console.log("the CORRECT and separate url: " + arr[0]);
+              //console.log(the CORRECT and separate url: " + arr[0]);
               thisBox.append(
                 "<h4>Answer: </h4><p>" +
               allTopics[i].answer + "</p><a class='answerA' href=" +
@@ -185,9 +185,9 @@ jQuery(document).ready(function( $ ){
   // This function adds the delete and edit buttons to topics or questions authored by the current user.
   function addLittleButtonsTopic() {
     
-      console.log("INSIDE addLittleButtonsTopic, thisTopicID: " + thisTopicId);
-      console.log("also inside addLittleButtonsTopic, thisTopicText: " + thisTopicText);
-      console.log("also inside addLittlebuttonsTopic, thisTopicAnswer: " + thisTopicAnswer);
+      //console.log(INSIDE addLittleButtonsTopic, thisTopicID: " + thisTopicId);
+      //console.log(also inside addLittleButtonsTopic, thisTopicText: " + thisTopicText);
+      //console.log(also inside addLittlebuttonsTopic, thisTopicAnswer: " + thisTopicAnswer);
       // append the delete and edit buttons, with the id of the current topic as data
       thisBox.append(
         "<button type='button' class='btn btn-default btn-xs littleXTopic' data_idtopic=" +
@@ -212,9 +212,9 @@ jQuery(document).ready(function( $ ){
   // might look at later combining, just need an if statement to choose between topic or answer
   function addLittleButtonsAnswer() {
     
-      console.log("INSIDE addLittleButtonsAnswer, thisTopicID: " + thisTopicId);
-      console.log("also inside addLittlebuttonsAnswer, thisTopicText: " + thisTopicText);
-      console.log("also inside addLittlebuttonsAnswer, thisTopicAnswer: " + thisTopicAnswer);
+      //console.log(INSIDE addLittleButtonsAnswer, thisTopicID: " + thisTopicId);
+      //console.log(also inside addLittlebuttonsAnswer, thisTopicText: " + thisTopicText);
+      //console.log(also inside addLittlebuttonsAnswer, thisTopicAnswer: " + thisTopicAnswer);
       // append the delete and edit buttons, with the id of the current topic as data
       thisBox.append(
         "<button type='button' class='btn btn-default btn-xs littleXAnswer' data_idtopic=" +
@@ -246,7 +246,7 @@ jQuery(document).ready(function( $ ){
       // the value of the text of the chosen question to be used in the modal to get the answer
       $("#chosenQ").text($(this).text());
       chosenQuestion = $(this).text();
-      console.log("chosenQuestion variable: " + chosenQuestion);
+      //console.log(chosenQuestion variable: " + chosenQuestion);
       $("#answerQuestion").modal("show");
     }
   });
@@ -254,7 +254,7 @@ jQuery(document).ready(function( $ ){
   // submitting an answer to just a questions to the db
   $(document).on("click", "#submitNewAnswer", function(event) {
     event.preventDefault();
-    console.log("inside function for a logged in user to asnwer a question, currentUser: " + currentUser);
+    //console.log(inside function for a logged in user to asnwer a question, currentUser: " + currentUser);
       $.ajax({
           method: "POST",
           url: "/answerTopic/" + chosenQuestion,
@@ -265,7 +265,7 @@ jQuery(document).ready(function( $ ){
           }
       })
       .then(function(dataChosenQuestion) {
-          console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+          //console.log(data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
           loadTheTopics();
       });
       $("#newAnswer").val("");
@@ -276,17 +276,17 @@ jQuery(document).ready(function( $ ){
   // this deletes the entire collection in the Topics db
   $(document).on("click", ".littleXTopic", function(event) {
     event.preventDefault();
-    console.log("Inside DELETE the current user's Topic");
+    //console.log(Inside DELETE the current user's Topic");
     // delete this entire topic from the db, using the topic's id number
     thisTopicId = $(this).attr("data_idtopic");
-    console.log("AFTER clicking littleXTopic, thisTopicId: "  + thisTopicId);
+    //console.log(AFTER clicking littleXTopic, thisTopicId: "  + thisTopicId);
     // DELETE these specific answer from the Topic collection
     $.ajax({
       method: "DELETE",
       url: "/topic/delete/" + thisTopicId
     })
       .then (function(dbTopic) {
-        console.log("data from deleting Topic (dbTopic) in db,topic.js: ", dbTopic);
+        //console.log(data from deleting Topic (dbTopic) in db,topic.js: ", dbTopic);
         loadTheTopics();
       });
   });
@@ -295,10 +295,10 @@ jQuery(document).ready(function( $ ){
   // also need to delete the name of the author from that answer
   $(document).on("click", ".littleXAnswer", function(event) {
     event.preventDefault();
-    console.log("Inside DELETE the current user's answer");
+    //console.log(Inside DELETE the current user's answer");
     // overwrites this answer from the db, using the topic's id number
     thisTopicId = $(this).attr("data_idtopic");
-    console.log("AFTER clicking littleXAnswer, thisTopicId: "  + thisTopicId);
+    //console.log(AFTER clicking littleXAnswer, thisTopicId: "  + thisTopicId);
     // DELETE these specific answer from the Topic collection
     $.ajax({
       method: "POST",
@@ -310,7 +310,7 @@ jQuery(document).ready(function( $ ){
       }
       })
       .then(function(dataTopicNoAnswer) {
-        console.log("data from removing answer to question (dataTopicNoAnswer) in db,topic.js: ", dataTopicNoAnswer);
+        //console.log(data from removing answer to question (dataTopicNoAnswer) in db,topic.js: ", dataTopicNoAnswer);
         loadTheTopics();
       });
   });
@@ -319,19 +319,19 @@ jQuery(document).ready(function( $ ){
   // brings up the modal to make the edit.
   $(document).on("click", ".littleETopic", function(event) {
     event.preventDefault();
-    console.log("inside function to bring up modal to edit a topic's question");
+    //console.log(inside function to bring up modal to edit a topic's question");
     // need text of current answer to put in placeholder of form in modal
     $("h3#chosenQ").text($(this).attr("data-texttopic"));
     $("h3#prevAnswer").text($(this).attr("data-textanswer"));
     thisTopicId = $(this).attr("data-idtopic");
-    console.log("after hitting little pen to edit, thisTopicId: " + thisTopicId);
+    //console.log(after hitting little pen to edit, thisTopicId: " + thisTopicId);
     $("#editTopic").modal("show");
   });
 
   // Then, the user submits their new or edited answer and loads it into the db
   $(document).on("click", "#submitEditedTopic", function(event) {
     event.preventDefault();
-    console.log("inside function for topic author to edit a their quetion, thisTopicId: " + thisTopicId);
+    //console.log(inside function for topic author to edit a their quetion, thisTopicId: " + thisTopicId);
       $.ajax({
           method: "POST",
           url: "/updateTopic/" + thisTopicId,
@@ -341,7 +341,7 @@ jQuery(document).ready(function( $ ){
           }
       })
       .then(function(dataChosenQuestion) {
-        console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+        //console.log(data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
         loadTheTopics();
       });
       $("#editedTopic").val("");
@@ -352,19 +352,19 @@ jQuery(document).ready(function( $ ){
   // brings up the modal to make the edit.
   $(document).on("click", ".littleEAnswer", function(event) {
     event.preventDefault();
-    console.log("inside function to bring up modal to edit a topic's answer");
+    //console.log(inside function to bring up modal to edit a topic's answer");
     // need text of current answer to put in placeholder of form in modal
     $("h3#chosenQ").text($(this).attr("data-texttopic"));
     $("h3#prevAnswer").text($(this).attr("data-textanswer"));
     thisTopicId = $(this).attr("data-idtopic");
-    console.log("after hitting little pen to edit, thisTopicId: " + thisTopicId);
+    //console.log(after hitting little pen to edit, thisTopicId: " + thisTopicId);
     $("#editAnswer").modal("show");
   });
 
   // Then, the user submits their new or edited answer and loads it into the db
   $(document).on("click", "#submitEditedAnswer", function(event) {
     event.preventDefault();
-    console.log("inside function for answer author to edit a their answer, thisTopicId: " + thisTopicId);
+    //console.log(inside function for answer author to edit a their answer, thisTopicId: " + thisTopicId);
       $.ajax({
           method: "POST",
           url: "/updateAnswer/" + thisTopicId,
@@ -374,7 +374,7 @@ jQuery(document).ready(function( $ ){
           }
       })
       .then(function(dataChosenQuestion) {
-        console.log("data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
+        //console.log(data from putting answer to question (dataChosenQuestion) in db,topic.js: ", dataChosenQuestion);
         loadTheTopics();
       });
       $("#editedAnswer").val("");

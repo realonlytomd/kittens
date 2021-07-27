@@ -14,14 +14,14 @@ var startCount;
 var myTimer;
 jQuery.noConflict();
 jQuery(document).ready(function($){
-    console.log("in index.js, have just set var startCount: " + startCount);
+    //console.log(in index.js, have just set var startCount: " + startCount);
     startCount = parseInt(localStorage.getItem("startCount"));
-    console.log("in index.js, just getItem startCount: " + startCount);
+    //console.log(in index.js, just getItem startCount: " + startCount);
     if (startCount > 0) {
-        console.log("in index.js, testing if startCount > 0, startCount: " + startCount);
+        //console.log(in index.js, testing if startCount > 0, startCount: " + startCount);
         clickFunction();
       } else {
-        console.log("startCount is NOT greater than 0");
+        //console.log(startCount is NOT greater than 0");
       }
     myTimer = parseInt(localStorage.getItem("myTimer"));
     // build array of kitten pics
@@ -78,11 +78,11 @@ jQuery(document).ready(function($){
             if ($("button#topicButton").css("font-size") === "14px") {
                 //console.log("In buildBackground(), fontsize should be 14: " + $("button#topicButton").css("font-size"));
                 image.attr("src", "assets/img/" + kittenPortPics[kittenIndex]);
-                console.log("kittenIndex = " + kittenIndex);
+                //console.log(kittenIndex = " + kittenIndex);
             } else {
                 //console.log("In buildBackground(), fontsize should be 26: " + $("button#topicButton").css("font-size"));
                 image.attr("src", "assets/img/" + kittenLandPics[kittenIndex]);
-                console.log("kittenIndex = " + kittenIndex);
+                //console.log("kittenIndex = " + kittenIndex);
             }
             image.attr("alt", "cute");
             $("#carouselBackground").append(image);
@@ -90,11 +90,11 @@ jQuery(document).ready(function($){
             if ($("button#topicButton").css("font-size") === "14px") {
                 //console.log("before splice: fontsize is 14: " + $("button#topicButton").css("font-size"));
                 kittenPortPics.splice(parseInt(kittenIndex), 1);
-                console.log("kittenPortPics.length = " + kittenPortPics.length);
+                //console.log(kittenPortPics.length = " + kittenPortPics.length);
             } else {
                 //console.log("before splice: fontsize is 26: " + $("button#topicButton").css("font-size"));
                 kittenLandPics.splice(parseInt(kittenIndex), 1);
-                console.log("kittenLandPics.length = " + kittenLandPics.length);
+                //console.log(kittenLandPics.length = " + kittenLandPics.length);
             }
             // if the last index has been removed, rebuild the array
             if ((kittenPortPics.length === 0) || (kittenLandPics.length === 0)) {

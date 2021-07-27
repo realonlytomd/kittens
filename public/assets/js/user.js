@@ -53,28 +53,28 @@ var thisTitleId;
 jQuery.noConflict();
 jQuery(document).ready(function( $ ){
   jQuery(document).ready(function( $ ){ feedKittenTimer(); });
-  console.log("hello from user.js");
-  console.log("from user.js, currentUserId is ", currentUserId);
-  console.log("from user.js, currentUserLoggedIn is ", currentUserLoggedIn);
+  //console.log(hello from user.js");
+  //console.log(from user.js, currentUserId is ", currentUserId);
+  //console.log(from user.js, currentUserLoggedIn is ", currentUserLoggedIn);
   // This code is used if a user returns from the topics page,
   // or another page, and there is a feed kitten timer currently going off.
   // it acts as the same code in topic.js.
   startCount = parseInt(localStorage.getItem("startCount"));
-  console.log("in user.js, getItem startCount: " + startCount);
+  //console.log(in user.js, getItem startCount: " + startCount);
   myTimer = parseInt(localStorage.getItem("myTimer"));
   // If a timer is running, bypass the click event to start timer function
   if (startCount > 0) {
-    console.log("in user.js, testing if startCount > 0, startCount: " + startCount);
+    //console.log(in user.js, testing if startCount > 0, startCount: " + startCount);
     clickFunction();
   } else {
-    console.log("startCount is NOT greater than 0");
+    //console.log(startCount is NOT greater than 0");
   }
 
 
   // insert a logout function
   $(document).on("click", "#logoutButton", function(event) {
     event.preventDefault();
-    console.log("This is the logout function!");
+    //console.log(This is the logout function!");
     //
     // add modal to ask user if they are sure
     // and if a feed kitten timer is running
@@ -93,7 +93,7 @@ jQuery(document).ready(function( $ ){
       }
     })
     .then(function(userUpdate) {
-      console.log("userUpdate: ", userUpdate);
+      //console.log(userUpdate: ", userUpdate);
     });
     window.location.replace("/");
     return;
@@ -111,7 +111,7 @@ jQuery(document).ready(function( $ ){
     })
       .then(function(dataCreateKitten) {
         // this is the current user with his fields populated to receive kitten name and metric data
-        console.log("in user.js, dataCreateKitten, after User is populated: ", dataCreateKitten);
+        //console.log(in user.js, dataCreateKitten, after User is populated: ", dataCreateKitten);
       });
   });
     
@@ -132,10 +132,10 @@ jQuery(document).ready(function( $ ){
           }
       })
       .then(function(dataKittenUser) {
-          console.log("User after creation of new kitten (dataKittenUser) in user.js: ", dataKittenUser);
+          //console.log(User after creation of new kitten (dataKittenUser) in user.js: ", dataKittenUser);
           // save id of current (last created) kitten
           currentKittenId = dataKittenUser.kitten[dataKittenUser.kitten.length - 1];
-          console.log("currentKittenId: " + currentKittenId);
+          //console.log(currentKittenId: " + currentKittenId);
           // empty out the input fields
           $("#kittenNameInput").val("");
           $("#kittenBreedInput").val("");
@@ -163,7 +163,7 @@ jQuery(document).ready(function( $ ){
         }
       })
       .then(function(allDataKittenUser) {
-          console.log("User after kitten metrics (allDataKittenUser) in user.js: ", allDataKittenUser);
+          //console.log(User after kitten metrics (allDataKittenUser) in user.js: ", allDataKittenUser);
           // empty out the input fields
           $("#kittenAgeInput").val("");
           $("#kittenWeightInput").val("");
@@ -176,7 +176,7 @@ jQuery(document).ready(function( $ ){
           getAllData();
         })
         .then(function() {
-          console.log("insde 2nd .then after submitting new kitten metrics");
+          //console.log(insde 2nd .then after submitting new kitten metrics");
           writeKittenDom();
         });
   });
@@ -220,13 +220,13 @@ jQuery(document).ready(function( $ ){
       // the variable just exists
       if (currentUserLoggedIn === undefined || currentUserLoggedIn === null) {
         // go back to login
-        console.log("Go Back To Home! currentUserLoggedIn is undefined or null!");
+        //console.log(Go Back To Home! currentUserLoggedIn is undefined or null!");
         window.location.replace("/");
         return;
       } else if (currentUserLoggedIn === "true") {
         // I do save the name of the current user in local storage from the
         // login.js page. This is a good check for errors.
-        console.log("!!!CHECKING: nowCurrentUser[0].name: " + nowCurrentUser[0].name +
+        //console.log(!!!CHECKING: nowCurrentUser[0].name: " + nowCurrentUser[0].name +
           "   localStorage currentUser: " + currentUser);
         //$("span#currentUser").text(nowCurrentUser[0].name);
         // this .forEach goes through each kitten of the user
@@ -248,7 +248,7 @@ jQuery(document).ready(function( $ ){
           }
       } else {
         // go back to login
-        console.log("Go Back To Home!");
+        //console.log(Go Back To Home!");
         window.location.replace("/");
         return;
       }
@@ -265,13 +265,13 @@ jQuery(document).ready(function( $ ){
   
   // function called after a particular kitten button is clicked - gets and displays kitten data
   function writeKittenDom() {
-    console.log("currentKittenId inside writeKittendom: " + currentKittenId);
+    //console.log(currentKittenId inside writeKittendom: " + currentKittenId);
     $("#kittenMetrics").empty(); // empties out the div containing image and metric data of chosen kitten
     $("#chartContainer").empty();
       // gets the array of metrics associated with the current kitten
     $.getJSON("/getAKitten/" + currentKittenId, function(curkat) {
-      console.log("WHAT'S IN HERE curkat[0]: ", curkat[0]);
-      console.log("more specific, curkat[0].furcolor is: ", curkat[0].furcolor);
+      //console.log(WHAT'S IN HERE curkat[0]: ", curkat[0]);
+      //console.log(more specific, curkat[0].furcolor is: ", curkat[0].furcolor);
       // strings with multiple words are not being assigned.
       // try to to write the h5 element with data attributes instead.
       var showSpan = $("<span>");
@@ -304,50 +304,50 @@ jQuery(document).ready(function( $ ){
       curkat[0].image.forEach(innerImageForEach);
 
       function innerImageForEach(innerItem, innerIndex) { //innerItem here is metric id of images
-        console.log("THIS INNER image, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
+        //console.log(THIS INNER image, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
         $.ajax({
           method: "GET",
           url: "/getImages/" + innerItem
         })
           .then(function(dataGetImages) { // dataGetImages should be formattedImages from api-routes.js
             // this is the current image data
-            console.log("in user.js, after each get images dataGetImages: ", dataGetImages);
+            //console.log(in user.js, after each get images dataGetImages: ", dataGetImages);
             // then dataGetImages should be something I can setnd to user.html through jQuery
             $("#imageDiv").append(dataGetImages);
             // does user still have currentKittenId?
-            console.log("currentKittenId: " + currentKittenId);
+            //console.log(currentKittenId: " + currentKittenId);
           });
       }
       // Add Metrics Button - print to DOM: button with id of kitten to add metrics to kitten
       $("#kittenMetrics").append("<button type='submit' id='submitNewKittenMetrics' data-id=" + 
         curkat[0]._id + ">Add Metrics</button><h5>Click in a Metric Box to Delete or Edit</h5>");
-        console.log("curkat[0].metric: ", curkat[0].metric);
-        console.log("curkat[0].metric.length: " + curkat[0].metric.length);
+        //console.log(curkat[0].metric: ", curkat[0].metric);
+        //console.log(curkat[0].metric.length: " + curkat[0].metric.length);
 
       // this .forEach goes through each metric id to obtain associated metrics from db
       curkat[0].metric.forEach(innerMetricForEach);
 
       function innerMetricForEach(innerItem, innerIndex) {
-        console.log("THIS INNER metric, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
+        //console.log(THIS INNER metric, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
         $.getJSON("/getAMetric/" + innerItem, function(curmet) {
-          console.log("this innerItem or _id: " + curmet[0]._id);
-          console.log("curmet[0].age: ", curmet[0].age);
-          console.log("curmet[0].weight: ", curmet[0].weight);
-          console.log("curmet[0].size: ", curmet[0].size);
+          //console.log(this innerItem or _id: " + curmet[0]._id);
+          //console.log(curmet[0].age: ", curmet[0].age);
+          //console.log(curmet[0].weight: ", curmet[0].weight);
+          //console.log(curmet[0].size: ", curmet[0].size);
           //create the arrays of kitten metrics
           metricIds.push(curmet[0]._id);
           kittenAges.push(curmet[0].age);
           kittenWeights.push(curmet[0].weight);
           kittenSizes.push(curmet[0].size);
-          console.log("kittenAges.length = " + kittenAges.length);
-          console.log("curkat[0].metric.length = " + curkat[0].metric.length);
+          //console.log(kittenAges.length = " + kittenAges.length);
+          //console.log(curkat[0].metric.length = " + curkat[0].metric.length);
           // only print the arrays of kitten metrics to DOM if they are completely finished
           if (kittenAges.length === curkat[0].metric.length) {
             // perform sort function to get arrays in order of kitten ages
-            console.log("metricIds: " + metricIds);
-            console.log("kittenAges: " + kittenAges);
-            console.log("kittenWights: " + kittenWeights);
-            console.log("kittenSizes: " + kittenSizes);
+            //console.log(metricIds: " + metricIds);
+            //console.log(kittenAges: " + kittenAges);
+            //console.log(kittenWights: " + kittenWeights);
+            //console.log(kittenSizes: " + kittenSizes);
             // this array is emptied out here instead of after being built
             // so the user has access to it if needed to delete all the metrics
             // associated with a kitten
@@ -365,7 +365,7 @@ jQuery(document).ready(function( $ ){
               }
             })
             .then(function(sortedMetrics) {
-              console.log("from creation of sortedMetrcis: ", sortedMetrics);
+              //console.log(from creation of sortedMetrcis: ", sortedMetrics);
               sortedMetricIds = sortedMetrics.ids;
               sortedAges = sortedMetrics.ages;
               sortedWeights = sortedMetrics.weights;
@@ -383,10 +383,10 @@ jQuery(document).ready(function( $ ){
       // function to print the newly created arrays to the Dom
       // the first time, these arrays are not filled yet, printing nothing to DOM
       function showDom() {
-        console.log("inside function showDom, kittenAges: " + kittenAges);
-        console.log("inside function showDom, sortedAges: " + sortedAges);
+        //console.log(inside function showDom, kittenAges: " + kittenAges);
+        //console.log(inside function showDom, sortedAges: " + sortedAges);
           for (i=0; i<kittenAges.length; i++) {
-            console.log("I'm INSIDE THE showDom FORLOOP");
+            //console.log(I'm INSIDE THE showDom FORLOOP");
             $("#kittenMetrics").append("<div class='metricInfo'><h5 class='metricGroup' data_idKitten=" + 
               currentKittenId + " data_id=" + 
               sortedMetricIds[i] + " data_age=" +
@@ -426,7 +426,7 @@ jQuery(document).ready(function( $ ){
     $("#bigImageDiv").empty();
     $("#kittenImageTitle").text("");
     $("#kittenImageDesc").text("");
-    console.log("Inside click event of the image");
+    //console.log(Inside click event of the image");
     // create a variable that contains the info to build the image for display
     var imgSrc = $(this).attr("src");
     var bigImage = $("<img>");
@@ -440,12 +440,12 @@ jQuery(document).ready(function( $ ){
     // user should have the id of the current kitten
     // need this to delete this particular image from inside modal
     // and delete the reference to the image in the kitten document in the db
-    console.log("currentKittenId: " + currentKittenId);
-    console.log("thisId from get image title: " + thisId);
+    //console.log(currentKittenId: " + currentKittenId);
+    //console.log(thisId from get image title: " + thisId);
     $.getJSON("/getImageTitleDesc/" + thisId, function(currentImage) {
-      console.log("currentImage: ", currentImage);
-      console.log("currentImage[0].title: ", currentImage[0].title);
-      console.log("currentImage[0].desc: ", currentImage[0].desc);
+      //console.log(currentImage: ", currentImage);
+      //console.log(currentImage[0].title: ", currentImage[0].title);
+      //console.log(currentImage[0].desc: ", currentImage[0].desc);
       //create variables to contains the info to build the title and description for display
       var imgTitle = $("<h2>");
       imgTitle.addClass("editKittenImageTitle");
@@ -471,7 +471,7 @@ jQuery(document).ready(function( $ ){
   $(document).on("click", ".editKittenImageTitle", function(event) {
     event.preventDefault();
     var thisTitle = $(this).text();
-    console.log("thisTitle: " + thisTitle);
+    //console.log(thisTitle: " + thisTitle);
     thisTitleId = $(this).attr("data-id");
     // show the div to edit the current title
     $("#bigImageEditTitle").append("<div class='form-group'>" +
@@ -494,7 +494,7 @@ jQuery(document).ready(function( $ ){
       }
     })
     .then(function(editedImagedb) {
-        console.log("Imagedb after title edit (editedImagedb) in user.js: ", editedImagedb);
+        //console.log("Imagedb after title edit (editedImagedb) in user.js: ", editedImagedb);
         // empty out the input fields
         $("#editTitle").val("");
         // then hide the div to edit and this modal
@@ -508,7 +508,7 @@ jQuery(document).ready(function( $ ){
   $(document).on("click", ".editKittenImageDesc", function(event) {
     event.preventDefault();
     var thisDesc = $(this).text();
-    console.log("thisDesc: " + thisDesc);
+    //console.log(thisDesc: " + thisDesc);
     thisDescId = $(this).attr("data-id");
     // show the div to edit the current title
     $("#bigImageEditDesc").append("<div class='form-group'>" +
@@ -531,7 +531,7 @@ jQuery(document).ready(function( $ ){
       }
     })
     .then(function(editedImagedb) {
-        console.log("Imagedb after desc edit (editedImagedb) in user.js: ", editedImagedb);
+        //console.log("Imagedb after desc edit (editedImagedb) in user.js: ", editedImagedb);
         // empty out the input fields
         $("#editDesc").val("");
         // then hide the div to edit and this modal
@@ -544,14 +544,14 @@ jQuery(document).ready(function( $ ){
   // and add a delete button 
   $(document).on("click", "#editThisKitten", function(event) {
     event.preventDefault();
-    console.log("Inside edit this kitten function.");
+    //console.log("Inside edit this kitten function.");
     // retrieve data about "this" kitten from user clicking HERE
     thisName = $(this).attr("data-name");
     thisBreed = $(this).attr("data-breed");
     thisFurlength = $(this).attr("data-furlength");
     thisFurcolor = $(this).attr("data-furcolor");
     thisSex = $(this).attr("data-sex");
-    console.log("thisName: " + thisName);
+    //console.log("thisName: " + thisName);
     $("#editKittenModal").modal("show");
     // fill the form with data currently in db. 
     $("#editKittenNameInput").val(thisName);
@@ -566,7 +566,7 @@ jQuery(document).ready(function( $ ){
     // and submit it to the db using .set
     $(document).on("click", "#submitEditKitten", function(event) {
       event.preventDefault();
-      console.log("inside submitEditKitten");
+      //console.log("inside submitEditKitten");
       $.ajax({
         method: "POST",
         url: "/editKitten/" + currentKittenId,
@@ -579,7 +579,7 @@ jQuery(document).ready(function( $ ){
         }
       })
       .then(function(editedKittendb) {
-          console.log("User after kitten metrics (allDataKittenUser) in user.js: ", editedKittendb);
+          //console.log("User after kitten metrics (allDataKittenUser) in user.js: ", editedKittendb);
           // empty out the input fields
           $("#editKittenNameInput").val("");
           $("#editKittenBreedInput").val("");
@@ -597,13 +597,13 @@ jQuery(document).ready(function( $ ){
     // From tutorial on taking a form in html, and ajax call here with multiform
     $(document).on("click", "#submitNewKittenImage", function(event) {
       event.preventDefault();
-      console.log("inside submitNewKittenImage!");
+      //console.log("inside submitNewKittenImage!");
       //get form from html
       var imageform = $("#kittenImageInputForm")[0];
-      console.log("what is imageform?: ", imageform);
+      //console.log("what is imageform?: ", imageform);
       // Create an FormData object called imageData
       var imageData = new FormData(imageform);
-      console.log("what is imageData?: ", imageData);
+      //console.log("what is imageData?: ", imageData);
       $.ajax({
         type: "POST",
         enctype: "multipart/form-data",
@@ -613,7 +613,7 @@ jQuery(document).ready(function( $ ){
         contentType: false
       })
       .then(function(kittendb) {
-          console.log("after .then for submitting an image, imagedb: ", kittendb);
+          //console.log("after .then for submitting an image, imagedb: ", kittendb);
           // kittendb here is the kitten document with the new image data
           // then hide this modal
           $("#title").val("");
@@ -631,14 +631,14 @@ jQuery(document).ready(function( $ ){
     event.preventDefault();
     // delete this image from the db,
     // The id associated with this image, and the id of the kitten, are both known
-    console.log("currentImageId: "  + currentImageId + " and currentKittenId: " + currentKittenId);
+    //console.log("currentImageId: "  + currentImageId + " and currentKittenId: " + currentKittenId);
     // DELETE these specific metrics from the metrics collection
     $.ajax({
       method: "DELETE",
       url: "/image/delete/" + currentImageId
     })
       .then (function(dbImage) { 
-        console.log("dbImage after delete: ", dbImage); // shows a successful delete of 1 document
+        //console.log("dbImage after delete: ", dbImage); // shows a successful delete of 1 document
         // and then delete (or "pull") the reference to that just deleted document from the kitten document
         $.ajax({
           method: "POST",
@@ -646,7 +646,7 @@ jQuery(document).ready(function( $ ){
           data: {imageId: currentImageId}
         })
         .then (function(dbKitten) {
-          console.log("dbKitten after POST/kittens/removeImageRef/id: ", dbKitten);
+          //console.log("dbKitten after POST/kittens/removeImageRef/id: ", dbKitten);
           // remove modal of deleted image
           $("#bigImageModal").modal("hide");
           // still need to reload the metrics div
@@ -666,10 +666,10 @@ jQuery(document).ready(function( $ ){
   $(document).on("click", "#deleteKittenYes", function(event) {
     event.preventDefault();
     $("#deleteForSure").modal("hide");
-    console.log("I just clicked yes to delete the kitten");
-    console.log("currentUserId: " + currentUserId);
-    console.log("currentKittenId: " + currentKittenId);
-    console.log("CHECK THIS LASTLY!!!! sortedMetricIds: " + sortedMetricIds);
+    //console.log("I just clicked yes to delete the kitten");
+    //console.log("currentUserId: " + currentUserId);
+    //console.log("currentKittenId: " + currentKittenId);
+    //console.log("CHECK THIS LASTLY!!!! sortedMetricIds: " + sortedMetricIds);
     //  - what happens to the metric data referenced
     // to THAT kitten??? It doesn NOT go away. Need to find those metric id's
     // and delete them then delete the kitten, then delete the ref to that kitten in
@@ -683,7 +683,7 @@ jQuery(document).ready(function( $ ){
       url: "/kitten/delete/" + currentKittenId
     })
       .then (function(dbKitten) {
-        console.log("dbKitten after delete: ", dbKitten); // shows a successful delete of 1 document
+        //console.log("dbKitten after delete: ", dbKitten); // shows a successful delete of 1 document
         // and then delete (or "pull") the reference to that just deleted document from the user document
         $.ajax({
           method: "POST",
@@ -691,7 +691,7 @@ jQuery(document).ready(function( $ ){
           data: {kittenId: currentKittenId}
         })
           .then (function(dbUser) {
-            console.log("dbUser after POST/user/removeRef/id: ", dbUser);
+            //console.log("dbUser after POST/user/removeRef/id: ", dbUser);
             // now delete the metrics referenced from the kitten collection
             for (i=0; i<sortedMetricIds.length; i++) {
               $.ajax({
@@ -699,7 +699,7 @@ jQuery(document).ready(function( $ ){
                 url: "/metrics/delete/" + sortedMetricIds[i]
               })
               .then (function(dbMetric) {
-                console.log("and counter: " + i + "is index to which metric data after deleting a kitten, dbMetric: ", dbMetric);
+                //console.log("and counter: " + i + "is index to which metric data after deleting a kitten, dbMetric: ", dbMetric);
               });
             }
             // redraw page to show current kittens of current user
@@ -810,7 +810,7 @@ jQuery(document).ready(function( $ ){
       url: "/metrics/delete/" + thisId
     })
       .then (function(dbMetric) { 
-        console.log("dbMetric after delete: ", dbMetric); // shows a successful delete of 1 document
+        //console.log("dbMetric after delete: ", dbMetric); // shows a successful delete of 1 document
         // and then delete (or "pull") the reference to that just deleted document from the kitten document
         $.ajax({
           method: "POST",
@@ -818,7 +818,7 @@ jQuery(document).ready(function( $ ){
           data: {metricId: thisId}
         })
         .then (function(dbKitten) {
-          console.log("dbKitten after POST/kittens/removeRef/id: ", dbKitten);
+          //console.log("dbKitten after POST/kittens/removeRef/id: ", dbKitten);
           // still need to reload the metrics div
           writeKittenDom();
         });
@@ -837,12 +837,12 @@ jQuery(document).ready(function( $ ){
     littleButton = false;
     // bring up modal to edit existing information for this group of kitten metrics
     // check if all the variables are correctly defined
-    console.log("AFTER clicking littleE," +
-    " thisID: "  + thisId + 
-    " thisKittenId: " + thisKittenId +
-    " thisAge:" + thisAge +
-    " thisWeight:" + thisWeight +
-    " thisSize:" + thisSize);
+    // console.log("AFTER clicking littleE," +
+    // " thisID: "  + thisId + 
+    // " thisKittenId: " + thisKittenId +
+    // " thisAge:" + thisAge +
+    // " thisWeight:" + thisWeight +
+    // " thisSize:" + thisSize);
     $("#editKittenMetricModal").modal("show");
     $("#newKittenAgeInput").val(thisAge);
     $("#newKittenWeightInput").val(thisWeight);
@@ -851,7 +851,7 @@ jQuery(document).ready(function( $ ){
 
   $(document).on("click", "#submitEditedKittenMetrics", function(event) {
     event.preventDefault();
-    console.log("inside submitEditedKittenMetrics");
+    //console.log(inside submitEditedKittenMetrics");
     $.ajax({
       method: "POST",
       url: "/editMetrics/" + thisId,
@@ -862,7 +862,7 @@ jQuery(document).ready(function( $ ){
       }
     })
     .then(function(editedMetricdb) {
-        console.log("User after kitten metrics (allDataKittenUser) in user.js: ", editedMetricdb);
+        //console.log(User after kitten metrics (allDataKittenUser) in user.js: ", editedMetricdb);
         // empty out the input fields
         $("#newKittenAgeInput").val("");
         $("#newKittenWeightInput").val("");

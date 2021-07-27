@@ -19,30 +19,30 @@ var qThreeDb;
 // var i; // this is the index of the currently logged in user. used for same reason as above.
 jQuery.noConflict();
 jQuery(document).ready(function( $ ){
-  console.log("hello from login.js");
-  console.log("currentUserLoggedIn is: " + currentUserLoggedIn);
+  //console.log(hello from login.js");
+  //console.log(currentUserLoggedIn is: " + currentUserLoggedIn);
 
    //For users who've already registered and are re-logging in
   $(document).on("click", "#currentUserLogin", function(event) {
     // didn't work previously without the event.preventDefault - always use
     event.preventDefault();
     currentUser = $("#userName-input").val().trim();
-    console.log("before change to cap currentUser: " + currentUser);
+    //console.log(before change to cap currentUser: " + currentUser);
     currentUser = currentUser.charAt(0).toUpperCase() + currentUser.slice(1).toLowerCase();
-    console.log("after cap change currentUser: " + currentUser);
+    //console.log(after cap change currentUser: " + currentUser);
     currentPassword = $("#password-input").val().trim();
-    console.log("currentPassword: " + currentPassword);
+    //console.log(currentPassword: " + currentPassword);
     // I'm commenting out the following line, as some users would like different cases for password
     // currentPassword = currentPassword.toLowerCase();
     // console.log("after currentPassword: " + currentPassword);
     // Then get all the current users who've ever logged in 
     $.getJSON("/getAllUsers", function(allUsers) {
-      console.log("allUsers after getting them from db: ", allUsers);
+      //console.log(allUsers after getting them from db: ", allUsers);
       // And compare. Find the matching login user name, and check if the stored
       // email address matches the input from the user.
       for (i = 0; i < allUsers.length; i++) {
-        console.log("allUsers[i].name= " + allUsers[i].name);
-        console.log("allUsers[i].password= " + allUsers[i].password);
+        //console.log(allUsers[i].name= " + allUsers[i].name);
+        //console.log(allUsers[i].password= " + allUsers[i].password);
         if ((currentUser === allUsers[i].name) && (currentPassword === allUsers[i].password)) {
           // THIS is where a current user's logged in status is set to "true".
           // the db for users will always have their status set to "false".
@@ -51,7 +51,7 @@ jQuery(document).ready(function( $ ){
           console.log(allUsers[i].name + " is the current user");
           // and that user's id will be used to post to their data in the db
           currentUser_id = allUsers[i]._id;
-          console.log("from login.js, currentUser_id is " + currentUser_id);
+          //console.log(from login.js, currentUser_id is " + currentUser_id);
           // set to local storage to be accessible in user.js so
           // currently logged in user can post to their db values
           localStorage.setItem("currentUserId", currentUser_id);
@@ -71,12 +71,12 @@ jQuery(document).ready(function( $ ){
           // then ask them to try again or reset their password.
         } else if (currentUser === allUsers[i].name) {
           console.log(allUsers[i].name + " does not have correct password input");
-          console.log("currentUser: " + currentUser + " is the user currently logging in");
+          //console.log(currentUser: " + currentUser + " is the user currently logging in");
           // answers to security questions stored in db
           qOneDb = allUsers[i].questionOne;
           qTwoDb = allUsers[i].questionTwo;
           qThreeDb = allUsers[i].questionThree;
-          console.log("Their current answers to the sec. q's from db: qOneDB, qTwoD, qThreeDb are: " + qOneDb + " " + qTwoDb + " " + qThreeDb);
+          //console.log(Their current answers to the sec. q's from db: qOneDB, qTwoD, qThreeDb are: " + qOneDb + " " + qTwoDb + " " + qThreeDb);
           // since we know that a registered user is trying to log in, set their currentUserLoggedIn status
           currentUserLoggedIn = "false";  // instead of undefined, as it would be for a non-registered user
           // for now, assuming that the user name is correct, but password is wrong
@@ -84,7 +84,7 @@ jQuery(document).ready(function( $ ){
           "\nClick Cancel to try again, or click OK to reset your password."
             // using an alert 
           if (confirm(questions)) {
-            console.log("user wishes to change password");
+            //console.log(user wishes to change password");
             // The id secQAnswer modal appears asking the user to re-answer their original 3 security questions
             $("#secQAnswer").modal("show");
             // when the user clicks the submit button in that modal, the function below:
@@ -106,23 +106,23 @@ jQuery(document).ready(function( $ ){
   //  The modal with submit id=submitSecQ is pulled up also from signing up a new user
   $(document).on("click", "#submitSecQ", function(event) {
     event.preventDefault();
-    console.log("inside function that compares security questions to previous answers");
+    //console.log(inside function that compares security questions to previous answers");
     // hide the previous modal
     $("#secQAnswer").modal("hide");
     // retrieve the user inputted values and assign them to reanswer variables.
     qOneInput = $("#secQOne").val().trim();
     qTwoInput = $("#secQTwo").val().trim();
     qThreeInput = $("#secQThree").val().trim();
-    console.log("Their current answers to security q's: " + qOneInput + " " + qTwoInput + " " + qThreeInput);
+    //console.log(Their current answers to security q's: " + qOneInput + " " + qTwoInput + " " + qThreeInput);
 
     //
     // need if statement, if first time user signup, 
     // currentUserLoggedIn will be undefined because user hasn't logged in ever,
     // then call function to put this data in db
-    console.log("currentUserLoggedIn, before checking if !== false: " + currentUserLoggedIn);
+    //console.log(currentUserLoggedIn, before checking if !== false: " + currentUserLoggedIn);
     if (currentUserLoggedIn !== "false") {
       // call function to put a new user info in db
-      console.log("inside currentUserLoggedIn, !== false, so it's a new user...");
+      //console.log(inside currentUserLoggedIn, !== false, so it's a new user...");
       putUserInfoDb();
       return;
     } else { // a current user is trying to reset their password
@@ -138,7 +138,7 @@ jQuery(document).ready(function( $ ){
         // security questions are correct, this is the correct user
         // so reset their password
         // pull up the modal to reset the password...
-        console.log("correct answers, so need to reset user's password");
+        //console.log(correct answers, so need to reset user's password");
         $("#passwordReset").modal("show");
         // build funtion that takes answer to resetting password
       }
@@ -154,7 +154,7 @@ jQuery(document).ready(function( $ ){
   // function called from inside modal to reset password
   $(document).on("click", "#submitNewPass", function(event) {
     event.preventDefault();
-    console.log("inside function to reset password of user in the db");
+    //console.log(inside function to reset password of user in the db");
     // get user inputs to new password and confirmation
     newPassInput = $("#newPassword1").val().trim();
     newPassConfirmInput = $("#newPassword2").val().trim();
@@ -170,7 +170,7 @@ jQuery(document).ready(function( $ ){
         }
       })
       .then(function(dataNewPassword) {
-        console.log("data from changing user's password in db, login.js: ", dataNewPassword);
+        //console.log(data from changing user's password in db, login.js: ", dataNewPassword);
         $("#newPassword1").val("");
         $("#newPassword2").val("");
         $("#passwordReset").modal("hide");
@@ -187,13 +187,13 @@ jQuery(document).ready(function( $ ){
   $(document).on("click", "#signupUser", function(event) {
     event.preventDefault();
     userNameInput = $("#newUserName-input").val().trim();
-    console.log("before userNameInput: " + userNameInput);
+    //console.log(before userNameInput: " + userNameInput);
     
     userNameInput = userNameInput.charAt(0).toUpperCase() + userNameInput.slice(1).toLowerCase();
     
-    console.log("after userNameInput: " + userNameInput);
+    //console.log(after userNameInput: " + userNameInput);
     passwordInput = $("#newPassword-input").val().trim();
-    console.log("passwordInput: " + passwordInput);
+    //console.log(passwordInput: " + passwordInput);
     // passwordInput = passwordInput.toLowerCase();
     // console.log("after passwordInput: " + passwordInput);
 
@@ -220,16 +220,16 @@ jQuery(document).ready(function( $ ){
         }
       })
       .then(function(dataCreateUser) {
-        console.log("data from creation of new user (dataCreateUser) in login.js: ", dataCreateUser);
+        //console.log(data from creation of new user (dataCreateUser) in login.js: ", dataCreateUser);
         //Once a name and password have been put in user db, now take user to the /user page
         // set localstorage to the newly created user id so they can input kitten data
-        console.log("from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
-        console.log("from login.js, a new user, dataCreateUser.name: " + dataCreateUser.name);
+        //console.log(from login.js, a new user, dataCreateUser._id: " + dataCreateUser._id);
+        //console.log(from login.js, a new user, dataCreateUser.name: " + dataCreateUser.name);
         localStorage.setItem("currentUserId", dataCreateUser._id);
         localStorage.setItem("currentUserLoggedIn", dataCreateUser.loggedIn);
         // set the now logged in currentUser to localStorage to be used in topics.js as author
         localStorage.setItem("currentUser", dataCreateUser.name);
-        console.log("This is currentUserLoggedIn after putting user in db: " + dataCreateUser.loggedIn);
+        //console.log(This is currentUserLoggedIn after putting user in db: " + dataCreateUser.loggedIn);
         // but first, zero out input fields
         $("#newUserName-input").val("");
         $("#newPassword-input").val("");

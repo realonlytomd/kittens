@@ -9,7 +9,7 @@
       // function to bring up the countdown clock to feed the kitten
         $(document).on("click", "#feedKitten", function(event) {
           event.preventDefault();
-          console.log("click event to feed kitten");
+          //console.log(click event to feed kitten");
           clickFunction();
         });
       });
@@ -18,29 +18,29 @@
     function clickFunction() {
       jQuery.noConflict();
       jQuery(document).ready(function( $ ){
-        console.log("In clickFunction() on timer.js! startCount: " + startCount);
+        //console.log(In clickFunction() on timer.js! startCount: " + startCount);
         stopTimer();
-        console.log("before if, $('#startCount').val(): " + $("#startCount").val());
-        console.log("what is type of startCount?: " + typeof startCount);
+        //console.log(before if, $('#startCount').val(): " + $("#startCount").val());
+        //console.log(what is type of startCount?: " + typeof startCount);
         // check to see if the input value exists (or is empty or undefined)
         if (($("#startCount").val()))  {
-          console.log("$('#startCount').val().trim() at beginning of click event: " + $("#startCount").val().trim());
+          //console.log($('#startCount').val().trim() at beginning of click event: " + $("#startCount").val().trim());
           // timer should count down in seconds, because a user will be switching back
           // and forth between pages. The startCount and myTimer variables will
           // be reset. If under 1, a user could conceiveably never reach zero.
           // Therefore, the initial requested timer should be multiplied by 60
           startCount = $("#startCount").val().trim() * 60;
-          console.log("after setting to .val().trim(), startCount: " + startCount);
+          //console.log(after setting to .val().trim(), startCount: " + startCount);
           //reset form after retrieving input so input is undefined
           // for timer to be started from other pages with an undefined input.
           $("#countForm").trigger("reset");
-          console.log("just reset $('#startCount').val(): " + $("#startCount").val());
+          //console.log(just reset $('#startCount').val(): " + $("#startCount").val());
         } else {
-          console.log("startCount.val() is undefined! I'm in else.");
-          console.log("in else, startCount retrieved in topic.js, or a return to user.js: " + startCount);
+          //console.log(startCount.val() is undefined! I'm in else.");
+          //console.log(in else, startCount retrieved in topic.js, or a return to user.js: " + startCount);
         }
         localStorage.setItem("startCount", startCount);
-        console.log("outside of else, startCount written back into localStorage, startCount: " + startCount);
+        //console.log(outside of else, startCount written back into localStorage, startCount: " + startCount);
         timer();
       });
     }
@@ -64,7 +64,7 @@
         }
         $("#feedTimer").show();
         startCount = startCount - 1;
-        console.log("in function timer() after startCount - 1, startCount = " + startCount);
+        //console.log(in function timer() after startCount - 1, startCount = " + startCount);
         // add play a sound as startCount reaches 0?
         myTimer = setTimeout(function(){ timer() }, 1000);
         //console.log("what is myTimer: " + myTimer);
