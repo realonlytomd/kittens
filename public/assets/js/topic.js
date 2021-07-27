@@ -135,7 +135,7 @@ jQuery(document).ready(function( $ ){
             var str = allTopics[i].answer;
             var urlRE= new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+");
             var arr = str.match(urlRE);
-            console.table("this is the result of the new match: ", arr);
+            //console.table("this is the result of the new match: ", arr);
             if (arr !== null) {
               //console.log(the CORRECT and separate url: " + arr[0]);
               thisBox.append(
