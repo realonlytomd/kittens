@@ -125,6 +125,9 @@ button.kittenButtons {
 
 span#editThisKitten {
     cursor: pointer;
+    display: inline-block;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 
 .editKittenImageTitle, .editKittenImageDesc {
@@ -139,9 +142,8 @@ p.directions {
     margin-top: -5px;
 }
 
-#keepInline {
+.keepInline {
     display: inline-block;
-    margin-left: 6px;
 }
 
 #submitNewKittenMetrics {

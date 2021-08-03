@@ -282,12 +282,13 @@ jQuery(document).ready(function( $ ){
       showSpan.attr("data-furlength", curkat[0].furlength);
       showSpan.attr("data-furcolor", curkat[0].furcolor);
       showSpan.attr("data-sex", curkat[0].sex);
-      showSpan.text("CLICK HERE");
+      showSpan.text("HERE");
       //this works!
       // appends the name of the current kitten and other constants
+      $("#kittenMetrics").append("<p class='keepInline'>(CLICK</p>");
       $("#kittenMetrics").append(showSpan);
-      $("#kittenMetrics").append("<p id='keepInline'> to Edit or Delete " +
-      curkat[0].name + "</p><h4>Kitten: " + 
+      $("#kittenMetrics").append("<p class='keepInline'> to Edit or Delete " +
+      curkat[0].name + ")</p><h4>Kitten: " + 
       curkat[0].name + "<br>Breed: " +
       curkat[0].breed + "<br>Fur Length: " +
       curkat[0].furlength + "<br>Fur Color: " +
