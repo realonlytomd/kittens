@@ -19,17 +19,10 @@ body {
     background-image: linear-gradient(0deg, #F7CE68 0%, #FBAB7E 50%, #f7ce68 100%);
 }
 
-.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-  }
-
 .wrapper {
     min-height: 100vh;
     margin-bottom: -42px;
-    margin-top: 62px;
+    margin-top: 80px;
 }
 
 .footer, .push {
