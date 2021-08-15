@@ -19,6 +19,10 @@ body {
     background-image: linear-gradient(0deg, #F7CE68 0%, #FBAB7E 50%, #f7ce68 100%);
 }
 
+.navbar {
+    min-height: 80px;
+}
+
 .wrapper {
     min-height: 100vh;
     margin-bottom: -42px;
@@ -198,8 +202,6 @@ button#loadTopics {
     margin-bottom: 5px;
     margin-top: -5px;
 }
-
-
 
 @media only screen and (orientation: portrait) {
     button#topicButton, button#signupButton, button#logoutButton,
