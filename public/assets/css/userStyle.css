@@ -89,10 +89,6 @@ button#logoutButton, button#homeButton, button#usersButton {
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
-}  
-
-#picRow {
-    position: relative;
 }
 
 .padded-multiline {
