@@ -38,19 +38,6 @@
             <input type="number" id="startCount" name="minutes" min="0" placeholder="Minutes">
             <input type="button" id="feedKitten" value="Start The Clock!">
           </form>
-          <!--<div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" 
-              data-toggle="dropdown">Minutes <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li class="dropdown-header">Select How Many Minutes Between Feedings</li>
-              <li id="startCount">30</li>
-              <li id="startCount">45</li>
-              <li id="startCount">60</li>
-              <li id="startCount">90</li>
-              <li id="startCount">120</li>
-            </ul>
-          </div>
-          <button id="feedKitten">Feed The Kitten!</button> -->
           <div id="feedTimer">
             <h2><span id="timerDisplay"></span><span id="timerLabel"></span></h2>
           </div>
@@ -218,19 +205,34 @@
             </div>
             <div class="modal-body">
               <!-- entry form for entering info about the new kitten-->
+              
               <div class="form-group">
                 <label for="kittenAgeInput">Kitten Age:</label>
                 <input type="number" class="form-control" name="age" id="kittenAgeInput" placeholder="Enter the Kitten's Age in Weeks">
-              </div>
-              <div class="form-group">
+              </div> <!-- form-group -->
+              
+              <div class="input-group">
                 <label for="kittenWeightInput">Kitten Weight:</label>
                 <input type="number" class="form-control" name="weight" id="kittenWeightInput" placeholder="Enter the Kitten's Weight in Ounces">
-              </div>
+                <!--adding dropdown button for weight units-->
+                <div class="input-group-btn">
+                  <button type="button" id="unitButton" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div><!-- input-group-btn -->
+              </div><!-- input-group -->
+              
               <div class="form-group">
                 <label for="kittenSizeInput">Kitten Size:</label>
                 <input type="number" class="form-control" name="size" id="kittenSizeInput" placeholder="Enter the Kitten's Length in Inches">
-              </div>
+              </div> <!-- form-group -->
               <button type="submit" id="submitKittenMetrics">Submit</button>
+            
             </div>
             <div class="modal-footer">
               <button type="button" data-dismiss="modal">Close</button>
