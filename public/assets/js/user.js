@@ -714,6 +714,17 @@ jQuery(document).ready(function( $ ){
       });
   });
   
+  // adding function available when user adds metrics
+  // User required to pick units for weight of kitten
+  // this puts the chosen units into the dropdown button 
+  $(".dropdown-menu li a").click(function(e){
+    var selText = $(this).text();
+    $(this).parents(".input-group").find(".dropdown-toggle").html(selText + " <span class='caret'></span>");       
+    console.log("selText is: " + selText);
+  });
+  // the variable selText should also be initialized above and used later to put in db
+  // Yay, works. Next, store that text (a string) in db.
+  // retrieved later to figure out if a formula is needed so all units are equal.
 
    // This function is used as user clicks on the Add Metrics button (rendered from above)
   // to add metrics to an existing kitten, also while other metrics have been listed
