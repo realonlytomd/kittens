@@ -159,6 +159,8 @@ jQuery(document).ready(function( $ ){
         data: {
             age: $("#kittenAgeInput").val().trim(),
             weight: $("#kittenWeightInput").val().trim(),
+            // add something to get .txt or .val of the units chosen
+            // ("#weightUnit").val() or .txt(),  and add to db model
             size: $("#kittenSizeInput").val().trim()
         }
       })
@@ -167,6 +169,8 @@ jQuery(document).ready(function( $ ){
           // empty out the input fields
           $("#kittenAgeInput").val("");
           $("#kittenWeightInput").val("");
+          //
+          //I think the unit button will return to blank?
           $("#kittenSizeInput").val("");
           // then hide this modal
           $("#newKittenMetricModal").modal("hide");
