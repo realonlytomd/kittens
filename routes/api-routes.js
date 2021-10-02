@@ -34,6 +34,7 @@ var fs = require('fs');
 var sortedIds = [];
 var sortedAges = [];
 var sortedWeights = [];
+var sortedUnits = [];
 var sortedSizes = [];
 
 // initialize image variables
@@ -51,6 +52,7 @@ module.exports = function(router) {
         // console.log("from /sortArrays, req.query.ids: ", req.query.ids);
         // console.log("from /sortArrays, req.query.ages: ", req.query.ages);
         // console.log("from /sortArrays, req.query.weights: ", req.query.weights);
+        console.log("from /sortArrays, req.query.units: ", req.query.units);
         // console.log("from /sortArrays, req.query.sizes: ", req.query.sizes);
         // need to convert the numbers in ages array from strings to number
         var kittenAges = req.query.ages;
@@ -63,6 +65,7 @@ module.exports = function(router) {
             sortedIds[i]=req.query.ids[newIndex[i]];
             sortedAges[i]=req.query.ages[newIndex[i]];
             sortedWeights[i]=req.query.weights[newIndex[i]];
+            sortedUnits[i]=req.query.units[newIndex[i]];
             sortedSizes[i]=req.query.sizes[newIndex[i]];
         }
         // console.log("sortedIds: " + sortedIds);
@@ -73,6 +76,7 @@ module.exports = function(router) {
             ids: sortedIds,
             ages: sortedAges,
             weights: sortedWeights,
+            units: sortedUnits,
             sizes: sortedSizes
         };
         // console.log("sortedMetrics: ", sortedMetrics);
@@ -80,6 +84,7 @@ module.exports = function(router) {
         sortedIds = [];
         sortedAges = [];
         sortedWeights = [];
+        sortedUnits = [];
         sortedSizes = [];
     });
 

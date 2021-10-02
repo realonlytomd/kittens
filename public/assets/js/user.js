@@ -24,12 +24,14 @@ var kittenSexes = [];
 var metricIds = [];
 var kittenAges = [];
 var kittenWeights = [];
+var kittenUnits = [];
 var kittenSizes = [];
 // these are needed across functions as they are sorted in one, and printed to DOM
 
 var sortedMetricIds = [];
 var sortedAges = [];
 var sortedWeights = [];
+var sortedUnits = [];
 var sortedSizes = [];
 
 // boolean that is true when delete and edit buttons already exist in div somewhere
@@ -46,6 +48,8 @@ var thisFurcolor;
 var thisSex;
 var thisAge;
 var thisWeight;
+var thisUnit;
+var selText;
 var thisSize;
 var dataPointsArraySize = [];
 var dataPointsArrayWeight = [];
@@ -153,14 +157,15 @@ jQuery(document).ready(function( $ ){
   // that reference id is stored in the kitten document
   $(document).on("click", "#submitKittenMetrics", function(event) {
     event.preventDefault();
+    console.log("from user choosing weight units, selText: ", selText);
       $.ajax({
         method: "POST",
         url: "/kittenMetrics/" + currentKittenId,
         data: {
             age: $("#kittenAgeInput").val().trim(),
             weight: $("#kittenWeightInput").val().trim(),
-            // add something to get .txt or .val of the units chosen
-            // ("#weightUnit").val() or .txt(),  and add to db model
+            // the chosen units of the weight saved here
+            unit: selText,
             size: $("#kittenSizeInput").val().trim()
         }
       })
@@ -335,14 +340,17 @@ jQuery(document).ready(function( $ ){
       function innerMetricForEach(innerItem, innerIndex) {
         //console.log(THIS INNER metric, innerIndex and innerItem: " + innerIndex + " and " + innerItem);
         $.getJSON("/getAMetric/" + innerItem, function(curmet) {
-          //console.log(this innerItem or _id: " + curmet[0]._id);
-          //console.log(curmet[0].age: ", curmet[0].age);
-          //console.log(curmet[0].weight: ", curmet[0].weight);
-          //console.log(curmet[0].size: ", curmet[0].size);
+          //console.log("this innerItem or _id: " + curmet[0]._id);
+          //console.log("curmet[0].age: ", curmet[0].age);
+          //console.log("curmet[0].weight: ", curmet[0].weight);
+          console.log("curmet[0].unit: ", curmet[0].unit);
+          //console.log("curmet[0].size: ", curmet[0].size);
           //create the arrays of kitten metrics
           metricIds.push(curmet[0]._id);
           kittenAges.push(curmet[0].age);
           kittenWeights.push(curmet[0].weight);
+          kittenUnits.push(curmet[0].unit);
+          console.log("user.js: kittenUnits: ", kittenUnits);
           kittenSizes.push(curmet[0].size);
           //console.log(kittenAges.length = " + kittenAges.length);
           //console.log(curkat[0].metric.length = " + curkat[0].metric.length);
@@ -366,6 +374,7 @@ jQuery(document).ready(function( $ ){
                 ids: metricIds,
                 ages: kittenAges,
                 weights: kittenWeights,
+                units: kittenUnits,
                 sizes: kittenSizes
               }
             })
@@ -374,6 +383,7 @@ jQuery(document).ready(function( $ ){
               sortedMetricIds = sortedMetrics.ids;
               sortedAges = sortedMetrics.ages;
               sortedWeights = sortedMetrics.weights;
+              sortedUnits = sortedMetrics.units;
               sortedSizes = sortedMetrics.sizes;
               // console.log("CHECK THIS!!!! sortedMetricIds: " + sortedMetricIds);
               // console.log("sortedAges: " + sortedAges);
@@ -396,10 +406,11 @@ jQuery(document).ready(function( $ ){
               currentKittenId + " data_id=" + 
               sortedMetricIds[i] + " data_age=" +
               sortedAges[i] + " data_weight=" +
-              sortedWeights[i] + " data_size=" +
+              sortedWeights[i] + " data_unit=" +
+              sortedUnits[i] + " data_size=" +
               sortedSizes[i] + ">Age: " +
               sortedAges[i] + " Weeks" + "<br>Weight: " +
-              sortedWeights[i] + " Ounces" +"<br>Length: " +
+              sortedWeights[i] + " " + sortedUnits[i] + "<br>Length: " +
               sortedSizes[i] + " Inches" +"</h5></div>");
           }
           //
@@ -410,12 +421,14 @@ jQuery(document).ready(function( $ ){
           metricIds = [];
           kittenAges = [];
           kittenWeights = [];
+          kittenUnits = [];
           kittenSizes = [];
           // try: keep this array in case user wants to delete all the metrics referenced from
           // a kitten they are deleting.
           //sortedMetricIds = [];
           sortedAges = [];
           sortedWeights = [];
+          sortedUnits = [];
           sortedSizes = [];
           //console.log("CHECK THIS TOO!!!! sortedMetricIds: " + sortedMetricIds);
       }
@@ -718,13 +731,15 @@ jQuery(document).ready(function( $ ){
   // User required to pick units for weight of kitten
   // this puts the chosen units into the dropdown button 
   $(".dropdown-menu li a").click(function(e){
-    var selText = $(this).text();
+    // selText should be available to be put into db
+    selText = $(this).text();
     $(this).parents(".input-group").find(".dropdown-toggle").html(selText + " <span class='caret'></span>");       
     console.log("selText is: " + selText);
   });
   // the variable selText should also be initialized above and used later to put in db
   // Yay, works. Next, store that text (a string) in db.
   // retrieved later to figure out if a formula is needed so all units are equal.
+
 
    // This function is used as user clicks on the Add Metrics button (rendered from above)
   // to add metrics to an existing kitten, also while other metrics have been listed
@@ -771,6 +786,7 @@ jQuery(document).ready(function( $ ){
         thisKittenId = $(event.target).attr("data_idKitten");
         thisAge = $(event.target).attr("data_age");
         thisWeight = $(event.target).attr("data_weight");
+        thisUnit = $(event.target).attr("data_unit");
         thisSize = $(event.target).attr("data_size");
         //console.log("AFTER clicked .metricGroup, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
         addButtons();
@@ -862,18 +878,22 @@ jQuery(document).ready(function( $ ){
     $("#editKittenMetricModal").modal("show");
     $("#newKittenAgeInput").val(thisAge);
     $("#newKittenWeightInput").val(thisWeight);
+    // add value of units to the weight
+    // find out what this element is called
     $("#newKittenSizeInput").val(thisSize);
   });
 
   $(document).on("click", "#submitEditedKittenMetrics", function(event) {
     event.preventDefault();
     //console.log(inside submitEditedKittenMetrics");
+    // need to add an id to the dropdown menu???
     $.ajax({
       method: "POST",
       url: "/editMetrics/" + thisId,
       data: {
           age: $("#newKittenAgeInput").val().trim(),
           weight: $("#newKittenWeightInput").val().trim(),
+          // here will be what is in the dropdown button for units, nothing now
           size: $("#newKittenSizeInput").val().trim()
       }
     })
@@ -895,7 +915,7 @@ jQuery(document).ready(function( $ ){
   // that the user can toggle between. 
   // Only the chosen kitten's data will be displayed on the chart below (above?) the kitten's
   // metric boxes.
-  function displayChart() {
+  function displayChart() {  // need to add what to do with units for weights
     // below, dataPoints is an array of objects. I'm not joining 2 arrays
     // so  {x:sortedAges, y:sortedSizes} and then pushed into an array
     // sortedAges is one array, sortedSizes is another
