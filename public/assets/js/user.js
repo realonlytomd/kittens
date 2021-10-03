@@ -344,6 +344,9 @@ jQuery(document).ready(function( $ ){
           //console.log("curmet[0].age: ", curmet[0].age);
           //console.log("curmet[0].weight: ", curmet[0].weight);
           console.log("curmet[0].unit: ", curmet[0].unit);
+          if (curmet[0].unit === undefined) {
+            curmet[0].unit = "ounces";
+          }
           //console.log("curmet[0].size: ", curmet[0].size);
           //create the arrays of kitten metrics
           metricIds.push(curmet[0]._id);
@@ -409,9 +412,9 @@ jQuery(document).ready(function( $ ){
               sortedWeights[i] + " data_unit=" +
               sortedUnits[i] + " data_size=" +
               sortedSizes[i] + ">Age: " +
-              sortedAges[i] + " Weeks" + "<br>Weight: " +
+              sortedAges[i] + " weeks" + "<br>Weight: " +
               sortedWeights[i] + " " + sortedUnits[i] + "<br>Length: " +
-              sortedSizes[i] + " Inches" +"</h5></div>");
+              sortedSizes[i] + " inches" +"</h5></div>");
           }
           //
           // I think here is where the function to make the chart should be called.
@@ -737,7 +740,7 @@ jQuery(document).ready(function( $ ){
     console.log("selText is: " + selText);
   });
   // the variable selText should also be initialized above and used later to put in db
-  // Yay, works. Next, store that text (a string) in db.
+  // Next, store that text (a string) in db.
   // retrieved later to figure out if a formula is needed so all units are equal.
 
 
@@ -893,7 +896,7 @@ jQuery(document).ready(function( $ ){
       data: {
           age: $("#newKittenAgeInput").val().trim(),
           weight: $("#newKittenWeightInput").val().trim(),
-          // here will be what is in the dropdown button for units, nothing now
+          unit: selText,
           size: $("#newKittenSizeInput").val().trim()
       }
     })

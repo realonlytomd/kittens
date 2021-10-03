@@ -59,7 +59,7 @@ module.exports = function(router) {
         numberKittenAges = kittenAges.map(Number);
         // console.log("numberKittenAges: ", numberKittenAges);
         var newIndex = sortAges(numberKittenAges);
-        // console.log("newIndex: ", newIndex);
+        console.log("newIndex: ", newIndex);
         // reorder method below seems to be breaking, so do a for loop to reorder arrays
         for (var i=0; i<numberKittenAges.length; i++) {
             sortedIds[i]=req.query.ids[newIndex[i]];
@@ -619,11 +619,17 @@ module.exports = function(router) {
         // console.log("req.body: ", req.body);
         console.log("req.body.age: ", req.body.age);
         console.log("req.body.weight: ", req.body.weight);
+        console.log("req.body.unit: ", req.body.unit);
         console.log("req.body.size: ", req.body.size);
         // find the intended set of metrics, and change the numbers accordingly
         db.Metric.findOneAndUpdate (
             { _id: req.params.metricID },
-            {$set: { age: req.body.age , weight: req.body.weight , size: req.body.size }},
+            {$set: { 
+                age: req.body.age, 
+                weight: req.body.weight, 
+                unit: req.body.unit, 
+                size: req.body.size 
+            }},
             { new: true } //send new one back
         )
             .then(function(dbMetric) {

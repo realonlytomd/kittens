@@ -195,7 +195,7 @@
         </div>
       </div>
       <!-- End of modal code-->      
-      <!-- Modal for entering new kitten's metrics AND for adding metrics to existing kitten -->
+      <!-- Modal for entering new kitten's metrics -->
       <div class="modal fade" id="newKittenMetricModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -255,10 +255,23 @@
                 <label for="kittenAgeInput">Kitten Age:</label>
                 <input type="number" class="form-control" name="age" id="newKittenAgeInput" placeholder="Enter the Kitten's Age in Weeks">
               </div>
-              <div class="form-group">
+
+              <div class="input-group">
                 <label for="kittenWeightInput">Kitten Weight:</label>
-                <input type="number" class="form-control" name="weight" id="newKittenWeightInput" placeholder="Enter the Kitten's Weight in Ounces">
+                <input type="number" class="form-control" name="weight" id="newKittenWeightInput" placeholder="Enter the Kitten's Weight (choose unites)">
+                <!--adding dropdown button for weight units-->
+                <div class="input-group-btn">
+                  <button type="button" id="unitButton" class="btn btn-default dropdown-toggle" 
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Units <span class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">Grams</a></li>
+                    <li><a href="#">Kilograms</a></li>
+                    <li><a href="#">Ounces</a></li>
+                    <li><a href="#">Pounds</a></li>
+                  </ul>
+                </div><!-- input-group-btn -->
               </div>
+
               <div class="form-group">
                 <label for="kittenSizeInput">Kitten Size:</label>
                 <input type="number" class="form-control" name="size" id="newKittenSizeInput" placeholder="Enter the Kitten's Length in Inches">
