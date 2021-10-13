@@ -369,7 +369,7 @@ jQuery(document).ready(function( $ ){
             // associated with a kitten
             sortedMetricIds = [];
 
-            // now feed the arrays to the server side
+            // now feed the arrays to the server side to sort them according to age
             $.ajax({
               method: "GET",
               url: "/sortArrays/",
@@ -387,9 +387,11 @@ jQuery(document).ready(function( $ ){
               sortedAges = sortedMetrics.ages;
               sortedWeights = sortedMetrics.weights;
               sortedUnits = sortedMetrics.units;
+              console.log("sortedUnits: ", sortedUnits);
               sortedSizes = sortedMetrics.sizes;
+
               // console.log("CHECK THIS!!!! sortedMetricIds: " + sortedMetricIds);
-              // console.log("sortedAges: " + sortedAges);
+               console.log("sortedAges: " + sortedAges);
               // console.log("sortedWights: " + sortedWeights);
               // console.log("sortedSizes: " + sortedSizes);
               // call the function to print arrays to the DOM
@@ -949,8 +951,33 @@ jQuery(document).ready(function( $ ){
     var sortedAgesNumb = sortedAges.map(Number);
     var sortedSizesNumb = sortedSizes.map(Number);
     var sortedWeightsNumb = sortedWeights.map(Number);
-    // console.log("after convert, sortedAges: ", sortedAgesNumb);
-    
+     console.log("after convert, sortedWeightsNumb: ", sortedWeightsNumb);
+     console.log("not converted, but - sortedUnits: ", sortedUnits);
+
+    // insert a loop to go through the sortedWeightsNumb array and convert the
+    // values to ounces IF they are in any other units
+    for (i=0; i<sortedWeightsNumb.length; i++) {
+      switch(sortedUnits[i]) {
+        case "Grams":
+          sortedWeightsNumb[i] = sortedWeightsNumb[i] * 0.035274;
+          console.log("units was Grams, now Ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
+          break;
+        case "Kilograms":
+          sortedWeightsNumb[i] = sortedWeightsNumb[i] * 35.274;
+          console.log("units was Kilograms, now Ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
+          break;
+        case "Pounds":
+          sortedWeightsNumb[i] = sortedWeightsNumb[i] * 16;
+          console.log("units was Pounds, now Ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
+          break;
+        case "Ounces":
+          console.log(sortedWeightsNumb[i] + " already in Ounces"); 
+          break;
+        default:
+          console.log("sortedUnits is not defined?: ", sortedUnits);
+      }
+    }
+
     for (i=0; i<sortedAgesNumb.length; i++) {
       resultObjectSize={ x : sortedAgesNumb[i] , y : sortedSizesNumb[i]};
       resultObjectWeight={ x : sortedAgesNumb[i] , y : sortedWeightsNumb[i]};
