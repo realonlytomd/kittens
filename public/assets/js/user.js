@@ -49,7 +49,7 @@ var thisSex;
 var thisAge;
 var thisWeight;
 var thisUnit;
-var selText;
+var selText = "ounces";
 var thisSize;
 var dataPointsArraySize = [];
 var dataPointsArrayWeight = [];
@@ -347,6 +347,9 @@ jQuery(document).ready(function( $ ){
           if (curmet[0].unit === undefined) {
             curmet[0].unit = "ounces";
           }
+          // change old entries of units to lower case
+          curmet[0].unit = curmet[0].unit.toLowerCase();
+          console.log("after to lower case, curmet[0].unit: ", curmet[0].unit);
           //console.log("curmet[0].size: ", curmet[0].size);
           //create the arrays of kitten metrics
           metricIds.push(curmet[0]._id);
@@ -954,24 +957,24 @@ jQuery(document).ready(function( $ ){
      console.log("after convert, sortedWeightsNumb: ", sortedWeightsNumb);
      console.log("not converted, but - sortedUnits: ", sortedUnits);
 
-    // insert a loop to go through the sortedWeightsNumb array and convert the
+    // insert a switch to go through the sortedWeightsNumb array and convert the
     // values to ounces IF they are in any other units
     for (i=0; i<sortedWeightsNumb.length; i++) {
       switch(sortedUnits[i]) {
-        case "Grams":
+        case "grams":
           sortedWeightsNumb[i] = sortedWeightsNumb[i] * 0.035274;
-          console.log("units was Grams, now Ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
+          console.log("units was grams, now ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
           break;
-        case "Kilograms":
+        case "kilograms":
           sortedWeightsNumb[i] = sortedWeightsNumb[i] * 35.274;
-          console.log("units was Kilograms, now Ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
+          console.log("units was kilograms, now ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
           break;
         case "Pounds":
           sortedWeightsNumb[i] = sortedWeightsNumb[i] * 16;
-          console.log("units was Pounds, now Ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
+          console.log("units was Pounds, now ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
           break;
-        case "Ounces":
-          console.log(sortedWeightsNumb[i] + " already in Ounces"); 
+        case "ounces":
+          console.log(sortedWeightsNumb[i] + " already in ounces"); 
           break;
         default:
           console.log("sortedUnits is not defined?: ", sortedUnits);
