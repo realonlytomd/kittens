@@ -24,14 +24,14 @@ var kittenSexes = [];
 var metricIds = [];
 var kittenAges = [];
 var kittenWeights = [];
-var kittenUnits = [];
+var kittenWeightUnits = [];
 var kittenSizes = [];
 // these are needed across functions as they are sorted in one, and printed to DOM
 
 var sortedMetricIds = [];
 var sortedAges = [];
 var sortedWeights = [];
-var sortedUnits = [];
+var sortedWeightUnits = [];
 var sortedSizes = [];
 
 // boolean that is true when delete and edit buttons already exist in div somewhere
@@ -48,7 +48,7 @@ var thisFurcolor;
 var thisSex;
 var thisAge;
 var thisWeight;
-var thisUnit;
+var thisWeightUnit;
 var selText = "ounces";
 var thisSize;
 var dataPointsArraySize = [];
@@ -165,7 +165,7 @@ jQuery(document).ready(function( $ ){
             age: $("#kittenAgeInput").val().trim(),
             weight: $("#kittenWeightInput").val().trim(),
             // the chosen units of the weight saved here
-            unit: selText,
+            weightunit: selText,
             size: $("#kittenSizeInput").val().trim()
         }
       })
@@ -175,7 +175,7 @@ jQuery(document).ready(function( $ ){
           $("#kittenAgeInput").val("");
           $("#kittenWeightInput").val("");
           //
-          //I think the unit button will return to blank?
+          // the unit button stays on whatever the last choice is
           $("#kittenSizeInput").val("");
           // then hide this modal
           $("#newKittenMetricModal").modal("hide");
@@ -343,20 +343,20 @@ jQuery(document).ready(function( $ ){
           //console.log("this innerItem or _id: " + curmet[0]._id);
           //console.log("curmet[0].age: ", curmet[0].age);
           //console.log("curmet[0].weight: ", curmet[0].weight);
-          console.log("curmet[0].unit: ", curmet[0].unit);
-          if (curmet[0].unit === undefined) {
-            curmet[0].unit = "ounces";
+          console.log("curmet[0].weightunit: ", curmet[0].weightunit);
+          if (curmet[0].weightunit === undefined) {
+            curmet[0].weightunit = "ounces";
           }
           // change old entries of units to lower case
-          curmet[0].unit = curmet[0].unit.toLowerCase();
-          console.log("after to lower case, curmet[0].unit: ", curmet[0].unit);
+          curmet[0].weightunit = curmet[0].weightunit.toLowerCase();
+          console.log("after to lower case, curmet[0].weightunit: ", curmet[0].weightunit);
           //console.log("curmet[0].size: ", curmet[0].size);
           //create the arrays of kitten metrics
           metricIds.push(curmet[0]._id);
           kittenAges.push(curmet[0].age);
           kittenWeights.push(curmet[0].weight);
-          kittenUnits.push(curmet[0].unit);
-          console.log("user.js: kittenUnits: ", kittenUnits);
+          kittenWeightUnits.push(curmet[0].weightunit);
+          console.log("user.js: kittenWeightUnits: ", kittenWeightUnits);
           kittenSizes.push(curmet[0].size);
           //console.log(kittenAges.length = " + kittenAges.length);
           //console.log(curkat[0].metric.length = " + curkat[0].metric.length);
@@ -380,7 +380,7 @@ jQuery(document).ready(function( $ ){
                 ids: metricIds,
                 ages: kittenAges,
                 weights: kittenWeights,
-                units: kittenUnits,
+                weightunits: kittenWeightUnits,
                 sizes: kittenSizes
               }
             })
@@ -389,8 +389,8 @@ jQuery(document).ready(function( $ ){
               sortedMetricIds = sortedMetrics.ids;
               sortedAges = sortedMetrics.ages;
               sortedWeights = sortedMetrics.weights;
-              sortedUnits = sortedMetrics.units;
-              console.log("sortedUnits: ", sortedUnits);
+              sortedWeightUnits = sortedMetrics.weightunits;
+              console.log("sortedWeightUnits: ", sortedWeightUnits);
               sortedSizes = sortedMetrics.sizes;
 
               // console.log("CHECK THIS!!!! sortedMetricIds: " + sortedMetricIds);
@@ -414,11 +414,11 @@ jQuery(document).ready(function( $ ){
               currentKittenId + " data_id=" + 
               sortedMetricIds[i] + " data_age=" +
               sortedAges[i] + " data_weight=" +
-              sortedWeights[i] + " data_unit=" +
-              sortedUnits[i] + " data_size=" +
+              sortedWeights[i] + " data_weightunit=" +
+              sortedWeightUnits[i] + " data_size=" +
               sortedSizes[i] + ">Age: " +
               sortedAges[i] + " weeks" + "<br>Weight: " +
-              sortedWeights[i] + " " + sortedUnits[i] + "<br>Length: " +
+              sortedWeights[i] + " " + sortedWeightUnits[i] + "<br>Length: " +
               sortedSizes[i] + " inches" +"</h5></div>");
           }
           //
@@ -429,14 +429,14 @@ jQuery(document).ready(function( $ ){
           metricIds = [];
           kittenAges = [];
           kittenWeights = [];
-          kittenUnits = [];
+          kittenWeightUnits = [];
           kittenSizes = [];
           // try: keep this array in case user wants to delete all the metrics referenced from
           // a kitten they are deleting.
           //sortedMetricIds = [];
           sortedAges = [];
           sortedWeights = [];
-          sortedUnits = [];
+          sortedWeightUnits = [];
           sortedSizes = [];
           //console.log("CHECK THIS TOO!!!! sortedMetricIds: " + sortedMetricIds);
       }
@@ -738,7 +738,8 @@ jQuery(document).ready(function( $ ){
   // adding function available when user adds metrics
   // User required to pick units for weight of kitten
   // this puts the chosen units into the dropdown button 
-  $(".dropdown-menu li a").click(function(e){
+  $(".dropdown-menu li a").click(function(event){
+    event.preventDefault();
     // selText should be available to be put into db
     selText = $(this).text();
     $(this).parents(".input-group").find(".dropdown-toggle").html(selText + " <span class='caret'></span>");       
@@ -794,7 +795,7 @@ jQuery(document).ready(function( $ ){
         thisKittenId = $(event.target).attr("data_idKitten");
         thisAge = $(event.target).attr("data_age");
         thisWeight = $(event.target).attr("data_weight");
-        thisUnit = $(event.target).attr("data_unit");
+        thisWeightUnit = $(event.target).attr("data_weightunit");
         thisSize = $(event.target).attr("data_size");
         //console.log("AFTER clicked .metricGroup, thisID: "  + thisId + " and thisKittenId: " + thisKittenId);
         addButtons();
@@ -901,7 +902,7 @@ jQuery(document).ready(function( $ ){
       data: {
           age: $("#newKittenAgeInput").val().trim(),
           weight: $("#newKittenWeightInput").val().trim(),
-          unit: selText,
+          weightunit: selText,
           size: $("#newKittenSizeInput").val().trim()
       }
     })
@@ -955,12 +956,12 @@ jQuery(document).ready(function( $ ){
     var sortedSizesNumb = sortedSizes.map(Number);
     var sortedWeightsNumb = sortedWeights.map(Number);
      console.log("after convert, sortedWeightsNumb: ", sortedWeightsNumb);
-     console.log("not converted, but - sortedUnits: ", sortedUnits);
+     console.log("not converted, but - sortedWeightUnits: ", sortedWeightUnits);
 
     // insert a switch to go through the sortedWeightsNumb array and convert the
     // values to ounces IF they are in any other units
     for (i=0; i<sortedWeightsNumb.length; i++) {
-      switch(sortedUnits[i]) {
+      switch(sortedWeightUnits[i]) {
         case "grams":
           sortedWeightsNumb[i] = sortedWeightsNumb[i] * 0.035274;
           console.log("units was grams, now ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
@@ -969,15 +970,15 @@ jQuery(document).ready(function( $ ){
           sortedWeightsNumb[i] = sortedWeightsNumb[i] * 35.274;
           console.log("units was kilograms, now ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
           break;
-        case "Pounds":
+        case "pounds":
           sortedWeightsNumb[i] = sortedWeightsNumb[i] * 16;
-          console.log("units was Pounds, now ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
+          console.log("units was pounds, now ounces, sortedWeightsNumb[" + i + "]: ", sortedWeightsNumb[i]);
           break;
         case "ounces":
           console.log(sortedWeightsNumb[i] + " already in ounces"); 
           break;
         default:
-          console.log("sortedUnits is not defined?: ", sortedUnits);
+          console.log("sortedWeightUnits is not defined?: ", sortedWeightUnits);
       }
     }
 

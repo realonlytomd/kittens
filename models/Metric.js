@@ -16,7 +16,7 @@ var MetricSchema = new Schema({
     required: true
   },
   // The chosen units of the kitten's weight
-  unit: {
+  weightunit: {
     type: String,
     required: true
   },
