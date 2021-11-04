@@ -36,6 +36,7 @@ var sortedAges = [];
 var sortedWeights = [];
 var sortedWeightUnits = [];
 var sortedSizes = [];
+var sortedSizeUnits = [];
 
 // initialize image variables
 var imgHold = [];
@@ -53,6 +54,7 @@ module.exports = function(router) {
         // console.log("from /sortArrays, req.query.ages: ", req.query.ages);
         // console.log("from /sortArrays, req.query.weights: ", req.query.weights);
         console.log("from /sortArrays, req.query.weightunits: ", req.query.weightunits);
+        console.log("from /sortArrays, req.query.sizetunits: ", req.query.sizeunits);
         // console.log("from /sortArrays, req.query.sizes: ", req.query.sizes);
         // need to convert the numbers in ages array from strings to number
         var kittenAges = req.query.ages;
@@ -67,6 +69,7 @@ module.exports = function(router) {
             sortedWeights[i]=req.query.weights[newIndex[i]];
             sortedWeightUnits[i]=req.query.weightunits[newIndex[i]];
             sortedSizes[i]=req.query.sizes[newIndex[i]];
+            sortedSizeUnits[i]=req.query.sizeunits[newIndex[i]];
         }
         // console.log("sortedIds: " + sortedIds);
         // console.log("sortedAges: " + sortedAges);
@@ -77,7 +80,8 @@ module.exports = function(router) {
             ages: sortedAges,
             weights: sortedWeights,
             weightunits: sortedWeightUnits,
-            sizes: sortedSizes
+            sizes: sortedSizes,
+            sizeunits: sortedSizeUnits
         };
         // console.log("sortedMetrics: ", sortedMetrics);
         res.json(sortedMetrics);
@@ -86,6 +90,7 @@ module.exports = function(router) {
         sortedWeights = [];
         sortedWeightUnits = [];
         sortedSizes = [];
+        sotedSizeUnits = [];
     });
 
     // the GET route (temp) for getting all the images from the db
@@ -621,6 +626,7 @@ module.exports = function(router) {
         console.log("req.body.weight: ", req.body.weight);
         console.log("req.body.weightunit: ", req.body.weightunit);
         console.log("req.body.size: ", req.body.size);
+        console.log("req.body.sizeunit: ", req.body.sizeunit);
         // find the intended set of metrics, and change the numbers accordingly
         db.Metric.findOneAndUpdate (
             { _id: req.params.metricID },
@@ -628,7 +634,8 @@ module.exports = function(router) {
                 age: req.body.age, 
                 weight: req.body.weight, 
                 weightunit: req.body.weightunit, 
-                size: req.body.size 
+                size: req.body.size,
+                sizeunit: req.body.sizeunit
             }},
             { new: true } //send new one back
         )

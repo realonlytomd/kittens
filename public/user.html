@@ -227,10 +227,19 @@
                 </div><!-- input-group-btn -->
               </div><!-- input-group -->
               
-              <div class="form-group">
+              <div class="input-group">
                 <label for="kittenSizeInput">Kitten Size:</label>
-                <input type="number" class="form-control" name="size" id="kittenSizeInput" placeholder="Enter the Kitten's Length in Inches">
-              </div> <!-- form-group -->
+                <input type="number" class="form-control" name="size" id="kittenSizeInput" placeholder="Enter the Kitten's Length (choose units)">
+                <!--adding dropdown button for size units-->
+                <div class="input-group-btn">
+                  <button type="button" id="unitSizeButton" class="btn btn-default dropdown-toggle" 
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Units <span class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">cm</a></li>
+                    <li><a href="#">inches</a></li>
+                  </ul>
+                </div><!-- input-group-btn -->
+              </div> <!-- input-group -->
               <button type="submit" id="submitKittenMetrics">Submit</button>
             
             </div>
@@ -275,6 +284,15 @@
               <div class="form-group">
                 <label for="kittenSizeInput">Kitten Size:</label>
                 <input type="number" class="form-control" name="size" id="newKittenSizeInput" placeholder="Enter the Kitten's Length in Inches">
+                <!--adding dropdown button for size units-->
+                <div class="input-group-btn">
+                  <button type="button" id="unitSizeButton" class="btn btn-default dropdown-toggle" 
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Units <span class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">cm</a></li>
+                    <li><a href="#">inches</a></li>
+                  </ul>
+                </div><!-- input-group-btn -->
               </div>
               <button type="submit" id="submitEditedKittenMetrics">Submit</button>
             </div>

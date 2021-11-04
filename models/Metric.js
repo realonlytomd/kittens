@@ -24,6 +24,11 @@ var MetricSchema = new Schema({
   size: {
     type: String,
     required: true
+  },
+  // the chosen units of a kitten's size
+  sizeunit: {
+    type: String,
+    required: true
   }
 }, {
   // adding timestamps: created at and updated at
