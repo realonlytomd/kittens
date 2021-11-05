@@ -757,21 +757,21 @@ jQuery(document).ready(function( $ ){
   // adding function available when user adds metrics
   // User required to pick units for weight of kitten
   // this puts the chosen units into the dropdown button 
-  $("#unitButton").click(function(event){
+  $(".dropdown-menu li a").click(function(event){
     event.preventDefault();
     // selText should be available to be put into db
     selText = $(this).text();
-    $(this).parents(".input-group").find("#unitButton").html(selText + " <span class='caret'></span>");
+    $(this).parents(".input-group").find(".dropdown-toggle").html(selText + " <span class='caret'></span>");
     console.log("selText is: " + selText);
   });
   // the variable selText should also be initialized above and used later to put in db
 
   //TRY: do the same for choosing the units for size of a kitten
   // but use the id of the button, not the more generic .dropdown-men li a
-  $("#unitSizeButton").click(function(event){
+  $(".dropdown-menu li a").click(function(event){
     event.preventDefault();
     selTextSize = $(this).text();
-    $(this).parents(".input-group").find("#unitSizeButton").html(selTextSize + " <span class='caret'></span>");
+    $(this).parents(".input-group").find(".dropdown-toggle").html(selTextSize + " <span class='caret'></span>");
     console.log("selTextSize is: " + selTextSize);
   })
 

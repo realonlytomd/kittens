@@ -40,7 +40,7 @@ body {
     padding-left: 0px;
 }
 
-#unitButton {
+#unitButton, #unitSizeButton {
     margin-top: 25px;
 }
 
