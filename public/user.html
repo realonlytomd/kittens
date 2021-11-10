@@ -218,7 +218,7 @@
                 <div class="input-group-btn btn-group">
                   <button type="button" id="unitButton" class="btn btn-default dropdown-toggle" 
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Units <span class="caret"></span></button>
-                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                  <ul class="dropdown-menu dropdown-menu-right" id="ulWeight" role="menu">
                     <li><a href="#">grams</a></li>
                     <li><a href="#">kilograms</a></li>
                     <li><a href="#">ounces</a></li>
@@ -234,7 +234,7 @@
                 <div class="input-group-btn">
                   <button type="button" id="unitSizeButton" class="btn btn-default dropdown-toggle" 
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Units <span class="caret"></span></button>
-                  <ul class="dropdown-menu dropdown-menu-right">
+                  <ul class="dropdown-menu dropdown-menu-right" id="ulSize" role="menu">
                     <li><a href="#">cm</a></li>
                     <li><a href="#">inches</a></li>
                   </ul>
@@ -266,13 +266,13 @@
               </div>
 
               <div class="input-group">
-                <label for="kittenWeightInput">Kitten Weight:</label>
-                <input type="number" class="form-control" name="weight" id="newKittenWeightInput" placeholder="Enter the Kitten's Weight (choose unites)">
+                <label for="newKittenWeightInput">Edit Kitten Weight:</label>
+                <input type="number" class="form-control" name="weight" id="newKittenWeightInput" placeholder="Enter the Kitten's Weight (choose units)">
                 <!--adding dropdown button for weight units-->
                 <div class="input-group-btn">
                   <button type="button" id="unitButton" class="btn btn-default dropdown-toggle" 
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Units <span class="caret"></span></button>
-                  <ul class="dropdown-menu dropdown-menu-right">
+                  <ul class="dropdown-menu dropdown-menu-right" id="ulWeight" role="menu">
                     <li><a href="#">grams</a></li>
                     <li><a href="#">kilograms</a></li>
                     <li><a href="#">ounces</a></li>
@@ -282,13 +282,13 @@
               </div>
 
               <div class="form-group">
-                <label for="kittenSizeInput">Kitten Size:</label>
-                <input type="number" class="form-control" name="size" id="newKittenSizeInput" placeholder="Enter the Kitten's Length in Inches">
+                <label for="newKittenSizeInput">Edit Kitten Size:</label>
+                <input type="number" class="form-control" name="size" id="newKittenSizeInput" placeholder="Enter the Kitten's Length (choose units)">
                 <!--adding dropdown button for size units-->
                 <div class="input-group-btn">
                   <button type="button" id="unitSizeButton" class="btn btn-default dropdown-toggle" 
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Units <span class="caret"></span></button>
-                  <ul class="dropdown-menu dropdown-menu-right">
+                  <ul class="dropdown-menu dropdown-menu-right" id="ulSize" role="menu">
                     <li><a href="#">cm</a></li>
                     <li><a href="#">inches</a></li>
                   </ul>

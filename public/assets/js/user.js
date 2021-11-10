@@ -754,26 +754,26 @@ jQuery(document).ready(function( $ ){
       });
   });
   
-  // adding function available when user adds metrics
   // User required to pick units for weight of kitten
   // this puts the chosen units into the dropdown button 
-  $(".dropdown-menu li a").click(function(event){
+  // and sets the variable selText to be the chosen units of the kitten's weight, stored in db
+  $("#ulWeight li a").click(function(event){
     event.preventDefault();
     // selText should be available to be put into db
     selText = $(this).text();
-    $(this).parents(".input-group").find(".dropdown-toggle").html(selText + " <span class='caret'></span>");
+    $(this).parents(".btn-group").find("#unitButton").html(selText + " <span class='caret'></span>");
     console.log("selText is: " + selText);
   });
-  // the variable selText should also be initialized above and used later to put in db
 
-  //TRY: do the same for choosing the units for size of a kitten
-  // but use the id of the button, not the more generic .dropdown-men li a
-  $(".dropdown-menu li a").click(function(event){
+  // Do the same for choosing the units for size of a kitten
+  // but need a separate function to set the variable selTextSize 
+  // to store the chosen units for the kitten's size
+  $("#ulSize li a").click(function(event){
     event.preventDefault();
     selTextSize = $(this).text();
-    $(this).parents(".input-group").find(".dropdown-toggle").html(selTextSize + " <span class='caret'></span>");
+    $(this).parents(".btn-group").find("#unitSizeButton").html(selTextSize + " <span class='caret'></span>");
     console.log("selTextSize is: " + selTextSize);
-  })
+  });
 
    // This function is used as user clicks on the Add Metrics button (rendered from above)
   // to add metrics to an existing kitten, also while other metrics have been listed
