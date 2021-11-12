@@ -111,7 +111,7 @@ module.exports = function(router) {
             }
             console.log("inside /getImages/, records[0]._id: " + records[0]._id);
             const formattedImages = imagesHold.map(buffer => {
-                return `<img data-id=` + records[0]._id + ` class="theImages" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
+                return `<img data-id=` + records[0]._id + ` class="theImages" title="Click to Enlarge" src="data:image/jpeg;base64,${buffer.toString("base64")}"/>`
             }).join("");
             
             res.send(formattedImages)  //this should be going back to user.js
