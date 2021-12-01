@@ -424,7 +424,7 @@ module.exports = function(router) {
     // delete (or pull) the id of the kitten and pass the req.body to the entry
     db.User.findOneAndUpdate(
         { _id: req.params.id },
-        { $pull: { kitten: req.body.kittenId }}, // this kitten._id should be the metric id to be removed
+        { $pull: { kitten: req.body.kittenId }}, // this kitten._id should be the kitten's id to be removed
         { new: true }
     )
         .then(function(dbUser) {

@@ -750,6 +750,8 @@ jQuery(document).ready(function( $ ){
             // redraw page to show current kittens of current user
             getAllData();
             $("#kittenMetrics").empty();
+            $("#chartContainerSize").empty();
+            $("#chartContainerWeight").empty();
           });
       });
   });
