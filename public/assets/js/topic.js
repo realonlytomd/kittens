@@ -139,10 +139,9 @@ jQuery(document).ready(function( $ ){
             if (arr !== null) {
               //console.log(the CORRECT and separate url: " + arr[0]);
               thisBox.append(
-                "<h4>Answer: </h4><p>" +
-              allTopics[i].answer + "</p><a class='answerA' href=" +
+                "<h4>Answer: </h4><p><a class='answerA' href=" +
                 arr[0] + " target='_blank'>" +
-                "[CLICK HERE TO FOLLOW LINK]" + "</a>");
+                allTopics[i].answer + "</a></p>");
             } else {
               thisBox.append(
                 "<h4>Answer: </h4><p>" +
