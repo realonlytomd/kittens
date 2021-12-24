@@ -128,4 +128,10 @@ jQuery(document).ready(function($){
         $("#signupButton").show();
         $("#usersButton").hide();
     }
+    $.getJSON("/getAllTopics", function(allTopics) {
+        var i = allTopics.length - 1;
+        thisTopicText = allTopics[i].topic;
+        $("#latestTopic").append("<h4>Latest Topic: " +
+        thisTopicText + "</h4>");
+    });
 });
