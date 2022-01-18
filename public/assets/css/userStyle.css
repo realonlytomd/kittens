@@ -122,7 +122,7 @@ input#feedKitten {
     margin-top: 5px;
 }
 
-button#createKitten {
+button#createKitten, button#submitEditedKittenMetrics{
     margin-top: 10px;
 }
 
