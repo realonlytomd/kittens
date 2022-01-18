@@ -12,6 +12,10 @@ body {
     background-image: linear-gradient(0deg, #F7CE68 0%, #FBAB7E 50%, #f7ce68 100%);
 }
 
+/* * {
+    outline: 1px solid red;
+} */
+
 #navColor {
     /*background-color: aliceblue;*/
     margin-bottom: 0px;
