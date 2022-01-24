@@ -936,7 +936,7 @@ jQuery(document).ready(function( $ ){
       }
     })
     .then(function(editedMetricdb) {
-        //console.log(User after kitten metrics (allDataKittenUser) in user.js: ", editedMetricdb);
+        //console.log("User after kitten metrics (allDataKittenUser) in user.js: ", editedMetricdb);
         // empty out the input fields
         $("#newKittenAgeInput").val("");
         $("#newKittenWeightInput").val("");
