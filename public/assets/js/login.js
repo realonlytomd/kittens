@@ -22,6 +22,17 @@ jQuery(document).ready(function( $ ){
   //console.log(hello from login.js");
   //console.log(currentUserLoggedIn is: " + currentUserLoggedIn);
 
+  // code to add functionality to visiblity eye icon in password input field.
+  $(document).on("click", "#togglePassword", function(event) {
+    event.preventDefault();
+    console.log("inside togglePassword");
+    // toggle the type attribute
+    const type = $("#password-input").attr("type") === "password" ? "text" : "password";
+    $("#password-input").attr("type", type);
+    // toggle the eye slash icon
+    $(this).classList.toggle("fa-eye-slash");
+  });
+
    //For users who've already registered and are re-logging in
   $(document).on("click", "#currentUserLogin", function(event) {
     // didn't work previously without the event.preventDefault - always use
