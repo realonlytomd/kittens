@@ -22,16 +22,28 @@ jQuery(document).ready(function( $ ){
   //console.log(hello from login.js");
   //console.log(currentUserLoggedIn is: " + currentUserLoggedIn);
 
-  // code to add functionality to visiblity eye icon in password input field.
+  // add functionality to visiblity eye icon in old user password input field.
   $(document).on("click", "#togglePassword", function(event) {
     event.preventDefault();
-    console.log("inside togglePassword");
     // toggle the type attribute
     const type = $("#password-input").attr("type") === "password" ? "text" : "password";
     $("#password-input").attr("type", type);
     // toggle the eye slash icon
-    $(this).classList.toggle("fa-eye-slash");
+    $(this).toggleClass("fa-eye-slash");
+
   });
+
+  // add functionality to visiblity eye icon in new user password input field.
+  $(document).on("click", "#newTogglePassword", function(event) {
+    event.preventDefault();
+    // toggle the type attribute
+    const type = $("#newPassword-input").attr("type") === "password" ? "text" : "password";
+    $("#newPassword-input").attr("type", type);
+    // toggle the eye slash icon
+    $(this).toggleClass("fa-eye-slash");
+  });
+
+
 
    //For users who've already registered and are re-logging in
   $(document).on("click", "#currentUserLogin", function(event) {
