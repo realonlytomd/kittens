@@ -27,7 +27,7 @@ app.use(express.static("public"));
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
-//may not need this since I added the function(err) callback below
+
 mongoose.Promise = Promise;
 // set up for deploying on heroku and developing local
   if (process.env.DB_URI) {
@@ -39,7 +39,7 @@ mongoose.Promise = Promise;
       useFindAndModify: false
     }, function(err){
       if(err){
-      console.log("am I gettting an error?", err);
+      console.log("I am gettting an error", err);
     } else {
       console.log("mongoose connection is successful on: " + "mongodb://localhost:27017/littlecats");
     }
