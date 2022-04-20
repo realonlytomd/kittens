@@ -1013,7 +1013,7 @@ jQuery(document).ready(function( $ ){
     }
 
     // insert a switch to go through the sortedUnitsNumb array and convert the
-    // values to inches IF they are in centimeters (the only other option)
+    // values to inches IF they are in centimeters - the only other option
     for (i=0; i<sortedSizesNumb.length; i++) {
       switch(sortedSizeUnits[i]) {
         case "cm":
