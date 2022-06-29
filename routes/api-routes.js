@@ -706,7 +706,7 @@ module.exports = function(router) {
             });
     });
 
-    //Route to edit the title of a kitten's image
+    //Route to edit the title of a kitten's image good.
     router.post("/editImageDesc/:imageId", function(req, res) {
         console.log("req.params.imageId: ", req.params.imageId);
         //console.log("req.body: ", req.body);
