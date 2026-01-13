@@ -42,10 +42,21 @@ mongoose.Promise = Promise;
       console.log("I am gettting an error", err);
     } else {
       console.log("mongoose connection is successful on: " + "mongodb://localhost:27017/littlecats");
+      // 🔍 DIAGNOSTIC CODE — TEMPORARY
+        mongoose.connection.db.admin()
+        .command({ getCmdLineOpts: 1 })
+        .then(res => {
+          console.log("MongoDB cmdLineOpts FULL RESPONSE:");
+          console.dir(res, { depth: null });
+        })
+        .catch(err => {
+          console.error("Admin command error:", err);
+      });
+        // 🔍 END DIAGNOSTIC CODE
     }
    });
   }
-
+  mongoose.set("debug", true);
 // // Routes
 require("./routes/api-routes.js")(app);
 require("./routes/html-routes.js")(app);
